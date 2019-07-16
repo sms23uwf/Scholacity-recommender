@@ -1,10 +1,14 @@
 {
     "presets": [
-      "env",
-      "react"
+      ["@babel/preset-env", {
+        "useBuiltIns": "usage",
+        "corejs": 3,
+        "targets": "last 1 version, > 0.25%, not dead"
+      }],
+      "@babel/preset-react"
     ],
     "plugins": [
-      "transform-class-properties",
-      "transform-object-rest-spread"
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties"
     ]
   }
