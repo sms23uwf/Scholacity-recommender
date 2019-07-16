@@ -32,6 +32,7 @@ module.exports = (env) => {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
+              // hot module reload only in dev
               hmr: process.env.NODE_ENV === 'development',
             },
           },
@@ -42,7 +43,8 @@ module.exports = (env) => {
     },
     plugins: [
        new MiniCssExtractPlugin({
-         filename: '[name].css',
+         filename: 'styles.css', // force a 'styles.css' output with everything inside of it...
+         ignoreOrder: false, // Enable to remove warnings about conflicting order
       }),
       new webpack.DefinePlugin({
         'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
