@@ -21,7 +21,7 @@ import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
-import { setUUIDFilter } from './actions/filters';
+import { setUUIDFilter, setDomainFilter } from './actions/filters';
 import { startSetRatingsByUserCourseLO } from './actions/ratingsByUserCourseLO';
 import getVisibleRatingsByUserCourseLO from './selectors/ratingsByUserCourseLO';
 import { startAddUserNavigationEvent } from './actions/navigationEvents';
@@ -61,6 +61,12 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     console.log(`log in`);
 
+    let userDomainArray = firebase.auth().currentUser.email.split('@');
+    const userDomain = userDomainArray[1];
+
+    console.log(`userDomain: ${userDomain}`);
+    
+    store.dispatch(setDomainFilter(userDomain));
     store.dispatch(setUUIDFilter(firebase.auth().currentUser.uid));
     store.dispatch(startAddUserNavigationEvent({timestamp: Date.now(), event: 'login'}));
 

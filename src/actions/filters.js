@@ -16,6 +16,12 @@ export const setUUIDFilter = (userId = '') => ({
   userId
 });
 
+// SET_DOMAIN_FILTER
+export const setDomainFilter = (domain = '') => ({
+  type: 'SET_DOMAIN_FILTER',
+  domain
+});
+
 // SET_LO_FILTER
 export const setLOFilter = (learningobjectiveid = '') => ({
   type: 'SET_LO_FILTER',

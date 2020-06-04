@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 import { PersistentDrawerLeft } from './PersistentDrawerLeft';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
+import routes from '../routers/SidebarRouter';
+import altRoutes from '../routers/SidebarRouterAlt';
+import { firebase } from '../firebase/firebase';
 
 const handleStartLogout = (props) => {
   props.startAddUserNavigationEvent({timestamp: Date.now(), event: 'logout'});
@@ -12,7 +15,22 @@ const handleStartLogout = (props) => {
 export class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userRoutes: []
+    }
   }
+
+  componentDidMount() {
+    let userDomainArray = firebase.auth().currentUser.email.split('@');
+    const userDomain = userDomainArray[1];
+    console.log(`inside Header: userDomain - ${userDomain}`);
+    
+    const sessionRoutes = userDomain == 'scholacity.org' ? routes : altRoutes;
+
+    this.setState({
+      userRoutes: sessionRoutes
+    });
+  };
 
   handleCancel = () => {
     console.log(`inside handleCancel`);
@@ -35,7 +53,7 @@ export class Header extends React.Component {
       <header className="header">
       <div className="content-container">
         <div>
-          <PersistentDrawerLeft handleLogout={this.handleCancel} />
+          <PersistentDrawerLeft handleLogout={this.handleCancel} routes={this.state.userRoutes} />
         </div>
       </div>
     </header>

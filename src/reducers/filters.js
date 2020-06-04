@@ -29,6 +29,11 @@ export default (state = filtersReducerDefaultState, action) => {
         ...state,
         userId: action.userId
       };
+    case 'SET_DOMAIN_FILTER':
+      return {
+        ...state,
+        domain: action.domain
+      };        
     case 'SET_LO_FILTER':
       return {
         ...state,

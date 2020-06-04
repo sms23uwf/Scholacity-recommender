@@ -17,14 +17,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import routes from '../routers/SidebarRouter';
 import Grid from '@material-ui/core/Grid';
 
 const drawerWidth = 245;
 
 const showModal = false;
-
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -90,7 +87,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function PersistentDrawerLeft({ handleLogout }) {
+export function PersistentDrawerLeft({ handleLogout, routes }) {
   
   const classes = useStyles();
   const theme = useTheme();
