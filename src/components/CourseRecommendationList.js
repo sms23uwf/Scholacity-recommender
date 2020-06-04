@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CourseRecommendationListItem from './CourseRecommendationListItem';
 import selectCourseRecommendations from '../selectors/courserecommendations';
-import * as firebase from 'firebase';
 
 export const CourseRecommendationsList = (props) => (
   <div className="content-container">

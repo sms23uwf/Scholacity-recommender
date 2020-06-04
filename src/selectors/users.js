@@ -1,7 +1,7 @@
 import { statement } from "@babel/template";
 import uuid from 'uuid';
 import database from '../firebase/firebase';
-import * as firebase from 'firebase';
+import { firebase } from '../firebase/firebase';
 
 // Get visible users
 

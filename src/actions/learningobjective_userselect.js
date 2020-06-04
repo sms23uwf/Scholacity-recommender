@@ -49,7 +49,6 @@ export const setLOSelectionsByUser = (learningobjective_userselects) => ({
 });
 
 export const startsetLOSelectionsByUser = () => {
-  console.log(`inside startsetLOSelectionsByUser`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

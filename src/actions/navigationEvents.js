@@ -23,7 +23,6 @@ export const addUserNavigationEvent = (user_navigation_event) => ({
         }
 
         const navigationEventData = { timestamp, userid, event };
-        console.log(`inside startSetUserNavigationEvent with ${event}`)
         return database.ref(`users_tables/${uid}/navigation_event`).push({...navigationEventData}).then((ref) => {
         dispatch(addUserNavigationEvent({
             id: ref.key,
@@ -40,7 +39,6 @@ export const setUserNavigationEvent = (user_navigation_events) => ({
 });
 
 export const startSetUserNavigationEvent = () => {
-  console.log(`inside startSetUserNavigationEvent`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

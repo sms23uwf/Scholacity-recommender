@@ -32,7 +32,6 @@ const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
 class PortfolioListItem extends React.Component {
   constructor(props){
       super(props);
-      console.log(`disposition is ${props.disposition}`);
       this.state = {
         showModal: false,
         disposition: props.disposition,
@@ -73,9 +72,6 @@ class PortfolioListItem extends React.Component {
 
     let timeInModal = timeStamp - this.state.timeEnteredModal;
 
-    console.log(`this.state.timeEnteredModal: ${this.state.timeEnteredModal}`);
-    console.log(`timeInModal: ${timeInModal}`);
-
     const timeInModalCapture = {timeInModal: timeInModal, userid: this.props.courserecommendation.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
     this.props.startAddUserTimeInModal(timeInModalCapture);
   }
@@ -97,17 +93,14 @@ class PortfolioListItem extends React.Component {
   }
 
   onCheckSaveToPortfolio = (recommendationPairing,keeperCount,e) => {
-    console.log(`onCheckSaveToPortfolio`);
 
     if(e.target.checked===true)
     {
-      console.log(`onCheckSaveToPortfolio - target is checked`);
       this.setState({isPortFolio: true});
       this.setState({newDisposition: `Portfolio`});
     }
     else
     {
-      console.log(`onCheckSaveToPortfolio - target is NOT checked`);
 
       this.setState({isPortFolio: false});
       this.setState({newDisposition: `Undecided`});
@@ -115,7 +108,6 @@ class PortfolioListItem extends React.Component {
       // put a check here to see if any remaining LO associated with this former portfolio item
       // if not, startRemoveCourseRecommendation
 
-      console.log(`keeperCount is ${keeperCount}`);
       this.setState({itemIsKeeper: true});
       this.setState({recommendationPairing: recommendationPairing});
 

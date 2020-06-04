@@ -23,9 +23,8 @@ export class Header extends React.Component {
   componentDidMount() {
     let userDomainArray = firebase.auth().currentUser.email.split('@');
     const userDomain = userDomainArray[1];
-    console.log(`inside Header: userDomain - ${userDomain}`);
     
-    const sessionRoutes = userDomain == 'scholacity.org' ? routes : altRoutes;
+    const sessionRoutes = userDomain == 'scholarsanonymous.org' ? altRoutes : routes;
 
     this.setState({
       userRoutes: sessionRoutes
@@ -40,9 +39,6 @@ export class Header extends React.Component {
 
   recordNavigationEvent = (event) => {
     let timeStamp = Date.now();
-
-    console.log(`navigation event: ${event}`);
-    console.log(`timestamp: ${timeStamp}`);
 
     const navigationEventCapture = {timestamp: timeStamp, event: event};
     this.props.startAddUserNavigationEvent(navigationEventCapture);

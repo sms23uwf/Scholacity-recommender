@@ -35,7 +35,6 @@ export const setRatingsByUserCourseLO = (ratings_user_course_lo) => ({
 });
 
 export const startSetRatingsByUserCourseLO = () => {
-  console.log(`inside startsetRatingsByUserCourseLO`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

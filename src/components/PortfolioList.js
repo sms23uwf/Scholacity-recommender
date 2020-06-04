@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PortfolioListItem from './PortfolioListItem';
 import selectCourseRecommendations from '../selectors/coursecompletions';
-import * as firebase from 'firebase';
 
 const disposition = "accepted";
 

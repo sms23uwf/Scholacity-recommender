@@ -66,16 +66,12 @@ class CourseRecommendationListItem extends React.Component {
 
     let timeInModal = timeStamp - this.state.timeEnteredModal;
 
-    console.log(`this.state.timeEnteredModal: ${this.state.timeEnteredModal}`);
-    console.log(`timeInModal: ${timeInModal}`);
-
     const timeInModalCapture = {timeInModal: timeInModal, userid: this.props.courserecommendation.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
     this.props.startAddUserTimeInModal(timeInModalCapture);
   }
 
   toggleModal = () => {
     let timeStamp = Date.now();
-    console.log(`inside toggleModal with showModal: ${this.state.showModal} and timestamp is ${timeStamp}`)
     if(this.state.showModal == false)
     {
       this.setState({
@@ -102,17 +98,14 @@ class CourseRecommendationListItem extends React.Component {
   }
 
   onCheckSaveToPortfolio = (e) => {
-    console.log(`onCheckSaveToPortfolio`);
 
     if(e.target.checked===true)
     {
-      console.log(`onCheckSaveToPortfolio - target is checked`);
       this.setState({isPortFolio: true});
       this.setState({newDisposition: `Portfolio`});
     }
     else
     {
-      console.log(`onCheckSaveToPortfolio - target is NOT checked`);
       this.setState({isPortFolio: false});
       this.setState({newDisposition: `Undecided`});
     }
@@ -121,12 +114,7 @@ class CourseRecommendationListItem extends React.Component {
 
 
   handleRatingChange = event => {
-    console.log(`newRating is ${this.state.newRating}`);
-    console.log(`currentRating is ${this.state.currentRating}`);
     this.setState({newRating: event.target.value});
-    console.log(`newRating is ${this.state.newRating}`);
-    console.log(`currentRating is ${this.state.currentRating}`);
-    console.log(`event.target.value is ${event.target.value}`);
   }
 
   recordLocalRating = (rating,e) => {

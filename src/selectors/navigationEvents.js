@@ -1,4 +1,3 @@
-import { firebase  } from './firebase/firebase';
 
 // Get visible selections
 

@@ -33,7 +33,6 @@ export const setLearningObjectives = (learningobjectives) => ({
 });
 
 export const startSetLearningObjectives = () => {
-  console.log(`inside startSetLearningObjectives`);
   return (dispatch, getState) => {
     
     return database.ref(`learningobjective`).once('value').then((snapshot) => {

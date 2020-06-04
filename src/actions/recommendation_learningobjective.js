@@ -50,7 +50,6 @@ export const setRecommendationLearningObjectives = (recommendation_learningobjec
 });
 
 export const startSetRecommendationLearningObjectives = () => {
-  console.log(`inside startSetRecommendationLearningObjectives`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
     

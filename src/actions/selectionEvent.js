@@ -19,8 +19,6 @@ export const addUserSelectionEvent = (user_selection_event) => ({
         } = timeData;
         const selectionEventData = { timestamp, userid, learningobjectiveid, disposition };
     
-        console.log(`inside startAddUserSelectionEvent with ${disposition}`);
-        
         return database.ref(`users_tables/${uid}/selection_event`).push({...selectionEventData}).then((ref) => {
         dispatch(addUserSelectionEvent({
             id: ref.key,

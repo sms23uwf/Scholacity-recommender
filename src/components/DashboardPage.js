@@ -7,7 +7,7 @@ import { history } from '../routers/AppRouter';
 import selectUsers from '../selectors/users';
 import { startAddUser } from '../actions/users';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
-import * as firebase from 'firebase';
+import { firebase } from '../firebase/firebase';
 import { setUUIDFilter } from '../actions/filters';
 import Typography from "@material-ui/core/Typography";
 
@@ -33,7 +33,6 @@ export class DashboardPage extends React.Component {
 
   componentDidMount() {
     this.recordNavigationEvent('Dashboard');
-    //console.log(`user just entered the dashboard`);
   }
 
   closeModal = () => {
@@ -44,7 +43,6 @@ export class DashboardPage extends React.Component {
   }
 
   handleCancel = () => {
-    console.log(`inside handleCancel`);
     this.recordNavigationEvent('logout');
     this.closeModal()
     {cancelLogin()}
@@ -53,9 +51,6 @@ export class DashboardPage extends React.Component {
 
   recordNavigationEvent = (event) => {
     let timeStamp = Date.now();
-
-    console.log(`navigation event: ${event}`);
-    console.log(`timestamp: ${timeStamp}`);
 
     const navigationEventCapture = {timestamp: timeStamp, event: event};
     this.props.startAddUserNavigationEvent(navigationEventCapture);

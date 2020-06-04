@@ -8,8 +8,6 @@ export const PortfolioSummary = ({ courseRecommendationCount, courseRecommendati
   const courseRecommendationWord = courseRecommendationCount === 1 ? 'course completion' : 'course completions';
   const formattedCourseRecommendationsTotal = 1;
 
-  console.log(`user just entered the portfolio summary`);
-  
   return (
     <div className="page-header">
       <div className="content-container">

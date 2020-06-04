@@ -9,7 +9,7 @@ import selectCourses from '../selectors/courses';
 import { startAddLOSelectionToUser, startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
 import { startAddCourseRecommendation , startRemoveCourseRecommendation} from '../actions/courseRecommendations';
 import { startAddRecommendationLearningObjective , startRemoveRecommendationLearningObjective} from '../actions/recommendation_learningobjective';
-import * as firebase from 'firebase';
+import { firebase } from '../firebase/firebase';
 import database from '../firebase/firebase';
 import { setUUIDFilter, setLOFilter, setCourseFilter } from '../actions/filters';
 import selectCourseRecommendations, {findExistingCourseRecommendation} from '../selectors/courserecommendations';
@@ -116,7 +116,6 @@ export class LearningObjectiveList extends React.Component {
               if(numberOfLearningObjectives <= 1)
               {
                 const recommendationPairing = {id: courserecommendation.id};
-                console.log(`just about to branch based on disposition ${courserecommendation.disposition}`);
                 
                 if(numberOfLearningObjectives === 0)
                 {
@@ -124,7 +123,6 @@ export class LearningObjectiveList extends React.Component {
                 }
                 else
                 {
-                  console.log(`ONLY ONE REMAINING LEARNING OBJECTIVE - attempting to remove lo from recommendation with ${key}`);
                   database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
                     this.props.startSetCourseRecommendations();
                   });
@@ -138,7 +136,6 @@ export class LearningObjectiveList extends React.Component {
               }
               else
               {
-                console.log(`attempting to remove lo from recommendation with ${key}`);
                 database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
                   this.props.startSetCourseRecommendations();
                 });
@@ -178,8 +175,6 @@ export class LearningObjectiveList extends React.Component {
                 if(this.props.content === learningobjective.knowledgearea)
                   {
                     const pairingId = this.getPairing(learningobjective.id);
-
-                    console.log(`learningobjective_userselects count is ${this.props.learningobjective_userselects.length}`);
 
                     learningobjective.selected = false;
 

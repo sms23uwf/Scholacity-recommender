@@ -61,12 +61,6 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     console.log(`log in`);
 
-    let userDomainArray = firebase.auth().currentUser.email.split('@');
-    const userDomain = userDomainArray[1];
-
-    console.log(`userDomain: ${userDomain}`);
-    
-    store.dispatch(setDomainFilter(userDomain));
     store.dispatch(setUUIDFilter(firebase.auth().currentUser.uid));
     store.dispatch(startAddUserNavigationEvent({timestamp: Date.now(), event: 'login'}));
 

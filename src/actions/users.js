@@ -33,16 +33,12 @@ export const selectUser = (user) => ({
 export const startSelectUser = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    console.log(`inside startSelectUser uid ${uid}`);
     return database.ref(`user`).once('value').then((snapshot) => {
       const users = [];
 
       snapshot.forEach((childSnapshot) => {
         if (childSnapshot.userid === uid)
         {
-          console.log(`childSnapshot.uid: ${ childSnapshot.userid }`);
-          console.log(`childSnapshot.userid === uid: ${ childSnapshot.userid === uid }`);
-          
           users.push({
             id: childSnapshot.key,
             ...childSnapshot.val()

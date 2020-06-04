@@ -26,7 +26,6 @@ export class LearningObjectiveListFilters extends React.Component {
       selectedOption.forEach(knowledearea => {
         selectedLabel = knowledearea.label;
       })
-      console.log(`inside LearningObjectiveListFilters handleChange`);
 
       this.setState({ selectedOption });
       var first = selectedOption[0];
@@ -41,7 +40,6 @@ export class LearningObjectiveListFilters extends React.Component {
   }
 
   onFocusChange = (calendarFocused) => {
-    console.log(`inside LearningObjectiveListFilters onFocusChange`);
     this.setState(() => ({ calendarFocused }));
   }
   onTextChange = (e) => {

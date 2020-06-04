@@ -59,7 +59,6 @@ export const startAddCourseRecommendation = (courseRecommendationData = {}) => {
         if(poData) {
           // nothing to do
         } else {
-          console.log(`getting ready to add portfolioobjective`);
           var newPO = database.ref(`users_tables/${uid}/courserecommendation/${existingrecommendationid}`).child(`portfolioobjectives`).push();
           newPO.set({
             learningobjectiveid: portfolioobjectives[0].learningobjectiveid,
@@ -78,7 +77,6 @@ export const removeCourseRecommendation = ({ id } = {}) => ({
 });
 
 export const startRemoveCourseRecommendation = (recommendationPairing = {}) => {
-  console.log(`inside startRemoveCourseRecommendation with ${recommendationPairing}`)
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
     const id = recommendationPairing.id;

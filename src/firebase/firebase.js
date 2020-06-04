@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import 'firebase/auth';
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -10,6 +11,7 @@ const config = {
 };
 
 firebase.initializeApp(config);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();

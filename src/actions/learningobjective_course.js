@@ -8,7 +8,6 @@ export const setLOCourses = (learningobjective_courses) => ({
 });
 
 export const startSetLOCourses = () => {
-  console.log(`inside startsetLOCourses`);
   return (dispatch) => {
     
     return database.ref(`learningobjective_course`).once('value').then((snapshot) => {
