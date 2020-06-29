@@ -35,7 +35,6 @@ export const setUserSelectionEvent = (user_selection_events) => ({
 });
 
 export const startSetUserSelectionEvent = () => {
-  console.log(`inside startSetUserSelectionEvent`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

@@ -7,8 +7,6 @@ export const CourseRecommendationsSummary = ({ courseRecommendationCount, course
   const courseRecommendationWord = courseRecommendationCount === 1 ? 'course recommendation' : 'course recommendations';
   const formattedCourseRecommendationsTotal = 1;
 
-  console.log(`user just entered the recommendations dashboard`);
-  
   return (
     <div className="page-header">
       <div className="content-container">

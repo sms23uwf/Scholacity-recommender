@@ -32,7 +32,6 @@ export class Header extends React.Component {
   };
 
   handleCancel = () => {
-    console.log(`inside handleCancel`);
     this.recordNavigationEvent('logout');
     this.props.startLogout();
   }

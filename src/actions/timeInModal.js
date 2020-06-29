@@ -37,7 +37,6 @@ export const setUserTimeInModal = (user_times_in_modals) => ({
 });
 
 export const startSetUserTimeInModal = () => {
-  console.log(`inside startSetUserTimeInModal`);
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 

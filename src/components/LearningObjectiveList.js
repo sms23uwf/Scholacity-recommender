@@ -171,8 +171,7 @@ export class LearningObjectiveList extends React.Component {
             </div>
           ) : (
               this.props.learningobjectives.map((learningobjective) => {
-                
-                if(this.props.content === learningobjective.knowledgearea)
+                if(this.props.id === learningobjective.knowledgeareaid)
                   {
                     const pairingId = this.getPairing(learningobjective.id);
 

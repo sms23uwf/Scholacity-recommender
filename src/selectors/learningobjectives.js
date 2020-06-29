@@ -2,9 +2,9 @@
 
 export default (learningobjectives, { text, disposition, userId, learningobjectiveid, sortBy, startDate, endDate }) => {
   return learningobjectives.filter((learningobjective) => {
-    const textMatch = learningobjective.knowledgearea.toLowerCase().includes(text.toLowerCase());
+    const textMatch = learningobjective.knowledgeareaid.toLowerCase().includes(text.toLowerCase());
     return textMatch;
   }).sort((a, b) => {
-      return a.knowledgearea < b.knowledgearea ? 1 : -1;
+      return a.content < b.content ? 1 : -1;
   });
 };

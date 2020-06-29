@@ -47,8 +47,6 @@ export const startSelectUser = () => {
       });
 
       dispatch(selectUser(users));
-      console.log(`users count: ${users.length}`);
-
     });
   };
 };
