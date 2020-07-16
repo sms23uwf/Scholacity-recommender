@@ -4,8 +4,6 @@ import { startLogout } from '../actions/auth';
 import { PersistentDrawerLeft } from './PersistentDrawerLeft';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 import routes from '../routers/SidebarRouter';
-import altRoutes from '../routers/SidebarRouterAlt';
-import { firebase } from '../firebase/firebase';
 
 const handleStartLogout = (props) => {
   props.startAddUserNavigationEvent({timestamp: Date.now(), event: 'logout'});
@@ -21,10 +19,8 @@ export class Header extends React.Component {
   }
 
   componentDidMount() {
-    let userDomainArray = firebase.auth().currentUser.email.split('@');
-    const userDomain = userDomainArray[1];
-    
-    const sessionRoutes = userDomain == 'scholarsanonymous.org' ? altRoutes : routes;
+   
+    const sessionRoutes = routes;
 
     this.setState({
       userRoutes: sessionRoutes
