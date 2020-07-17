@@ -38,7 +38,7 @@ class PortfolioListItem extends React.Component {
         newDisposition: props.disposition,
         isPortFolio: props.disposition === `Portfolio` ? true : false,
         currentRating: props.rating,
-        currentTitle: props.knowledgearea + `: ` + props.coursename,
+        currentTitle: props.coursename,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         newRating: props.rating,
         itemIsKeeper: true,
@@ -211,7 +211,7 @@ class PortfolioListItem extends React.Component {
             <div>
               <div className="modal-header">
                 <div className="content-container">
-                  <h3 className="page-header__title">{this.props.knowledgearea}:{this.props.coursename}</h3>
+                  <h3 className="page-header__title">{this.props.coursename}</h3>
                 </div>
               </div>
               <div className="content-container">

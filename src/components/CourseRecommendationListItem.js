@@ -37,7 +37,7 @@ class CourseRecommendationListItem extends React.Component {
         disposition: props.disposition,
         newDisposition: props.disposition,
         isPortFolio: props.disposition === `Portfolio` ? true : false,
-        currentTitle: props.knowledgearea + `: ` + props.coursename,
+        currentTitle: props.coursename,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         newRating: props.rating,
         timeEnteredModal: Date.now()
@@ -195,7 +195,7 @@ class CourseRecommendationListItem extends React.Component {
             <div>
               <div className="modal-header">
                 <div className="content-container">
-                  <h4 className="page-header__title">{this.props.knowledgearea}:{this.props.coursename}</h4>
+                  <h4 className="page-header__title">{this.props.coursename}</h4>
                 </div>
               </div>
               <div className="content-container">

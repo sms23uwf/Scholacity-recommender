@@ -159,12 +159,25 @@ class AboutPage extends React.Component {
             <Card>
               <CardHeader avatar={<Avatar src={this.setAvatarURL(this.state.avgRating)} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.setTitleBasedOnRating(this.state.avgRating)}/>
               <CardContent>
-                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  Scholacity is about the facilitation of Lifelong Learning.
+                <Typography variant="h5" component="h2" gutterBottom>
+                  Scholacity, Scholarship and Tenacity, is the trait of Lifelong Learning.
                 </Typography>
                 <Divider/>
                   <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                    From the "Planner" menu option - select one or more Learning Outcomes that are of interest. Then, Navigate to the "Recommendations" menu option and rate the recommendations that will have been subsequently provided vis-a-vis your selections. You may select "Save to Portolio" if you want it to persist after de-selecting Learning Outcomes.
+                    Here are the menu options:
+                  </Typography>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
+                    {<b>"My Interests"</b>} menu option takes you to a page from which you may select one or more Learning Outcomes that are of interest. These Learning Outcomes are derived from the course descriptions in the UWF Leisure Learning Course Catalog for the upcoming semester, and are grouped by Knowledge Area.
+                  </Typography>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
+                    {<b>"My Recommendations"</b>} menu option takes you to a page containing the recommendations made by the application based on the Learning Outcomes that you have selected in {'"My Interests"'}. Please {<b>click the recommendation and rate it</b>} using the provided Likert scale.  If you wish to register for the recommended course please also select {<b>"Maintain in Saved Courses"</b>} and then click the "Save" button.
+                  </Typography>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
+                    {<b>"My Courses"</b>} menu option takes you to a page containing the recommendations that you have chosen to save. You may click the saved recommendation and change your rating or de-select it as a saved course at any time.
+                  </Typography>
+                  <Divider/>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>
+                    The Information at the top of this dialog is the average  for all of the recommendations that you have rated.
                   </Typography>
                 </CardContent>
                 <br/>
