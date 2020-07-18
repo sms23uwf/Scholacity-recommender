@@ -6,7 +6,7 @@ import selectCourseRecommendations from '../selectors/coursecompletions';
 const disposition = "accepted";
 
 export const PortfolioList = (props) => (
-  <div className="content-container">
+  <div className="content-container-course">
     <div className="list-header">
       <div className="show-for-mobile">Accepted Recommendations</div>
       <div className="show-for-desktop">Accepted Recommendations</div>

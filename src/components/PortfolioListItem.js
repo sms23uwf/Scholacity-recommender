@@ -259,7 +259,7 @@ class PortfolioListItem extends React.Component {
                   <Grid item>
                     <FormControlLabel
                       control={
-                        <CustomCheckbox type="checkbox" checked={this.state.isPortFolio} onChange={(e) => { if (window.confirm('Are you sure you wish to remove this item from the Portfolio?')) this.onCheckSaveToPortfolio(recommendationPairing,keeperCount,e)}}></CustomCheckbox>
+                        <CustomCheckbox type="checkbox" checked={this.state.isPortFolio} onChange={(e) => { if (window.confirm('Are you sure you wish to remove this item from Saved Courses?')) this.onCheckSaveToPortfolio(recommendationPairing,keeperCount,e)}}></CustomCheckbox>
                       }
                       label={
                         <Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>

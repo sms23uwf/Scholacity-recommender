@@ -4,7 +4,7 @@ import CourseRecommendationListItem from './CourseRecommendationListItem';
 import selectCourseRecommendations from '../selectors/courserecommendations';
 
 export const CourseRecommendationsList = (props) => (
-  <div className="content-container">
+  <div className="content-container-course">
     <div className="list-header">
       <div className="show-for-mobile">Course Recommendations</div>
       <div className="show-for-desktop">Course Recommendations</div>

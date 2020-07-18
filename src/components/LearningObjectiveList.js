@@ -156,7 +156,7 @@ export class LearningObjectiveList extends React.Component {
 
   render() {
     return (
-      <div className="content-container">
+      <div className="content-container-planner-list">
       <div className="list-header">
         <div className="show-for-mobile"></div>
         <div className="show-for-mobile">Learning Outcome</div>

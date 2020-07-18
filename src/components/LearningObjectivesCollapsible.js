@@ -8,7 +8,7 @@ import LearningObjectiveList from './LearningObjectiveList';
  export const LearningObjectivesCollapsible = (props) => (
     props.knowledgeareas.map((knowledgearea, key) => {
         return (
-            <div key={key} className="content-container">
+            <div key={key} className="content-container-planner">
                 <Collapsible key={knowledgearea.id} title={knowledgearea.content}>
                     <LearningObjectiveList key={knowledgearea.id} {...knowledgearea} />
                 </Collapsible>
