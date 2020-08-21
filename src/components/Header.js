@@ -4,6 +4,7 @@ import { startLogout } from '../actions/auth';
 import { PersistentDrawerLeft } from './PersistentDrawerLeft';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 import routes from '../routers/SidebarRouter';
+import { firebase } from '../firebase/firebase';
 
 const handleStartLogout = (props) => {
   props.startAddUserNavigationEvent({timestamp: Date.now(), event: 'logout'});
@@ -14,7 +15,7 @@ export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userRoutes: []
+      userRoutes: [],
     }
   }
 

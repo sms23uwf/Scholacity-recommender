@@ -10,7 +10,7 @@ export const LoginPage = ({ startLogin }) => (
         <div className="box-layout__box">
           <h1 className="box-layout__title">Scholacity</h1>
           <p>Course Recommender System for Lifelong Leisure Learning.</p>
-          <button className="button" onClick={startLogin}>Login with Google</button>
+          <button className="button" onClick={startLogin}>Login With Your Participant Account</button>
         </div>
       </span>
     </div>

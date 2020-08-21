@@ -1,6 +1,7 @@
 import React from 'react';
 import InformedConsentModal from './InformedConsentModal';
 import Checkbox from './Checkbox';
+import { startLogout } from '../actions/auth';
 import { cancelLogin } from '../actions/auth';
 import { connect } from 'react-redux';
 import { history } from '../routers/AppRouter';
@@ -13,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 
 // require('bootstrap/dist/css/bootstrap.css');
 
-var userMustAgree = false;
+var invalidUserDomain = false;
 
 const section = {
   height: "100%",
@@ -26,24 +27,35 @@ export class DashboardPage extends React.Component {
   }
   
   state = {
-   showModal: userMustAgree,
-   agreeChecked: false,
+   showModal: false,
    userid: firebase.auth().currentUser.uid
   }
 
   componentDidMount() {
     this.recordNavigationEvent('Dashboard');
+
+    let userDomainArray = firebase.auth().currentUser.email.split('@');
+    const userDomain = userDomainArray[1];
+
+    if (userDomain != 'scholacity.org') {
+      console.log('logged out due to unauthorized domain');
+      this.setState({
+        invalidUserDomain: true,
+        showModal: true
+      })
+    }
+
   }
 
   closeModal = () => {
-    userMustAgree = false
+    invalidUserDomain = false
     this.setState({
-      showModal: !this.state.showModal
+      showModal: false
     });
   }
 
   handleCancel = () => {
-    this.recordNavigationEvent('logout');
+    console.log('inside handleCancel')
     this.closeModal()
     {cancelLogin()}
     history.push('/cancel');
@@ -56,23 +68,6 @@ export class DashboardPage extends React.Component {
     this.props.startAddUserNavigationEvent(navigationEventCapture);
   }
 
-  toggleModal = () => {
-    if (this.state.agreeChecked)
-    {
-      this.props.startAddUser();
-      userMustAgree = false
-      this.setState({
-        showModal: !this.state.showModal
-      });
-    }
-  }
-
-  onCheckChange = (e) => {
-    this.setState({
-      agreeChecked: !this.state.agreeChecked
-    });
-  };
-
   render() {
     return (
         <div className="content-container-dashboard">
@@ -80,36 +75,13 @@ export class DashboardPage extends React.Component {
             <span id="image-inner" />
           </span>
           <InformedConsentModal
-          show={userMustAgree}
-          closeCallback={this.toggleModal}
-          handleLogout={this.handleCancel}
-          customClass="custom_modal_class"
+            show={this.state.showModal}
+            closeCallback={this.handleCancel}
+            customClass="custom_modal_class"
           >
             <React.Fragment>
-            <br/>
-            <h2>Informed Consent</h2>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-              Removing a Potential Barrier to Lifelong Learning by Reducing Extrinsic Cognitive Load in the Course Selection Process: A Feasibility Study
-            </Typography>
-
-            
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semibold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                Thank you for your interest in this research project. Federal and university regulations require us to obtain signed consent for participation in research involving human participants. After reading the statements below, please indicate your consent by checking the box and clicking the 'Accept' button.
-            </Typography>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semibold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                The purpose of this study is to investigate the useability and acceptability of selecting desired Learning Outcomes that will result in a Course recommendation.
-                I understand that:
-            </Typography>
-            <ul>
-              <li style={{ fontSize: '1.25em', fontWeight: `semibold`, color: `#000000`, textAlign: `left` }}>There are no physical risks associated with this study.</li>
-              <li style={{ fontSize: '1.25em', fontWeight: `semibold`, color: `#000000`, textAlign: `left` }}>The Web Application will collect no information whatsoever about the participant.</li>
-              <li style={{ fontSize: '1.25em', fontWeight: `semibold`, color: `#000000`, textAlign: `left` }}>I may discontinue participation in this study at any time.</li>
-            </ul>
-        
-              <div className="list-item__consent">
-                <Checkbox style={section} type="checkbox" label="I have read and understand the statements above and agree to participate in the project." onCheckboxChange={this.onCheckChange}/>
-              </div>
-
+              <br/>
+              <h2>Please Log In With Your Participant Account</h2>
             </React.Fragment>
           </InformedConsentModal>
       </div>
@@ -125,6 +97,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  startLogout: () => dispatch(startLogout()),
   startLogin: () => dispatch(startLogin()),
   startAddUser: () => dispatch(startAddUser()),
   setUUIDFilter: (userId) => dispatch(setUUIDFilter(userId)),

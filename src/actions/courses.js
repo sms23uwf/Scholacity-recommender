@@ -10,7 +10,7 @@ export const setCourses = (courses) => ({
 
 export const startSetCourses = () => {
   return (dispatch, getState) => {
-    const uid = getState().auth.uid;
+    
     return database.ref(`course`).once('value').then((snapshot) => {
         const courses = [];
 
@@ -20,6 +20,7 @@ export const startSetCourses = () => {
           ...childSnapshot.val()
         });
       });
+
       dispatch(setCourses(courses));
     });
   };

@@ -12,7 +12,7 @@ const styles = {
     background: ''
   }
 }
-const InformedConsentModal = ({ children, customClass, show, closeCallback, handleLogout }) => (
+const InformedConsentModal = ({ children, customClass, show, closeCallback }) => (
   <div className={`modal ${customClass}`} style={{ display: show ? 'block' : 'none'}}>
     <div className="overlay"></div>
       <div className="modal_content">
@@ -23,27 +23,20 @@ const InformedConsentModal = ({ children, customClass, show, closeCallback, hand
           <div>
 
             <Grid
-            justify="space-between" 
+            justify="center" 
+            direction="row"
+            alignItems="center"
             container 
             spacing={0}
             >
               <Grid item>
                 <Button
                   color="inherit"
-                  aria-label="Accept"
+                  aria-label="OK"
                   font="Bold"
-                  title="Accept"
-                  onClick={closeCallback}
-                  edge="start"><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
+                  title="OK"
+                  onClick={closeCallback}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography>
                 </Button>
-              </Grid>
-              <Grid item>
-                 <Button
-                   color="inherit"
-                   aria-label="Cancel"
-                   title="Cancel"
-                   onClick={handleLogout}
-                   edge="end"><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
               </Grid>
             </Grid>
           </div>
