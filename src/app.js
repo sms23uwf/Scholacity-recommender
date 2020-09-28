@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetCourseRecommendations } from './actions/courseRecommendations';
+import { startSetCourseSelections } from './actions/courseSelections';
 import { startSetCourses } from './actions/courses';
 import { startSetLearningObjectives } from './actions/learningObjectives';
 import { startSetKnowledgeAreas } from './actions/knowledgeAreas';
 import { startsetLOSelectionsByUser } from './actions/learningobjective_userselect';
+import { startsetCourseSelectionsByUser } from './actions/course_userselect';
 import { startSetLOCourses } from './actions/learningobjective_course';
 import { startSetRecommendationLearningObjectives } from './actions/recommendation_learningobjective';
 import { login, logout } from './actions/auth';
@@ -67,10 +69,12 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(login(user.uid));
     store.dispatch(startSetCourses());
     store.dispatch(startSetCourseRecommendations());
+    store.dispatch(startSetCourseSelections());
     store.dispatch(startSetRecommendationLearningObjectives());
     store.dispatch(startSetLearningObjectives());
     store.dispatch(startSetUsers());
     store.dispatch(startsetLOSelectionsByUser());
+    store.dispatch(startsetCourseSelectionsByUser());
     store.dispatch(startSetLOCourses());
     store.dispatch(startSetRatingsByUserCourseLO());
     store.dispatch(startSetKnowledgeAreas()).then(() => {

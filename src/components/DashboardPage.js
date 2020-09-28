@@ -37,7 +37,7 @@ export class DashboardPage extends React.Component {
     let userDomainArray = firebase.auth().currentUser.email.split('@');
     const userDomain = userDomainArray[1];
 
-    if (userDomain != 'scholacity.org') {
+    if ((userDomain != 'scholacity.org') && (userDomain != 'scholarsanonymous.org')) {
       console.log('logged out due to unauthorized domain');
       this.setState({
         invalidUserDomain: true,

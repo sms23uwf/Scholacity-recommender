@@ -1,8 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import courseRecommendationsReducer from '../reducers/courserecommendations';
+import courseSelectionsReducer from '../reducers/courseselections';
 import coursesReducer from '../reducers/courses';
 import learningObjectivesReducer from '../reducers/learningobjectives';
+import coursesUserSelectsReducer from '../reducers/course_userselect';
 import learningObjectivesUserSelectReducer from '../reducers/learningobjective_userselect';
 import learningObjectiveCourseReducer from '../reducers/learningobjective_course';
 import knowledgeAreasReducer from '../reducers/knowledgeareas.js';
@@ -21,8 +23,10 @@ export default () => {
   const store = createStore(
     combineReducers({
       courserecommendations: courseRecommendationsReducer,
+      courseselections: courseSelectionsReducer,
       courses: coursesReducer,
       learningobjectives: learningObjectivesReducer,
+      course_userselects: coursesUserSelectsReducer,
       learningobjective_userselects: learningObjectivesUserSelectReducer,
       knowledgeareas: knowledgeAreasReducer,
       learningobjective_courses: learningObjectiveCourseReducer,
