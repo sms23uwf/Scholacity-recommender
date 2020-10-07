@@ -160,6 +160,7 @@ class PortfolioListItem extends React.Component {
         }
       }
   }
+  
   render() {
 
     const recommendationPairing = {id: this.props.id};

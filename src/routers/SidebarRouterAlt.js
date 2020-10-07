@@ -1,4 +1,4 @@
-import { Home, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, PlaylistAddCheck } from '@material-ui/icons';
+import { Home, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
 
 import DashboardPage from '../components/DashboardPage';
 import CoursesDashboard from '../components/CoursesDashboard';
@@ -19,7 +19,7 @@ const SidebarRouterAlt = [
     path: '/coursesDashboard',
     sidebarName: 'My Interests',
     navbarName: 'My Interests',
-    icon: PlaylistAddCheck,
+    icon: LocalLibrarySharp,
     component: CoursesDashboard
   },
   {
