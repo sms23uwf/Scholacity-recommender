@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUUIDFilter, setCourseFilter } from '../actions/filters';
 import CourseListItem from './CourseListItem';
-import {startSetCourses } from '../actions/courses';
 import selectCourses from '../selectors/courses';
+import selectSessions from '../selectors/sessions';
 
 export const CourseList = (props) => (
   <div className="content-container-course">
@@ -29,14 +29,14 @@ export const CourseList = (props) => (
 );
 
 const mapDispatchToProps = (dispatch) => ({
-  setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
-  startSetCourses: () => dispatch(startSetCourses())
+  setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid))
 })
 
 
 const mapStateToProps = (state) => {
   return {
-    courses: selectCourses(state.courses, state.filters)
+    courses: selectCourses(state.courses, state.filters),
+    filters: state.filters
   };
 };
 

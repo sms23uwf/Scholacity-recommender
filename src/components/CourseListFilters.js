@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setTextFilter } from '../actions/filters';
+import { setTextFilter, setCourseFilter } from '../actions/filters';
 import selectKnowledgeAreas from '../selectors/knowledgeareas';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 
@@ -66,6 +66,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setTextFilter: (text) => dispatch(setTextFilter(text)),
+  setCoursefilter: (courseid) => dispatch(setCourseFilter(courseid)),
   startAddUserNavigationEvent: (navigationEventCapture) => dispatch(startAddUserNavigationEvent(navigationEventCapture))
 });
 

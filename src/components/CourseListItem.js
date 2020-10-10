@@ -11,11 +11,13 @@ import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import selectCourseSelections from '../selectors/courseselections';
+import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import { firebase } from '../firebase/firebase';
+import moment from 'moment/moment'
 import { Work, Assessment, ShoppingCart, LocalLibrarySharp } from '@material-ui/icons';
 
 const checkBoxStyles = theme => ({
@@ -34,6 +36,8 @@ class CourseListItem extends React.Component {
       super(props);
       this.state = {
         showModal: false,
+        instructor: props.instructor,
+        fee: props.fee,
         disposition: props.disposition,
         newDisposition: props.disposition,
         isRegistered: props.disposition === `Registered` ? true : false,
@@ -122,6 +126,31 @@ class CourseListItem extends React.Component {
 
   render() {
 
+    const sessionItems = this.props.sessions.map((session) =>
+      <li key={session.session_number}>
+        <Grid
+          justify="flex-start" 
+          container 
+          spacing={1}
+        >
+          <Grid item>
+            {session.session_number}
+          </Grid>
+          <Grid item>
+            {session.DOW.padEnd(9)}
+          </Grid>
+          <Grid item>
+            {moment(session.session_date).format('DD MMM YYYY')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_start).format('hh:mm A')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_end).format('hh:mm A')}
+          </Grid>
+        </Grid>
+      </li>
+    );
     return (
       <div>
       <Divider/>
@@ -131,6 +160,14 @@ class CourseListItem extends React.Component {
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.state.currentDescription}
+              </Typography>
+              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
+              </Typography>
+              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                <ul>{sessionItems}</ul>
               </Typography>
               <br/>
               <Divider/>
@@ -154,6 +191,11 @@ class CourseListItem extends React.Component {
                 <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
                   {this.props.description}
                 </Typography>
+
+                <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
+                  {this.props.sessions[0].DOW}
+                </Typography>
+                
                 </span>
               </div>
             </div>
@@ -188,7 +230,9 @@ class CourseListItem extends React.Component {
                               aria-label="Accept"
                               style={{fontWeight: "bold"}}
                               title="Accept"
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                              startIcon={<ShoppingCart />}
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography>
+                            </Button>
                           </Grid>
                           <Grid item>
                             <Button
@@ -212,6 +256,7 @@ class CourseListItem extends React.Component {
 const mapStateToProps = (state, props) => ({
   courseselections: selectCourseSelections(state.courseselections, state.filters),
   courseselection: state.courseselections.find((courseselection) => courseselection.id === props.id),
+  sessions: selectSessions(state.sessions, props.id),
   filters: state.filters
 });
 
