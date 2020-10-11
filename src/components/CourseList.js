@@ -19,7 +19,7 @@ export class CourseList extends React.Component {
    }
 
   getRegistrationPairing(courseId) {
-    const pairing = this.props.registrations_user.find(p => p.courseid === courseId) || {id:0};
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
     return pairing.id;
   }
   
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     courses: selectCourses(state.courses, state.filters),
-    registrations_user: selectRegistrationsForUser(state.registrations_user, state.filters),
+    registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
     filters: state.filters
   };
 };

@@ -1,3 +1,3 @@
-export default (registrations_user, { userId }) => {
+export default (registrations_user, userid) => {
     return registrations_user;
   };

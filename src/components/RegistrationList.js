@@ -4,7 +4,6 @@ import { setUUIDFilter, setCourseFilter } from '../actions/filters';
 import RegistrationListItem from './RegistrationListItem';
 import selectRegistrationsAll from '../selectors/registration_all';
 import selectCourses from '../selectors/courses';
-import selectSessions from '../selectors/sessions';
 import { firebase } from '../firebase/firebase';
 
 export class RegistrationList extends React.Component {
@@ -22,8 +21,8 @@ export class RegistrationList extends React.Component {
 
       <div className="content-container-course">
         <div className="list-header">
-          <div className="show-for-mobile">Courses</div>
-          <div className="show-for-desktop">Courses</div>
+          <div className="show-for-mobile">Registrations</div>
+          <div className="show-for-desktop">Registrations</div>
         </div>
         <div className="list-body">
           {

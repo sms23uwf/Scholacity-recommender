@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseSelections } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startApproveRegistrationForUser_Course } from '../actions/registrations';
 import Modal from './Modal';
@@ -11,14 +10,9 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
-import selectCourseSelections from '../selectors/courseselections';
-import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import { firebase } from '../firebase/firebase';
-import moment from 'moment/moment'
 import { Work, CheckSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 class RegistrationListItem extends React.Component {
@@ -119,12 +113,9 @@ class RegistrationListItem extends React.Component {
             <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
+                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}  |  {this.state.user_email}  |  {this.state.status}
               </Typography>
               <br/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.user_email}
-              </Typography>
               <br/>
               <Divider/>
             </CardContent>
