@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
+import { startAddRegistrationToUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -41,6 +42,7 @@ class CourseListItem extends React.Component {
         disposition: props.disposition,
         newDisposition: props.disposition,
         isRegistered: props.disposition === `Registered` ? true : false,
+        courseid: props.id,
         currentTitle: props.name,
         currentDescription: props.description,
         currentAvatarUrl: this.setAvatarURL(props.disposition),
@@ -108,6 +110,31 @@ class CourseListItem extends React.Component {
     }
 
   };
+
+  onClickRegister = (e) => {
+    console.log(`onClickRegister - courseid: ${this.state.courseid}`)
+    console.log(`onClickRegister - course_name: ${this.state.currentTitle}`)
+    console.log(`onClickRegister - course_instructor: ${this.state.instructor}`)
+    console.log(`onClickRegister - course_fee: ${this.state.fee}`)
+    console.log(`onClickRegister - userid: ${this.state.userid}`)
+    console.log(`onClickRegister - user_email: ${firebase.auth().currentUser.email}`)
+    
+    const localCourseId = this.state.courseid
+    const localCourseName = this.state.currentTitle
+
+    console.log(`onClickRegister - localCourseId: ${localCourseId}`)
+    console.log(`onClickRegister - localCourseName: ${localCourseName}`)
+
+    const registrationData = {courseid: localCourseId, 
+                              course_name: localCourseName, 
+                              course_instructor: this.state.instructor, 
+                              course_fee: this.state.fee, 
+                              userid: this.state.userid, 
+                              user_email: firebase.auth().currentUser.email, 
+                              registration_status: 'requested'};
+
+    this.props.startAddRegistrationToUser(registrationData);
+  }
 
   setAvatarURL = (status) => {
     {
@@ -227,11 +254,21 @@ class CourseListItem extends React.Component {
                           <Grid item>
                             <Button
                               color="inherit"
-                              aria-label="Accept"
+                              aria-label="Save"
                               style={{fontWeight: "bold"}}
-                              title="Accept"
+                              title="Save"
                               startIcon={<ShoppingCart />}
                               onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Register"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              startIcon={<LocalLibrarySharp />}
+                              onClick={this.onClickRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -263,6 +300,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
+  startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
