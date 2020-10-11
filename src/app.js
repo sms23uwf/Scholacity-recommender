@@ -10,6 +10,7 @@ import { startSetSessions } from './actions/sessions';
 import { startSetLearningObjectives } from './actions/learningObjectives';
 import { startSetKnowledgeAreas } from './actions/knowledgeAreas';
 import { startsetLOSelectionsByUser } from './actions/learningobjective_userselect';
+import { startsetRegistrationsByUser } from './actions/registrations';
 import { startsetCourseSelectionsByUser } from './actions/course_userselect';
 import { startSetLOCourses } from './actions/learningobjective_course';
 import { startSetRecommendationLearningObjectives } from './actions/recommendation_learningobjective';
@@ -76,6 +77,7 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(startSetLearningObjectives());
     store.dispatch(startSetUsers());
     store.dispatch(startsetLOSelectionsByUser());
+    store.dispatch(startsetRegistrationsByUser());
     store.dispatch(startsetCourseSelectionsByUser());
     store.dispatch(startSetLOCourses());
     store.dispatch(startSetRatingsByUserCourseLO());

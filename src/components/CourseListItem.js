@@ -19,7 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
-import { Work, Assessment, ShoppingCart, LocalLibrarySharp } from '@material-ui/icons';
+import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 const checkBoxStyles = theme => ({
   root: {
@@ -39,13 +39,13 @@ class CourseListItem extends React.Component {
         showModal: false,
         instructor: props.instructor,
         fee: props.fee,
-        disposition: props.disposition,
-        newDisposition: props.disposition,
-        isRegistered: props.disposition === `Registered` ? true : false,
+        disposition: props.registrationId === 0 ? 'Open' : 'Registered',
+        newDisposition: props.registrationId === 0 ? 'Open' : 'Registered',
+        isRegistered: props.registrationId === 0 ? false : true,
         courseid: props.id,
         currentTitle: props.name,
         currentDescription: props.description,
-        currentAvatarUrl: this.setAvatarURL(props.disposition),
+        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ? 'Open' : 'Registered'),
         timeEnteredModal: Date.now(),
         userid: firebase.auth().currentUser.uid
       }
@@ -90,50 +90,34 @@ class CourseListItem extends React.Component {
   toggleModalWithCancel = () => {
 
     this.setState({
-      showModal: !this.state.showModal,
-      isRegistered: false
+      showModal: !this.state.showModal
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
 
-  onCheckSaveToPortfolio = (e) => {
+  toggleModalWithRegister = () => {
 
-    if(e.target.checked===true)
+    if(this.state.showModal == true)
     {
-      this.setState({isRegistered: true});
-      this.setState({newDisposition: `Registered`});
+      const registrationData = {courseid: this.state.courseid, 
+        course_name: this.state.currentTitle, 
+        course_instructor: this.state.instructor, 
+        course_fee: this.state.fee, 
+        userid: this.state.userid, 
+        user_email: firebase.auth().currentUser.email, 
+        registration_status: 'requested'};
+
+      this.props.startAddRegistrationToUser(registrationData);
     }
-    else
-    {
-      this.setState({isRegistered: false});
-      this.setState({newDisposition: `Selected`});
-    }
 
-  };
+    this.setState({
+      showModal: !this.state.showModal,
+      disposition: 'Registered',
+      currentAvatarUrl: this.setAvatarURL('Registered')
+    });
+    this.recordTimeInModal('register', this.state.currentRating);
 
-  onClickRegister = (e) => {
-    console.log(`onClickRegister - courseid: ${this.state.courseid}`)
-    console.log(`onClickRegister - course_name: ${this.state.currentTitle}`)
-    console.log(`onClickRegister - course_instructor: ${this.state.instructor}`)
-    console.log(`onClickRegister - course_fee: ${this.state.fee}`)
-    console.log(`onClickRegister - userid: ${this.state.userid}`)
-    console.log(`onClickRegister - user_email: ${firebase.auth().currentUser.email}`)
-    
-    const localCourseId = this.state.courseid
-    const localCourseName = this.state.currentTitle
 
-    console.log(`onClickRegister - localCourseId: ${localCourseId}`)
-    console.log(`onClickRegister - localCourseName: ${localCourseName}`)
-
-    const registrationData = {courseid: localCourseId, 
-                              course_name: localCourseName, 
-                              course_instructor: this.state.instructor, 
-                              course_fee: this.state.fee, 
-                              userid: this.state.userid, 
-                              user_email: firebase.auth().currentUser.email, 
-                              registration_status: 'requested'};
-
-    this.props.startAddRegistrationToUser(registrationData);
   }
 
   setAvatarURL = (status) => {
@@ -234,16 +218,6 @@ class CourseListItem extends React.Component {
                     spacing={1}
                     >
                       <Grid item>
-                        <FormControlLabel
-                          control={
-                            <CustomCheckbox id="saveToPortfolio" type="checkbox" checked={this.state.isRegistered} onChange={(e) => this.onCheckSaveToPortfolio(e)}></CustomCheckbox>
-                          }
-                          label={
-                            <Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>
-                              Register for course
-                            </Typography>
-                          }
-                        />
                       </Grid>
 
                         <Grid
@@ -253,31 +227,33 @@ class CourseListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              color="inherit"
+                              color="primary"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
                               title="Save"
                               startIcon={<ShoppingCart />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Cart</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              color="inherit"
+                              disabled={this.state.isRegistered}
+                              color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
                               title="Register"
-                              startIcon={<LocalLibrarySharp />}
-                              onClick={this.onClickRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
+                              startIcon={<Work />}
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register Now</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              color="inherit"
+                              color="primary"
                               aria-label="Cancel"
                               style={{fontWeight: "bold"}}
                               title="Cancel"
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
+                              startIcon={<CloseSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography></Button>
                           </Grid>
                         </Grid>
                       </Grid>
