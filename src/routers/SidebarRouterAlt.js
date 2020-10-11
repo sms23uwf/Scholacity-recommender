@@ -1,9 +1,10 @@
-import { Home, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
+import { Home, HowToRegSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
 
 import DashboardPage from '../components/DashboardPage';
 import CoursesDashboard from '../components/CoursesDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
+import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
 const SidebarRouterAlt = [
@@ -35,6 +36,13 @@ const SidebarRouterAlt = [
     navbarName: 'My Courses',
     icon: Work,
     component: PortfolioDashboard
+  },
+  {
+    path: '/adminDashboard',
+    sidebarName: 'Administration',
+    navbarName: 'Administration',
+    icon: HowToRegSharp,
+    component: AdminDashboard
   },
   {
     path:'/aboutPage',

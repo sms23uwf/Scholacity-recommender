@@ -7,6 +7,7 @@ import sessionsReducer from '../reducers/sessions';
 import learningObjectivesReducer from '../reducers/learningobjectives';
 import coursesUserSelectsReducer from '../reducers/course_userselect';
 import registrationsUserReducer from '../reducers/registrations';
+import registrationsAllReducer from '../reducers/registrations_admin';
 import learningObjectivesUserSelectReducer from '../reducers/learningobjective_userselect';
 import learningObjectiveCourseReducer from '../reducers/learningobjective_course';
 import knowledgeAreasReducer from '../reducers/knowledgeareas.js';
@@ -32,6 +33,7 @@ export default () => {
       course_userselects: coursesUserSelectsReducer,
       learningobjective_userselects: learningObjectivesUserSelectReducer,
       registrations_user: registrationsUserReducer,
+      registrations_all: registrationsAllReducer,
       knowledgeareas: knowledgeAreasReducer,
       learningobjective_courses: learningObjectiveCourseReducer,
       recommendation_learningobjectives: recommendationLearningObjectiveReducer,

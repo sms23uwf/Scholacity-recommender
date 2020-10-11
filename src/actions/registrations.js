@@ -37,17 +37,44 @@ export const removeRegistrationFromUser = ({ id } = {}) => ({
     id
   });
   
-  export const startRemoveRegistrationFromUser = (registrationPairing = {}) => {
-    return (dispatch, getState) => {
-      const uid = getState().auth.uid;
-      const id = registrationPairing.id;
-  
-      return database.ref(`users_tables/${uid}/registration/${id}`).remove().then(() => {
-        dispatch(removeRegistrationFromUser({ id }));
-      });
-    };
+export const startRemoveRegistrationFromUser = (registrationPairing = {}) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const id = registrationPairing.id;
+
+    return database.ref(`users_tables/${uid}/registration/${id}`).remove().then(() => {
+      dispatch(removeRegistrationFromUser({ id }));
+    });
   };
-  
+};
+ 
+// APPROVE_REGISTRATION
+export const approveRegistrationForUser_Course = (id, updates) => ({
+  type: 'APPROVE_REGISTRATION',
+  id,
+  updates
+});
+
+export const startApproveRegistrationForUser_Course = (registrationUserPairing = {}) => {
+
+  return (dispatch, getState) => {
+    const {
+      registration_userid = ``,
+      registration_id = ``
+    } = registrationUserPairing;
+
+    const updates = { registration_status: 'approved' };
+
+    console.log(`inside startApproveRegistrationForUser_Course with registration_id: ${registration_id}`);
+    console.log(`inside startApproveRegistrationForUser_Course with registration_userid: ${registration_userid}`);
+
+    return database.ref(`users_tables/${registration_userid}/registration/${registration_id}`).update(updates).then(() => {
+      dispatch(approveRegistrationForUser_Course(registration_id, updates));
+    });
+  };
+
+}
+
   // SET_REGISTRATION_USER
 export const setRegistrationsByUser = (registrations_user) => ({
     type: 'SET_REGISTRATION_USER',
@@ -73,38 +100,3 @@ export const setRegistrationsByUser = (registrations_user) => ({
     };
   };
 
-  // SET_ALL_REGISTRATIONS
-  export const setAllRegistrations = (registrations_all) => ({
-      type: 'SET_ALL_REGISTRATIONS',
-      registrations_all
-  });
-
-  
-  export const startsetAllRegistrations = () => {
-      return (dispatch, getState) => {
-        const registrations_all = [];
-
-        return database.ref('users_tables').once('value').then((snapshot) => {
-            const user_ids = [];
-
-            snapshot.forEach((childSnapshot) => {
-                user_ids.push({
-                    id: childSnapshot.key
-                })
-            })
-
-            user_ids.map((localUserId) => {
-                return database.ref(`users_tables/${uid}/registration`).once('value').then((snapshot) => {
-              
-                    snapshot.forEach((childSnapshot) => {
-                        registrations_all.push({
-                          id: childSnapshot.key,
-                          ...childSnapshot.val()
-                        });
-                    });
-                });
-            })
-            dispatch(setAllRegistrations(registrations_all));
-        });
-    };
- };

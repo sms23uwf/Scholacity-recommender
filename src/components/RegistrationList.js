@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUUIDFilter, setCourseFilter } from '../actions/filters';
-import CourseListItem from './CourseListItem';
-import selectRegistrationsForUser from '../selectors/registration_user';
+import RegistrationListItem from './RegistrationListItem';
+import selectRegistrationsAll from '../selectors/registration_all';
 import selectCourses from '../selectors/courses';
 import selectSessions from '../selectors/sessions';
 import { firebase } from '../firebase/firebase';
 
-export class CourseList extends React.Component {
+export class RegistrationList extends React.Component {
   constructor(props) {
     super(props);
-    //props.setUUIDFilter(firebase.auth().currentUser.uid);
   }
 
   state = {
@@ -18,12 +17,6 @@ export class CourseList extends React.Component {
     courseid: ''
    }
 
-  getRegistrationPairing(courseId) {
-    const pairing = this.props.registrations_user.find(p => p.courseid === courseId) || {id:0};
-    return pairing.id;
-  }
-  
-  
   render() {
     return (
 
@@ -34,16 +27,15 @@ export class CourseList extends React.Component {
         </div>
         <div className="list-body">
           {
-            this.props.courses.length === 0 ? (
+            this.props.registrations_all.length === 0 ? (
               <div className="list-item list-item--message">
-                <span>No Courses</span>
+                <span>No Registration Requests</span>
               </div>
             ) : (
-                this.props.courses.map((course) => {
-                  if(this.props.id === course.knowledgeareaid)
+                this.props.registrations_all.map((registration) => {
+                  if(this.props.id === registration.courseid)
                   {
-                    const registrationId = this.getRegistrationPairing(course.id);
-                    return <CourseListItem key={course.id} id={course.id} {...course} registrationId={registrationId}/>;
+                    return <RegistrationListItem key={registration.id} id={registration.id} {...registration} />;
                   }
                 })
               )
@@ -56,16 +48,16 @@ export class CourseList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
-  setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid))
+  setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
 })
 
 
 const mapStateToProps = (state) => {
   return {
     courses: selectCourses(state.courses, state.filters),
-    registrations_user: selectRegistrationsForUser(state.registrations_user, state.filters),
+    registrations_all: selectRegistrationsAll(state.registrations_all, state.filters),
     filters: state.filters
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseList);
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationList);

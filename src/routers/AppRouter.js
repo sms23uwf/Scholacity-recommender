@@ -11,6 +11,7 @@ import CoursesDashboard from '../components/CoursesDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
+import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
 export const history = createHistory();
@@ -28,6 +29,7 @@ const AppRouter = () => (
         <PrivateRoute path="/recommendationsDashboard" component={RecommendationsDashboard}/>
         <PrivateRoute path="/selectionsDashboard" component={SelectionsDashboard}/>
         <PrivateRoute path="/portfolioDashboard" component={PortfolioDashboard}/>
+        <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
         <Route component={NotFoundPage} />
       </Switch>
