@@ -4,6 +4,7 @@ import DashboardPage from '../components/DashboardPage';
 import CoursesDashboard from '../components/CoursesDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
+import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
 const SidebarRouterAlt = [
@@ -16,18 +17,18 @@ const SidebarRouterAlt = [
     showModal: false
   },
   {
-    path: '/admincoursesDashboard',
+    path: '/coursesDashboard',
     sidebarName: 'Courses By Domain',
     navbarName: 'Courses By Domain',
     icon: LocalLibrarySharp,
-    component: AdminCoursesDashboard
+    component: CoursesDashboard
   },
   {
     path: '/adminDashboard',
     sidebarName: 'Administration',
     navbarName: 'Administration',
     icon: Work,
-    component: AdministratorDashboard
+    component: AdminDashboard
   },
   {
     path:'/aboutPage',

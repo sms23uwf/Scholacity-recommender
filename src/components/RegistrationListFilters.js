@@ -19,7 +19,7 @@ export class RegistrationListFilters extends React.Component {
      });
 
     componentDidMount() {
-      this.recordNavigationEvent('CoursesDashboard');
+      this.recordNavigationEvent('AdminDashboard');
     }
   
    handleChange = selectedOption => {

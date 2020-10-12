@@ -32,7 +32,7 @@ const SidebarRouter = [
   {
     path: '/portfolioDashboard',
     sidebarName: 'My Courses',
-    navbarName: 'Portfolio',
+    navbarName: 'My Courses',
     icon: Work,
     component: PortfolioDashboard
   },

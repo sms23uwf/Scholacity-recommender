@@ -12,8 +12,7 @@ export class RegistrationList extends React.Component {
   }
 
   state = {
-    userid: firebase.auth().currentUser.uid,
-    courseid: ''
+    userid: firebase.auth().currentUser.uid
    }
 
   render() {
@@ -32,10 +31,7 @@ export class RegistrationList extends React.Component {
               </div>
             ) : (
                 this.props.registrations_all.map((registration) => {
-                  if(this.props.id === registration.courseid)
-                  {
-                    return <RegistrationListItem key={registration.id} id={registration.id} {...registration} />;
-                  }
+                  return <RegistrationListItem key={registration.id} id={registration.id} {...registration} />;
                 })
               )
           }

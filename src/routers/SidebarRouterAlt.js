@@ -18,8 +18,8 @@ const SidebarRouterAlt = [
   },
   {
     path: '/coursesDashboard',
-    sidebarName: 'My Interests',
-    navbarName: 'My Interests',
+    sidebarName: 'Course Offerings',
+    navbarName: 'Course Offerings',
     icon: LocalLibrarySharp,
     component: CoursesDashboard
   },
@@ -36,13 +36,6 @@ const SidebarRouterAlt = [
     navbarName: 'My Courses',
     icon: Work,
     component: PortfolioDashboard
-  },
-  {
-    path: '/adminDashboard',
-    sidebarName: 'Administration',
-    navbarName: 'Administration',
-    icon: HowToRegSharp,
-    component: AdminDashboard
   },
   {
     path:'/aboutPage',

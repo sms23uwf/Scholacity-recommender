@@ -13,13 +13,14 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
-import { Work, CheckSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { ThumbsUpDownSharp, ThumbsUpWork, CheckSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 class RegistrationListItem extends React.Component {
   constructor(props){
       super(props);
       this.state = {
         showModal: false,
+        approve_button_label: props.registration_status == 'approved' ? 'APPROVED' : 'APPROVE',
         registration_id: props.id,
         instructor: props.course_instructor,
         fee: props.course_fee,
@@ -80,28 +81,26 @@ class RegistrationListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      disposition: 'Registered',
-      currentAvatarUrl: this.setAvatarURL('Registered')
+      status: 'approved',
+      approve_button_label: 'APPROVED',
+      currentAvatarUrl: this.setAvatarURL('approved')
     });
     this.recordTimeInModal('register', this.state.currentRating);
-
-
   }
 
   setAvatarURL = (status) => {
     {
       switch(status) {
-        case 'Open':
-          return '/images/local_library.png';
-        case `Interested`:
-            return `/images/shopping_cart.webp`;
-        case `Registered`:
-            return `/images/briefcase.jpg`;
+        case `requested`:
+          return `/images/noun_request_icon.png`;
+        case `approved`:
+          return `/images/noun_approved_icon.png`;
         default:
-            return '/images/local_library.png';
-      }
+          return `/images/noun_request_icon.png`;
+        }
     }
   }
+
 
   render() {
 
@@ -113,10 +112,11 @@ class RegistrationListItem extends React.Component {
             <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}  |  {this.state.user_email}  |  {this.state.status}
+                Instructor: {this.state.instructor}   |  Fee: {'$' + this.state.fee.toFixed(2)} 
               </Typography>
-              <br/>
-              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                Registration for: {this.state.user_email}  
+              </Typography>
               <Divider/>
             </CardContent>
           </Card>
@@ -130,19 +130,17 @@ class RegistrationListItem extends React.Component {
             <div>
               <div className="modal-header">
                 <div className="content-container">
-                  <h4 className="page-header__title">{this.props.name}</h4>
+                  <h4 className="page-header__title">{this.state.currentTitle}</h4>
                 </div>
               </div>
               <div className="content-container">
                 <span>
-                <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
-                </Typography>
-                <br/>
-                <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                    {this.state.user_email} has submitted a registration request for this course.
-                </Typography>
-                
+                  <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                    Instructor: {this.state.instructor}   |  Fee: {'$' + this.state.fee.toFixed(2)} 
+                  </Typography>
+                  <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                    Registration for: {this.state.user_email}  
+                  </Typography>
                 </span>
               </div>
             </div>
@@ -163,13 +161,13 @@ class RegistrationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered}
+                              disabled={this.state.status == 'approved'}
                               color="primary"
                               aria-label="Approve"
                               style={{fontWeight: "bold"}}
                               title="Approve"
                               startIcon={<CheckSharp />}
-                              onClick={this.toggleModalWithApproval}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Approve</Typography>
+                              onClick={this.toggleModalWithApproval}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.approve_button_label}</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
