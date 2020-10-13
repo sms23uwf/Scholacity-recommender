@@ -21,7 +21,16 @@ export class CourseRecommendationsList extends React.Component {
     const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
     return pairing.id;
   }
-  
+
+  getRegistrationStatus(courseId) {
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing.registration_status;
+  }
+
+  getRegistration(courseId) {
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing;
+  }
   
   render() {
     return (
@@ -39,9 +48,16 @@ export class CourseRecommendationsList extends React.Component {
               </div>
             ) : (
                 this.props.courserecommendations.map((courserecommendation) => {
-                  const registrationId = this.getRegistrationPairing(courserecommendation.courseid);
+                  
+                  const registrationRecord = this.getRegistration(courserecommendation.courseid);
+                  const registrationId = registrationRecord.id;
+                  const registration_status = registrationRecord.registration_status;
 
-                  return <CourseRecommendationListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation} registrationId={registrationId}/>;
+                  //const registrationId = this.getRegistrationPairing(courserecommendation.courseid);
+                  //const registration_status = this.getRegistrationStatus(courserecommendation.courseid);
+
+                  if (registration_status != 'approved')
+                    return <CourseRecommendationListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation} registrationId={registrationId}/>;
                 })
               )
           }

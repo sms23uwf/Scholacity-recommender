@@ -23,6 +23,10 @@ export class CourseList extends React.Component {
     return pairing.id;
   }
   
+  getRegistration(courseId) {
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing;
+  }
   
   render() {
     return (

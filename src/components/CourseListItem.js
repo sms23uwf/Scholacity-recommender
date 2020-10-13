@@ -42,6 +42,7 @@ class CourseListItem extends React.Component {
         disposition: props.registrationId === 0 ? 'Open' : 'Registered',
         newDisposition: props.registrationId === 0 ? 'Open' : 'Registered',
         isRegistered: props.registrationId === 0 ? false : true,
+        isRegistrationApproved: props.registration_status == 'approved',
         courseid: props.id,
         currentTitle: props.name,
         currentDescription: props.description,
