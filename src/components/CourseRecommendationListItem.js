@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startSetCourseRecommendations, startEditCourseRecommendation } from '../actions/courseRecommendations';
 import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
+import { startAddRegistrationToUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -12,35 +13,33 @@ import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import selectCourseRecommendations from '../selectors/courserecommendations';
+import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { Checkbox, FormControlLabel }  from '@material-ui/core';
-
-const checkBoxStyles = theme => ({
-  root: {
-    '&$checked': {
-      color: '#3D70B2',
-    },
-  },
-  checked: {},
- })
-
-const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
+import { firebase } from '../firebase/firebase';
+import moment from 'moment/moment';
+import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
       super(props);
       this.state = {
         showModal: false,
+        instructor: props.instructor,
+        fee: props.fee,
         currentRating: props.rating,
         disposition: props.disposition,
         newDisposition: props.disposition,
         isPortFolio: props.disposition === `Portfolio` ? true : false,
+        isRegistered: props.registrationId === 0 ? false : true,
         currentTitle: props.coursename,
+        courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         newRating: props.rating,
-        timeEnteredModal: Date.now()
+        timeEnteredModal: Date.now(),
+        userid: firebase.auth().currentUser.uid
       }
   }
   
@@ -52,7 +51,7 @@ class CourseRecommendationListItem extends React.Component {
     }
 
     if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
-      this.recordRating(this.props.courserecommendation.id, this.state.newRating, this.state.newDisposition, this.props.courserecommendation.courseid, this.props.courserecommendation.userid, this.props.courserecommendation.learningobjectives);
+      this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
 
     this.setState({
       showModal: !this.state.showModal
@@ -66,7 +65,7 @@ class CourseRecommendationListItem extends React.Component {
 
     let timeInModal = timeStamp - this.state.timeEnteredModal;
 
-    const timeInModalCapture = {timeInModal: timeInModal, userid: this.props.courserecommendation.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
+    const timeInModalCapture = {timeInModal: timeInModal, userid: this.props.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
     this.props.startAddUserTimeInModal(timeInModalCapture);
   }
 
@@ -136,6 +135,31 @@ class CourseRecommendationListItem extends React.Component {
     })
   }
 
+  toggleModalWithRegister = () => {
+
+    if(this.state.showModal == true)
+    {
+
+      if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
+        this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
+
+      const registrationData = {courseid: this.state.courseid, 
+        course_name: this.state.currentTitle, 
+        course_instructor: this.state.instructor, 
+        course_fee: this.state.fee, 
+        userid: this.state.userid, 
+        user_email: firebase.auth().currentUser.email, 
+        registration_status: 'requested'};
+
+      this.props.startAddRegistrationToUser(registrationData);
+    }
+
+    this.setState({
+      showModal: !this.state.showModal
+    });
+    this.recordTimeInModal('register', this.state.currentRating);
+  }
+
   setAvatarURL = (rating) => {
       {
         switch(rating) {
@@ -165,6 +189,32 @@ class CourseRecommendationListItem extends React.Component {
       reasons.push(<li key={reason.learningobjectiveid}>{reason.content}</li>)
     ));
 
+    const sessionItems = this.props.sessions.map((session) =>
+      <li key={session.session_number}>
+        <Grid
+          justify="flex-start" 
+          container 
+          spacing={1}
+        >
+          <Grid item>
+            {session.session_number}
+          </Grid>
+          <Grid item>
+            {session.DOW.padEnd(9)}
+          </Grid>
+          <Grid item>
+            {moment(session.session_date).format('DD MMM YYYY')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_start).format('hh:mm A')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_end).format('hh:mm A')}
+          </Grid>
+        </Grid>
+      </li>
+    );
+
     return (
       <div>
       <Divider/>
@@ -176,13 +226,25 @@ class CourseRecommendationListItem extends React.Component {
                 {this.props.coursedescription}
               </Typography>
               <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
+              </Typography>
+              <br/>
               <Divider/>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-              Based on your selection of:
+                Based on your selection of:
                 <ul>
                   {reasons}
                 </ul>
               </Typography>
+              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                Sessions:
+                <ul>
+                  {sessionItems}
+                </ul>
+              </Typography>
+              <br/>
             </CardContent>
           </Card>
         </CardActionArea>
@@ -241,19 +303,6 @@ class CourseRecommendationListItem extends React.Component {
                     container 
                     spacing={1}
                     >
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <CustomCheckbox id="saveToPortfolio" type="checkbox" checked={this.state.isPortFolio} onChange={(e) => this.onCheckSaveToPortfolio(e)}></CustomCheckbox>
-                          }
-                          label={
-                            <Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>
-                              Maintain in Saved Courses
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-
                         <Grid
                         justify="center" 
                         container 
@@ -265,15 +314,28 @@ class CourseRecommendationListItem extends React.Component {
                               aria-label="Accept"
                               style={{fontWeight: "bold"}}
                               title="Accept"
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                              startIcon={<SaveSharp />}
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              color="inherit"
+                              disabled={this.state.isRegistered}
+                              color="primary"
+                              aria-label="Register"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              startIcon={<Work />}
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save and Register</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              color="primary"
                               aria-label="Cancel"
                               style={{fontWeight: "bold"}}
                               title="Cancel"
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
+                              startIcon={<CloseSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography></Button>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -288,13 +350,15 @@ class CourseRecommendationListItem extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters),
-  courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.id),
+  courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.courseid),
+  sessions: selectSessions(state.sessions, props.courseid),
   filters: state.filters
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
   startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
+  startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

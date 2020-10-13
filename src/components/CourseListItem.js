@@ -116,8 +116,6 @@ class CourseListItem extends React.Component {
       currentAvatarUrl: this.setAvatarURL('Registered')
     });
     this.recordTimeInModal('register', this.state.currentRating);
-
-
   }
 
   setAvatarURL = (status) => {
@@ -177,8 +175,12 @@ class CourseListItem extends React.Component {
                 {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
               </Typography>
               <br/>
+              <Divider/>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                <ul>{sessionItems}</ul>
+                Sessions:
+                <ul>
+                  {sessionItems}
+                </ul>
               </Typography>
               <br/>
               <Divider/>
@@ -199,14 +201,9 @@ class CourseListItem extends React.Component {
               </div>
               <div className="content-container">
                 <span>
-                <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.props.description}
-                </Typography>
-
-                <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.props.sessions[0].DOW}
-                </Typography>
-                
+                  <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
+                    {this.props.description}
+                  </Typography>
                 </span>
               </div>
             </div>

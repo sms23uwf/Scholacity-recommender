@@ -22,7 +22,6 @@ export const startsetAllRegistrations = () => {
           })
 
           user_ids.map((localUserId) => {
-              console.log(`localUserId: ${localUserId.id}`);
               return database.ref(`users_tables/${localUserId.id}/registration`).once('value').then((snapshot) => {
             
                   snapshot.forEach((childSnapshot) => {

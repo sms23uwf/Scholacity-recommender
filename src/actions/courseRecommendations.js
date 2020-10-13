@@ -21,11 +21,13 @@ export const startAddCourseRecommendation = (courseRecommendationData = {}) => {
       knowledgearea = ``,
       existingrecommendationid = ``,
       coursename = ``,
-      coursedescription = ``
+      coursedescription = ``,
+      instructor = ``,
+      fee = ``
     } = courseRecommendationData;
 
 
-    const courseUserPairing = { userid, courseid, learningobjectiveid, learningobjectives, portfolioobjectives, rating, counter, disposition, knowledgearea, existingrecommendationid, coursename, coursedescription };
+    const courseUserPairing = { userid, courseid, learningobjectiveid, learningobjectives, portfolioobjectives, rating, counter, disposition, knowledgearea, existingrecommendationid, coursename, coursedescription, instructor, fee };
 
     if(existingrecommendationid === ``)
     {

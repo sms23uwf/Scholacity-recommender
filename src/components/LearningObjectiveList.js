@@ -80,7 +80,9 @@ export class LearningObjectiveList extends React.Component {
                   knowledgearea: course.knowledgearea, 
                   existingrecommendationid: existingrecommendationid,
                   coursename: course.name, 
-                  coursedescription: course.description};
+                  coursedescription: course.description,
+                  instructor: course.instructor,
+                  fee: course.fee};
 
                 this.props.startAddCourseRecommendation(userCourse);
                 this.props.startSetCourseRecommendations();

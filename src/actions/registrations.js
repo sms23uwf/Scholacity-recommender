@@ -18,7 +18,6 @@ export const startAddRegistrationToUser = (registrationData = {}) => {
       user_email = ``,
       registration_status = ``
     } = registrationData;
-    console.log(`You are in startAddRegistrationToUser with course_name: ${course_name}.`);
 
     const registrationUserPairing = { courseid, course_name, course_instructor, course_fee, userid, user_email, registration_status};
 
@@ -64,9 +63,6 @@ export const startApproveRegistrationForUser_Course = (registrationUserPairing =
     } = registrationUserPairing;
 
     const updates = { registration_status: 'approved' };
-
-    console.log(`inside startApproveRegistrationForUser_Course with registration_id: ${registration_id}`);
-    console.log(`inside startApproveRegistrationForUser_Course with registration_userid: ${registration_userid}`);
 
     return database.ref(`users_tables/${registration_userid}/registration/${registration_id}`).update(updates).then(() => {
       dispatch(approveRegistrationForUser_Course(registration_id, updates));

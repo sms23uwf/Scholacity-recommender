@@ -2,33 +2,66 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CourseRecommendationListItem from './CourseRecommendationListItem';
 import selectCourseRecommendations from '../selectors/courserecommendations';
+import selectRegistrationsForUser from '../selectors/registration_user';
+import selectSessions from '../selectors/sessions';
+import { firebase } from '../firebase/firebase';
 
-export const CourseRecommendationsList = (props) => (
-  <div className="content-container-course">
-    <div className="list-header">
-      <div className="show-for-mobile">Course Recommendations</div>
-      <div className="show-for-desktop">Course Recommendations</div>
-    </div>
-    <div className="list-body">
-      {
-        props.courserecommendations.length === 0 ? (
-          <div className="list-item list-item--message">
-            <span>No Course Recommendations</span>
-          </div>
-        ) : (
-            props.courserecommendations.map((courserecommendation) => {
-              return <CourseRecommendationListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation}/>;
-            })
-          )
-      }
-    </div>
-  </div>
-);
+export class CourseRecommendationsList extends React.Component {
+  constructor(props) {
+    super(props);
+    //props.setUUIDFilter(firebase.auth().currentUser.uid);
+  }
 
-const mapStateToProps = (state) => {
-  return {
-    courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters)
+  state = {
+    userid: firebase.auth().currentUser.uid,
+    courseid: ''
+   }
+
+  getRegistrationPairing(courseId) {
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing.id;
+  }
+  
+  
+  render() {
+    return (
+
+      <div className="content-container-course">
+        <div className="list-header">
+          <div className="show-for-mobile">Course Recommendations</div>
+          <div className="show-for-desktop">Course Recommendations</div>
+        </div>
+        <div className="list-body">
+          {
+            this.props.courserecommendations.length === 0 ? (
+              <div className="list-item list-item--message">
+                <span>No Course Recommendations</span>
+              </div>
+            ) : (
+                this.props.courserecommendations.map((courserecommendation) => {
+                  const registrationId = this.getRegistrationPairing(courserecommendation.courseid);
+
+                  return <CourseRecommendationListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation} registrationId={registrationId}/>;
+                })
+              )
+          }
+        </div>
+      </div>
+    )};      
   };
-};
 
-export default connect(mapStateToProps)(CourseRecommendationsList);
+  const mapDispatchToProps = (dispatch) => ({
+    setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
+    setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid))
+  })
+  
+  
+  const mapStateToProps = (state) => {
+    return {
+      courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters),
+      registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
+      filters: state.filters
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(CourseRecommendationsList); 
