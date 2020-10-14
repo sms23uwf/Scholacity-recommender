@@ -35,6 +35,7 @@ class PortfolioListItem extends React.Component {
         currentRating: props.rating,
         currentTitle: props.coursename,
         currentAvatarUrl: this.setAvatarURL(props.rating),
+        statusAvatarUrl: this.setStatusAvatarURL('Approved'),
         newRating: props.rating,
         itemIsKeeper: true,
         recommendationPairing: 0,
@@ -137,6 +138,21 @@ class PortfolioListItem extends React.Component {
     })
   }
 
+  setStatusAvatarURL = (status) => {
+    {
+      switch(status) {
+        case `Cart`:
+          return `/images/shopping_cart.webp`;
+        case `Registered`:
+          return `/images/noun_submit_icon.png`;
+        case 'Approved':
+          return `/images/briefcase.jpg`
+        default:
+          return `/images/briefcase.jpg`;
+      }
+    }
+  }
+
   setAvatarURL = (rating) => {
       {
         switch(rating) {
@@ -208,7 +224,7 @@ class PortfolioListItem extends React.Component {
       <Divider/>
         <CardActionArea onClick={this.toggleModal}>
           <Card>
-            <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
+            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.props.coursedescription}
@@ -217,8 +233,8 @@ class PortfolioListItem extends React.Component {
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
               </Typography>
-              <br/>
               <Divider/>
+              <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
               Based on your selection of:
                 <ul>

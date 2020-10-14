@@ -245,7 +245,6 @@ class CourseRecommendationListItem extends React.Component {
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
               </Typography>
-              <br/>
               <Divider/>
               <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
