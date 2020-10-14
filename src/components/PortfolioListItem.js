@@ -16,24 +16,19 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import selectCourseRecommendations, {findExistingCourseRecommendation} from '../selectors/courserecommendations';
-import { Checkbox, FormControlLabel }  from '@material-ui/core';
+import { FormControlLabel }  from '@material-ui/core';
+import moment from 'moment/moment';
+import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import selectSessions from '../selectors/sessions';
 
-const checkBoxStyles = theme => ({
-  root: {
-    '&$checked': {
-      color: '#3D70B2',
-    },
-  },
-  checked: {},
- })
-
-const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
 
 class PortfolioListItem extends React.Component {
   constructor(props){
       super(props);
       this.state = {
         showModal: false,
+        instructor: props.instructor,
+        fee: props.fee,
         disposition: props.disposition,
         newDisposition: props.disposition,
         isPortFolio: props.disposition === `Portfolio` ? true : false,
@@ -182,6 +177,32 @@ class PortfolioListItem extends React.Component {
      reasons.push(<li key={reason.learningobjectiveid}>{reason.content}</li>)
     ));
 
+    const sessionItems = this.props.sessions.map((session) =>
+      <li key={session.session_number}>
+        <Grid
+          justify="flex-start" 
+          container 
+          spacing={1}
+        >
+          <Grid item>
+            {session.session_number}
+          </Grid>
+          <Grid item>
+            {session.DOW.padEnd(9)}
+          </Grid>
+          <Grid item>
+            {moment(session.session_date).format('DD MMM YYYY')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_start).format('hh:mm A')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_end).format('hh:mm A')}
+          </Grid>
+        </Grid>
+      </li>
+    );
+
     return (
       <div>
       <Divider/>
@@ -193,6 +214,10 @@ class PortfolioListItem extends React.Component {
                 {this.props.coursedescription}
               </Typography>
               <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
+              </Typography>
+              <br/>
               <Divider/>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
               Based on your selection of:
@@ -200,6 +225,14 @@ class PortfolioListItem extends React.Component {
                   {reasons}
                 </ul>
               </Typography>
+              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                Sessions:
+                <ul>
+                  {sessionItems}
+                </ul>
+              </Typography>
+              <br/>
             </CardContent>
           </Card>
         </CardActionArea>
@@ -224,7 +257,7 @@ class PortfolioListItem extends React.Component {
                </div>
                <div>
                   <form action="">
-                    <label className="statement">This Recommendation Fits With a Desired Learning Outcome.</label>
+                    <label className="statement">This Course satisfied my Selected Learning Outcomes.</label>
                     <ul className='likert'>
                       <li>
                         <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
@@ -257,38 +290,27 @@ class PortfolioListItem extends React.Component {
                   container 
                   spacing={1}
                 >
-                  <Grid item>
-                    <FormControlLabel
-                      control={
-                        <CustomCheckbox type="checkbox" checked={this.state.isPortFolio} onChange={(e) => { if (window.confirm('Are you sure you wish to remove this item from Saved Courses?')) this.onCheckSaveToPortfolio(recommendationPairing,keeperCount,e)}}></CustomCheckbox>
-                      }
-                      label={
-                        <Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>
-                          Maintain in Saved Courses
-                        </Typography>
-                      }
-                    />
-                  </Grid>
-
                   <Grid
                   justify="center" 
                   container 
                   spacing={2}
                 >
-                  <Grid item>
+                    <Grid item>
                       <Button
                         color="inherit"
                         aria-label="Accept"
                         style={{fontWeight: "bold"}}
                         title="Accept"
-                        onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                        startIcon={<SaveSharp />}
+                        onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                     </Grid>
                     <Grid item>
                       <Button
-                        color="inherit"
+                        color="primary"
                         aria-label="Cancel"
                         style={{fontWeight: "bold"}}
                         title="Cancel"
+                        startIcon={<CloseSharp />}
                         onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
                     </Grid>
                   </Grid>
@@ -304,7 +326,8 @@ class PortfolioListItem extends React.Component {
 };
 
 const mapStateToProps = (state, props) => ({
-  courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.id)
+  courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.id),
+  sessions: selectSessions(state.sessions, props.courseid),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

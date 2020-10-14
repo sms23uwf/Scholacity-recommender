@@ -37,6 +37,7 @@ class CourseRecommendationListItem extends React.Component {
         currentTitle: props.coursename,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
+        statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? 'Cart' : 'Registered'),
         newRating: props.rating,
         timeEnteredModal: Date.now(),
         userid: firebase.auth().currentUser.uid
@@ -155,9 +156,24 @@ class CourseRecommendationListItem extends React.Component {
     }
 
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
+      currentAvatarUrl: this.setStatusAvatarURL('Registered')
+
     });
     this.recordTimeInModal('register', this.state.currentRating);
+  }
+
+  setStatusAvatarURL = (status) => {
+    {
+      switch(status) {
+        case `Cart`:
+          return `/images/shopping_cart.webp`;
+        case `Registered`:
+          return `/images/noun_submit_icon.png`;
+        default:
+          return `/images/shopping_cart.webp`;
+      }
+    }
   }
 
   setAvatarURL = (rating) => {
@@ -220,7 +236,7 @@ class CourseRecommendationListItem extends React.Component {
       <Divider/>
         <CardActionArea onClick={this.toggleModal}>
           <Card>
-            <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
+            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle} />
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.props.coursedescription}
@@ -231,6 +247,7 @@ class CourseRecommendationListItem extends React.Component {
               </Typography>
               <br/>
               <Divider/>
+              <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 Based on your selection of:
                 <ul>
@@ -325,7 +342,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save and Register</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -335,7 +352,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Cancel"
                               startIcon={<CloseSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography></Button>
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
                           </Grid>
                         </Grid>
                       </Grid>
