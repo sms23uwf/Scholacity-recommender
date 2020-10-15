@@ -7,7 +7,7 @@ import LoginPage from '../components/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import PlannerDashboard from '../components/PlannerDashboard';
-import CoursesDashboard from '../components/CoursesDashboard';
+import OfferingsDashboard from '../components/OfferingsDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
@@ -25,7 +25,7 @@ const AppRouter = () => (
         <PrivateRoute path="/cancel" component={LoginPage} exact={true} />
         <PrivateRoute path="/dashboard" component={DashboardPage} />
         <PrivateRoute path="/plannerDashboard" component={PlannerDashboard}/>
-        <PrivateRoute path="/coursesDashboard" component={CoursesDashboard}/>
+        <PrivateRoute path="/offeringsDashboard" component={OfferingsDashboard}/>
         <PrivateRoute path="/recommendationsDashboard" component={RecommendationsDashboard}/>
         <PrivateRoute path="/selectionsDashboard" component={SelectionsDashboard}/>
         <PrivateRoute path="/portfolioDashboard" component={PortfolioDashboard}/>

@@ -1,7 +1,7 @@
 import { Home, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
 
 import DashboardPage from '../components/DashboardPage';
-import CoursesDashboard from '../components/CoursesDashboard';
+import OfferingsDashboard from '../components/OfferingsDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
 import AdminDashboard from '../components/AdminDashboard';
@@ -17,11 +17,11 @@ const SidebarRouterAlt = [
     showModal: false
   },
   {
-    path: '/coursesDashboard',
-    sidebarName: 'Courses By Domain',
-    navbarName: 'Courses By Domain',
+    path: '/offeringsDashboard',
+    sidebarName: 'Course Offerings',
+    navbarName: 'Course Offerings',
     icon: LocalLibrarySharp,
-    component: CoursesDashboard
+    component: OfferingsDashboard
   },
   {
     path: '/adminDashboard',

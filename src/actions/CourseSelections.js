@@ -12,16 +12,19 @@ export const startAddCourseSelection = (courseSelectionData = {}) => {
     const {
       userid = ``,
       courseid = ``,
-      rating = ``,
-      counter = ``,
       disposition = ``,
+      counter = ``,
+      rating = ``,
       knowledgearea = ``,
       coursename = ``,
-      coursedescription = ``
+      coursedescription = ``,
+      instructor = ``,
+      fee = ``
     } = courseSelectionData;
 
+    console.log(`inside startAddCourseSelection with courseid: ${courseid}`);
 
-    const courseUserPairing = { userid, courseid, rating, counter, disposition, knowledgearea, coursename, coursedescription };
+    const courseUserPairing = { userid, courseid, rating, counter, rating, disposition, knowledgearea, coursename, coursedescription, instructor, fee };
 
     return database.ref(`users_tables/${uid}/courseselection`).push({...courseUserPairing}).then((ref) => {
       dispatch(addCourseSelection({

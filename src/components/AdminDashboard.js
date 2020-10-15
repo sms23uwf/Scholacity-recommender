@@ -5,7 +5,7 @@ import RegistrationListFilters from './RegistrationListFilters';
 import RegistrationList from './RegistrationList';
 
 
-const CoursesDashboard = () => (
+const AdminDashboard = () => (
   <div>
     <RegistrationSummary />
     <RegistrationListFilters/>
@@ -13,4 +13,4 @@ const CoursesDashboard = () => (
   </div>
 );
 
-export default CoursesDashboard;
+export default AdminDashboard;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
+import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
 import Modal from './Modal';
@@ -15,24 +15,11 @@ import selectCourseSelections from '../selectors/courseselections';
 import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
 import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
-const checkBoxStyles = theme => ({
-  root: {
-    '&$checked': {
-      color: '#3D70B2',
-    },
-  },
-  checked: {},
- })
-
-const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
-
-class CourseListItem extends React.Component {
+class OfferingListItem extends React.Component {
   constructor(props){
       super(props);
       this.state = {
@@ -44,7 +31,9 @@ class CourseListItem extends React.Component {
         isRegistered: props.registrationId === 0 ? false : true,
         isRegistrationApproved: props.registration_status == 'approved',
         courseid: props.id,
+        knowledeAreaId: props.knowledgeareaid,
         currentTitle: props.name,
+        currentRating: '-1',
         currentDescription: props.description,
         currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ? 'Open' : 'Registered'),
         timeEnteredModal: Date.now(),
@@ -52,17 +41,37 @@ class CourseListItem extends React.Component {
       }
   }
   
-  toggleModalWithSave = () => {
+  toggleModalWithSaveToCart = () => {
 
     if(this.state.showModal == true)
     {
+      const userCourse = {
+        userid: this.state.userid, 
+        courseid: this.state.courseid, 
+        disposition: 'Cart',
+        counter: '1',
+        rating: '-1',
+        knowledgearea: this.state.knowledeAreaId,
+        coursename: this.state.currentTitle,
+        coursedescription: this.state.currentDescription,
+        instructor: this.state.instructor,
+        fee: this.state.fee
+      };
+  
+      console.log(`inside toggleModalWithSaveToCart with courseid: ${this.state.courseid}`);
+
+      this.props.startAddCourseSelection(userCourse);
       this.props.startSetCourseSelections();
+
     }
 
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
+      disposition: 'Cart',
+      currentAvatarUrl: this.setAvatarURL('Cart')
     });
-    this.recordTimeInModal('save', this.state.currentRating);
+
+    this.recordTimeInModal('add to cart', this.state.currentRating);
   }
 
 
@@ -124,7 +133,7 @@ class CourseListItem extends React.Component {
       switch(status) {
         case 'Open':
           return '/images/local_library.png';
-        case `Interested`:
+        case `Cart`:
             return `/images/shopping_cart.webp`;
         case `Registered`:
             return `/images/briefcase.jpg`;
@@ -230,7 +239,7 @@ class CourseListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Save"
                               startIcon={<ShoppingCart />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Cart</Typography>
+                              onClick={this.toggleModalWithSaveToCart}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Cart</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -274,9 +283,10 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
+  startAddCourseSelection: (userCourse) => dispatch(startAddCourseSelection(userCourse)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferingListItem);

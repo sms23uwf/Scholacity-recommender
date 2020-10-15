@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUUIDFilter, setCourseFilter } from '../actions/filters';
-import CourseListItem from './CourseListItem';
+import OfferingListItem from './OfferingListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
 import selectCourses from '../selectors/courses';
 import selectSessions from '../selectors/sessions';
 import { firebase } from '../firebase/firebase';
 
-export class CourseList extends React.Component {
+export class OfferingList extends React.Component {
   constructor(props) {
     super(props);
     //props.setUUIDFilter(firebase.auth().currentUser.uid);
@@ -47,7 +47,7 @@ export class CourseList extends React.Component {
                   if(this.props.id === course.knowledgeareaid)
                   {
                     const registrationId = this.getRegistrationPairing(course.id);
-                    return <CourseListItem key={course.id} id={course.id} {...course} registrationId={registrationId}/>;
+                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId}/>;
                   }
                 })
               )
@@ -72,4 +72,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseList);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferingList);

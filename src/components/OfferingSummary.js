@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import selectCourses from '../selectors/courses';
 import selectCoursesTotal from '../selectors/courses-total';
 
-export const CoursesSummary = ({ coursesCount, coursesTotal }) => {
+export const OfferingSummary = ({ coursesCount, coursesTotal }) => {
   return (
     <div className="page-header">
       <div className="content-container">
@@ -22,4 +22,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CoursesSummary);
+export default connect(mapStateToProps)(OfferingSummary);

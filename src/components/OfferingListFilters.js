@@ -6,7 +6,7 @@ import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 
 let rows = [];
 
-export class CourseListFilters extends React.Component {
+export class OfferingListFilters extends React.Component {
   //constructor(props) {
     //super(props);
 
@@ -70,4 +70,4 @@ const mapDispatchToProps = (dispatch) => ({
   startAddUserNavigationEvent: (navigationEventCapture) => dispatch(startAddUserNavigationEvent(navigationEventCapture))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseListFilters);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferingListFilters);

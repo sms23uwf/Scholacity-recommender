@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Collapsible from './Collapsible';
 import selectKnowledgeAreas from '../selectors/knowledgeareas';
 import selectCourses from '../selectors/courses';
-import CourseList from './CourseList';
+import CourseList from './OfferingList';
 
- export const CoursesCollapsible = (props) => (
+ export const OfferingsCollapsible = (props) => (
     props.knowledgeareas.map((knowledgearea, key) => {
         return (
             <div key={key} className="content-container-planner">
@@ -25,4 +25,4 @@ import CourseList from './CourseList';
     };
   };
   
-  export default connect(mapStateToProps)(CoursesCollapsible);
+  export default connect(mapStateToProps)(OfferingsCollapsible);
