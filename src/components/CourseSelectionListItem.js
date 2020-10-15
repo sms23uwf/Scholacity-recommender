@@ -13,8 +13,11 @@ import CardHeader from "@material-ui/core/CardHeader";
 import selectCourseSelections from '../selectors/courseselections';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import selectSessions from '../selectors/sessions';
 import { withStyles } from '@material-ui/core/styles';
 import { Checkbox, FormControlLabel }  from '@material-ui/core';
+import moment from 'moment/moment'
+import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 const checkBoxStyles = theme => ({
   root: {
@@ -37,8 +40,11 @@ class CourseSelectionListItem extends React.Component {
         isRegistered: props.disposition === `Registered` ? true : false,
         currentTitle: props.coursename,
         currentDescription: props.coursedescription,
-        currentAvatarUrl: this.setAvatarURL(),
-        timeEnteredModal: Date.now()
+        currentAvatarUrl: this.setAvatarURL(props.rating),
+        statusAvatarUrl: this.setStatusAvatarURL(props.disposition),
+        timeEnteredModal: Date.now(),
+        instructor: props.instructor,
+        fee: props.fee
       }
   }
   
@@ -102,21 +108,88 @@ class CourseSelectionListItem extends React.Component {
 
   };
 
-  setAvatarURL = () => {
-    return `/images/happy.png`;
+  setStatusAvatarURL = (status) => {
+    {
+      switch(status) {
+        case `Cart`:
+          return `/images/shopping_cart.webp`;
+        case `Registered`:
+          return `/images/noun_submit_icon.png`;
+        default:
+          return `/images/shopping_cart.webp`;
+      }
+    }
   }
 
+  setAvatarURL = (rating) => {
+    {
+      switch(rating) {
+        case '0':
+          return '/images/verysad.png';
+        case `1`:
+            return `/images/sad.png`;
+        case `2`:
+            return `/images/justso.png`;
+        case `3`:
+             return `/images/happy.png`;
+        case `4`:
+          return `/images/veryhappy.png`;
+        default:
+            return ``;
+      }
+    }
+}
+
   render() {
+
+    const sessionItems = this.props.sessions.map((session) =>
+      <li key={session.session_number}>
+        <Grid
+          justify="flex-start" 
+          container 
+          spacing={1}
+        >
+          <Grid item>
+            {session.session_number}
+          </Grid>
+          <Grid item>
+            {session.DOW.padEnd(9)}
+          </Grid>
+          <Grid item>
+            {moment(session.session_date).format('DD MMM YYYY')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_start).format('hh:mm A')}
+          </Grid>
+          <Grid item>
+            {moment(session.session_time_end).format('hh:mm A')}
+          </Grid>
+        </Grid>
+      </li>
+    );
 
     return (
       <div>
       <Divider/>
         <CardActionArea onClick={this.toggleModal}>
           <Card>
-            <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
+            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 {this.state.currentDescription}
+              </Typography>
+              <br/>
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
+              </Typography>
+              <br/>
+              <Divider/>
+              <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
+              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+                Sessions:
+                <ul>
+                  {sessionItems}
+                </ul>
               </Typography>
               <br/>
               <Divider/>
@@ -142,6 +215,36 @@ class CourseSelectionListItem extends React.Component {
                 </Typography>
                 </span>
               </div>
+
+              <div>
+              <form action="">
+              <label className="statement">This Course Satisfies My Expectation For This Semester's Offerings.</label>
+              <ul className='likert'>
+                <li>
+                  <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
+                  <label>Strongly Disagree</label>
+                </li>
+                <li>
+                  <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
+                  <label>Disagree</label>
+                </li>
+                <li>
+                  <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
+                  <label>Neutral</label>
+                </li>
+                <li>
+                  <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
+                  <label>Agree</label>
+                </li>
+                <li>
+                  <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
+                  <label>Strongly Agree</label>
+                </li>
+              </ul>
+              </form>
+
+            </div>
+
             </div>
                 <span>
                   <div>
@@ -150,19 +253,6 @@ class CourseSelectionListItem extends React.Component {
                     container 
                     spacing={1}
                     >
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <CustomCheckbox id="saveToPortfolio" type="checkbox" checked={this.state.isRegistered} onChange={(e) => this.onCheckSaveToPortfolio(e)}></CustomCheckbox>
-                          }
-                          label={
-                            <Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>
-                              Register for course
-                            </Typography>
-                          }
-                        />
-                      </Grid>
-
                         <Grid
                         justify="center" 
                         container 
@@ -198,6 +288,7 @@ class CourseSelectionListItem extends React.Component {
 const mapStateToProps = (state, props) => ({
   courseselections: selectCourseSelections(state.courseselections, state.filters),
   courseselection: state.courseselections.find((courseselection) => courseselection.id === props.id),
+  sessions: selectSessions(state.sessions, props.courseid),
   filters: state.filters
 });
 
