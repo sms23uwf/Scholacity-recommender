@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
+import { startAddRegistrationToUser } from '../actions/registrations';
+import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -16,8 +18,8 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { deepOrange, red } from '@material-ui/core/colors';
-
-import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { firebase } from '../firebase/firebase';
+import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -27,6 +29,8 @@ class CourseSelectionListItem extends React.Component {
         showModal: false,
         disposition: props.disposition,
         newDisposition: props.disposition,
+        currentRating: props.rating,
+        newRating: props.rating,
         isRegistered: props.disposition === `Registered` ? true : false,
         currentTitle: props.coursename,
         currentDescription: props.coursedescription,
@@ -38,6 +42,56 @@ class CourseSelectionListItem extends React.Component {
       }
   }
   
+  toggleModalWithRegister = () => {
+
+    if(this.state.showModal == true)
+    {
+
+      this.setState({newDisposition: `Registered`});
+
+      if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
+        this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
+
+      const registrationData = {courseid: this.state.courseid, 
+        course_name: this.state.currentTitle, 
+        course_instructor: this.state.instructor, 
+        course_fee: this.state.fee, 
+        userid: this.state.userid, 
+        user_email: firebase.auth().currentUser.email, 
+        registration_status: 'requested'};
+
+      this.props.startAddRegistrationToUser(registrationData);
+    }
+
+    this.props.startSetCourseSelections();
+
+    this.setState({
+      showModal: !this.state.showModal,
+      statusAvatarUrl: this.setStatusAvatarURL('Registered')
+
+    });
+    this.recordTimeInModal('register', this.state.currentRating);
+
+  }
+
+  handleRatingChange = event => {
+    this.setState({newRating: event.target.value});
+  }
+
+  recordLocalRating = (rating,e) => {
+    this.setState({newRating: rating});
+  }
+
+  recordRating = (id,rating,disposition,courseid,userid) => {
+    this.setState({currentRating: rating});
+    const ratingData = {rating: rating, disposition: disposition};
+    this.props.startEditCourseSelection(id, ratingData);
+    this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
+
+    const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
+    this.props.startAddRatingsByUserSelection(ratingCapture);
+  }
+
   toggleModalWithSave = () => {
 
     if(this.state.showModal == true)
@@ -45,11 +99,15 @@ class CourseSelectionListItem extends React.Component {
       this.props.startSetCourseSelections();
     }
 
+    if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
+      this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid);
+
     this.setState({
       showModal: !this.state.showModal
     });
     this.recordTimeInModal('save', this.state.currentRating);
   }
+
 
 
   recordTimeInModal = (disposition, rating) => {
@@ -82,21 +140,6 @@ class CourseSelectionListItem extends React.Component {
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
-
-  onCheckSaveToPortfolio = (e) => {
-
-    if(e.target.checked===true)
-    {
-      this.setState({isRegistered: true});
-      this.setState({newDisposition: `Registered`});
-    }
-    else
-    {
-      this.setState({isRegistered: false});
-      this.setState({newDisposition: `Selected`});
-    }
-
-  };
 
   setStatusAvatarURL = (status) => {
     {
@@ -253,9 +296,10 @@ class CourseSelectionListItem extends React.Component {
                           <Grid item>
                             <Button
                               color="inherit"
-                              aria-label="Accept"
+                              aria-label="Save"
                               style={{fontWeight: "bold"}}
-                              title="Accept"
+                              title="Save"
+                              startIcon={<SaveSharp />}
                               onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
@@ -266,7 +310,7 @@ class CourseSelectionListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register Now</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save and Register</Typography>
                             </Button>
                           </Grid>
                         </Grid>
@@ -290,7 +334,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
-  startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
+  startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 

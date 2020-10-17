@@ -16,8 +16,6 @@ import selectCourseRecommendations from '../selectors/courserecommendations';
 import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
 import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
@@ -97,22 +95,6 @@ class CourseRecommendationListItem extends React.Component {
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
 
-  onCheckSaveToPortfolio = (e) => {
-
-    if(e.target.checked===true)
-    {
-      this.setState({isPortFolio: true});
-      this.setState({newDisposition: `Portfolio`});
-    }
-    else
-    {
-      this.setState({isPortFolio: false});
-      this.setState({newDisposition: `Undecided`});
-    }
-
-  };
-
-
   handleRatingChange = event => {
     this.setState({newRating: event.target.value});
   }
@@ -141,6 +123,8 @@ class CourseRecommendationListItem extends React.Component {
     if(this.state.showModal == true)
     {
 
+      this.setState({newDisposition: `Registered`});
+
       if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
         this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
 
@@ -157,7 +141,7 @@ class CourseRecommendationListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      currentAvatarUrl: this.setStatusAvatarURL('Registered')
+      statusAvatarUrl: this.setStatusAvatarURL('Registered')
 
     });
     this.recordTimeInModal('register', this.state.currentRating);

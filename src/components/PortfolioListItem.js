@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startSetCourseRecommendations, startEditCourseRecommendation, startRemoveCourseRecommendation } from '../actions/courseRecommendations';
-import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
+import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -33,10 +33,10 @@ class PortfolioListItem extends React.Component {
         newDisposition: props.disposition,
         isPortFolio: props.disposition === `Portfolio` ? true : false,
         currentRating: props.rating,
+        newRating: props.rating,
         currentTitle: props.coursename,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         statusAvatarUrl: this.setStatusAvatarURL('Approved'),
-        newRating: props.rating,
         itemIsKeeper: true,
         recommendationPairing: 0,
         timeEnteredModal: Date.now()
@@ -123,19 +123,14 @@ class PortfolioListItem extends React.Component {
     this.setState({newRating: rating});
   }
 
-  recordRating = (id,rating,disposition,courseid,userid,learningobjectives) => {
+  recordRating = (id,rating,disposition,courseid,userid) => {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseRecommendation(id, ratingData);
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
-    var loData = {...learningobjectives};
-
-    Object.keys(loData).map((key) => {
-      var currentLO = loData[key];
-      const ratingCapture = {courseid: courseid, learningobjectiveid: currentLO.learningobjectiveid, userid: userid, rating: rating};
-      this.props.startAddRatingsByUserCourseLO(ratingCapture);
-    })
+    const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
+    this.props.startAddRatingsByUserCourse(ratingCapture);
   }
 
   setStatusAvatarURL = (status) => {
@@ -350,7 +345,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
   startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
-  startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
+  startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
