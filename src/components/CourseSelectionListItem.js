@@ -14,21 +14,11 @@ import selectCourseSelections from '../selectors/courseselections';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
-import { withStyles } from '@material-ui/core/styles';
-import { Checkbox, FormControlLabel }  from '@material-ui/core';
 import moment from 'moment/moment'
+import { deepOrange, red } from '@material-ui/core/colors';
+
 import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
-const checkBoxStyles = theme => ({
-  root: {
-    '&$checked': {
-      color: '#3D70B2',
-    },
-  },
-  checked: {},
- })
-
-const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
 
 class CourseSelectionListItem extends React.Component {
   constructor(props){
@@ -204,6 +194,8 @@ class CourseSelectionListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
+    
+                <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
                 <div className="content-container">
                   <h4 className="page-header__title">{this.props.coursename}</h4>
                 </div>
@@ -264,15 +256,18 @@ class CourseSelectionListItem extends React.Component {
                               aria-label="Accept"
                               style={{fontWeight: "bold"}}
                               title="Accept"
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              color="inherit"
-                              aria-label="Cancel"
+                              disabled={this.state.isRegistered}
+                              color="primary"
+                              aria-label="Register"
                               style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
+                              title="Register"
+                              startIcon={<Work />}
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register Now</Typography>
+                            </Button>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -299,4 +294,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseSelectionListItem);
+export default connect(mapStateToProps, mapDispatchToProps) (CourseSelectionListItem);

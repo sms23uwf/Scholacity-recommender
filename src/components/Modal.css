@@ -54,7 +54,7 @@
     margin-bottom:10px;
   }
   
-  .modal .close_modal {
+  .modal .close_modalxx {
     position: absolute;
     left: 45%;
     font-weight: bold;
@@ -66,7 +66,21 @@
     border: none;
     transition: opacity 0.2s ease;
   }
-  
+
+  .modal .close_modal {
+    position: absolute;
+    left: 2%;
+    font-weight: bold;
+    color: red;
+    top: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 1.00;
+    background: none;
+    border: none;
+    transition: opacity 0.2s ease;
+  }
+
   .modal .close_modal:hover {
     opacity: 0.9;
   }
