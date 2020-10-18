@@ -5,6 +5,7 @@ import courseSelectionsReducer from '../reducers/courseselections';
 import coursesReducer from '../reducers/courses';
 import sessionsReducer from '../reducers/sessions';
 import coursesByDOWReducer from '../reducers/courses_dow';
+import daysOfWeekReducer from '../reducers/days_of_week';
 import learningObjectivesReducer from '../reducers/learningobjectives';
 import coursesUserSelectsReducer from '../reducers/course_userselect';
 import registrationsUserReducer from '../reducers/registrations';
@@ -30,6 +31,7 @@ export default () => {
       courseselections: courseSelectionsReducer,
       courses: coursesReducer,
       courses_by_dow: coursesByDOWReducer,
+      days_of_week: daysOfWeekReducer,
       sessions: sessionsReducer,
       learningobjectives: learningObjectivesReducer,
       course_userselects: coursesUserSelectsReducer,

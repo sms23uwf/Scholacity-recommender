@@ -34,6 +34,12 @@ export const setCourseFilter = (courseid = '') => ({
   courseid
 });
 
+// SET_DOW_FILTER
+export const setDOWFilter = (dow = '') => ({
+  type: 'SET_DOW_FILTER',
+  dow
+});
+
 // SORT_BY_DATE
 export const sortByDate = () => ({
   type: 'SORT_BY_DATE'

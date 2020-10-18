@@ -39,7 +39,7 @@ export class CourseSelectionList extends React.Component {
             ) : (
                 this.props.courseselections.map((courseselection) => {
                   
-                  const registrationRecord = this.getRegistration(courserecommendation.courseid);
+                  const registrationRecord = this.getRegistration(courseselection.courseid);
                   const registrationId = registrationRecord.id;
                   const registration_status = registrationRecord.registration_status;
 

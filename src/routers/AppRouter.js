@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import PlannerDashboard from '../components/PlannerDashboard';
 import OfferingsDashboard from '../components/OfferingsDashboard';
+import DOWDashboard from '../components/DOWDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
@@ -26,6 +27,7 @@ const AppRouter = () => (
         <PrivateRoute path="/dashboard" component={DashboardPage} />
         <PrivateRoute path="/plannerDashboard" component={PlannerDashboard}/>
         <PrivateRoute path="/offeringsDashboard" component={OfferingsDashboard}/>
+        <PrivateRoute path="/dowDashboard" component={DOWDashboard}/>
         <PrivateRoute path="/recommendationsDashboard" component={RecommendationsDashboard}/>
         <PrivateRoute path="/selectionsDashboard" component={SelectionsDashboard}/>
         <PrivateRoute path="/portfolioDashboard" component={PortfolioDashboard}/>

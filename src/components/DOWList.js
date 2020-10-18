@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUUIDFilter, setCourseFilter } from '../actions/filters';
-import OfferingListItem from './OfferingListItem';
+import DOWListItem from './DOWListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
+import selectCoursesByDOW from '../selectors/courses_dow';
 import selectCourses from '../selectors/courses';
 import { firebase } from '../firebase/firebase';
 
-export class OfferingList extends React.Component {
+export class DOWList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+        userid: firebase.auth().currentUser.uid,
+        current_dow: props.name        
+    }
     //props.setUUIDFilter(firebase.auth().currentUser.uid);
   }
-
-  state = {
-    userid: firebase.auth().currentUser.uid,
-    courseid: ''
-   }
 
   getRegistrationPairing(courseId) {
     const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
@@ -26,7 +26,12 @@ export class OfferingList extends React.Component {
     const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
     return pairing;
   }
-  
+
+  getCourse(courseId) {
+    const pairing = this.props.courses.find(p => p.id === courseId) || {id:0};
+    return pairing;
+  }
+
   render() {
     return (
 
@@ -37,16 +42,17 @@ export class OfferingList extends React.Component {
         </div>
         <div className="list-body">
           {
-            this.props.courses.length === 0 ? (
+            this.props.courses_by_dow.length === 0 ? (
               <div className="list-item list-item--message">
                 <span>No Courses</span>
               </div>
             ) : (
-                this.props.courses.map((course) => {
-                  if(this.props.id === course.knowledgeareaid)
+                this.props.courses_by_dow.map((course_by_dow) => {
+                  if(this.props.name === course_by_dow.DOW)
                   {
-                    const registrationId = this.getRegistrationPairing(course.id);
-                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId}/>;
+                    const registrationId = this.getRegistrationPairing(course_by_dow.courseid);
+                    const matchingCourse = this.getCourse(course_by_dow.courseid);
+                    return <DOWListItem key={course_by_dow.id} id={course_by_dow.id} {...matchingCourse} registrationId={registrationId}/>;
                   }
                 })
               )
@@ -58,7 +64,7 @@ export class OfferingList extends React.Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
+  setDOWFilter: (dow) => dispatch(setDOWFilter(dow)),
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid))
 })
 
@@ -66,9 +72,10 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     courses: selectCourses(state.courses, state.filters),
+    courses_by_dow: selectCoursesByDOW(state.courses_by_dow, state.filters),
     registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
     filters: state.filters
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfferingList);
+export default connect(mapStateToProps, mapDispatchToProps)(DOWList);

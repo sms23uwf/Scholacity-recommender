@@ -1,7 +1,8 @@
-import { Home, HowToRegSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
+import { Home, DateRangeSharp, HowToRegSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
 
 import DashboardPage from '../components/DashboardPage';
 import OfferingsDashboard from '../components/OfferingsDashboard';
+import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
 import AdminDashboard from '../components/AdminDashboard';
@@ -18,10 +19,17 @@ const SidebarRouterAlt = [
   },
   {
     path: '/offeringsDashboard',
-    sidebarName: 'Course Offerings',
-    navbarName: 'Course Offerings',
+    sidebarName: 'Courses By Domain',
+    navbarName: 'Courses By Domain',
     icon: LocalLibrarySharp,
     component: OfferingsDashboard
+  },
+  {
+    path: '/dowDashboard',
+    sidebarName: 'Courses By Day',
+    navbarName: 'Courses By Day',
+    icon: DateRangeSharp,
+    component: DOWDashboard
   },
   {
     path: '/selectionsDashboard',

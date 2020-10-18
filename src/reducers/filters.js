@@ -44,7 +44,12 @@ export default (state = filtersReducerDefaultState, action) => {
         ...state,
         courseid: action.courseid
       }
-    case 'SORT_BY_AMOUNT':
+      case 'SET_DOW_FILTER':
+        return {
+          ...state,
+          dow: action.dow
+        }
+      case 'SORT_BY_AMOUNT':
       return {
         ...state,
         sortBy: 'amount'
