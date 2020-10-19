@@ -24,9 +24,10 @@ export class Header extends React.Component {
   componentDidMount() {
     let userDomainArray = firebase.auth().currentUser.email.split('@');
     const userDomain = userDomainArray[1];
+    const userName = userDomainArray[0];
     
     //TODO: change this last one to 'uwf.edu'
-    const sessionRoutes = userDomain == 'scholacity.org' ? routes : userDomain == 'students.uwf.edu' ? adminRoutes : altRoutes;
+    const sessionRoutes = userDomain == 'scholacity.org' && userName == 'lladmin' ? adminRoutes : userDomain == 'scholacity.org' ? routes : altRoutes;
 
 
     this.setState({
