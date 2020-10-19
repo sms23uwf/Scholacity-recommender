@@ -82,7 +82,7 @@ export const startRemoveCourseRecommendation = (recommendationPairing = {}) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
     const id = recommendationPairing.id;
-    
+    console.log(`inside startRemoveCourseRecommendation`);
     return database.ref(`users_tables/${uid}/courserecommendation/${id}`).remove().then(() => {
       dispatch(removeCourseRecommendation({ id }));
     });

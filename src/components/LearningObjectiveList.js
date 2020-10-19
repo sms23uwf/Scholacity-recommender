@@ -130,7 +130,8 @@ export class LearningObjectiveList extends React.Component {
                   });
                 }
 
-                if(courserecommendation.disposition != "Portfolio")
+                console.log(`disposition: ${courserecommendation.disposition}`);
+                if(courserecommendation.disposition != "Registered")
                 {
                   this.props.startRemoveCourseRecommendation(recommendationPairing);
                   this.props.startSetCourseRecommendations();

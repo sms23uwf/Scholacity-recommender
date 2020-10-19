@@ -107,6 +107,7 @@ class CourseRecommendationListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseRecommendation(id, ratingData);
+    this.props.startSetCourseRecommendations();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     var loData = {...learningobjectives};
@@ -123,10 +124,9 @@ class CourseRecommendationListItem extends React.Component {
     if(this.state.showModal == true)
     {
 
-      this.setState({newDisposition: `Registered`});
+      this.setState({newDisposition: 'Registered'});
 
-      if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
-        this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
+      this.recordRating(this.props.id, this.state.newRating, 'Registered', this.props.courseid, this.props.userid, this.props.learningobjectives);
 
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
