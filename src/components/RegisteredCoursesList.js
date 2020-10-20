@@ -32,7 +32,7 @@ export class RegisteredCoursesList extends React.Component {
           {
             this.props.courseselections.length === 0 ? (
               <div className="list-item list-item--message">
-                <span>NADA</span>
+                <span>No Approved Registrations</span>
               </div>
             ) : (
 
