@@ -12,6 +12,7 @@ import DOWDashboard from '../components/DOWDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
+import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
@@ -31,6 +32,7 @@ const AppRouter = () => (
         <PrivateRoute path="/recommendationsDashboard" component={RecommendationsDashboard}/>
         <PrivateRoute path="/selectionsDashboard" component={SelectionsDashboard}/>
         <PrivateRoute path="/portfolioDashboard" component={PortfolioDashboard}/>
+        <PrivateRoute path="/registeredCoursesDashboard" component={RegisteredCoursesDashboard}/>
         <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
         <Route component={NotFoundPage} />

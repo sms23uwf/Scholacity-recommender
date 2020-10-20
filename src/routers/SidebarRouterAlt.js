@@ -4,7 +4,7 @@ import DashboardPage from '../components/DashboardPage';
 import OfferingsDashboard from '../components/OfferingsDashboard';
 import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
-import PortfolioDashboard from '../components/PortfolioDashboard';
+import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
@@ -39,11 +39,11 @@ const SidebarRouterAlt = [
     component: SelectionsDashboard
   },
   {
-    path: '/portfolioDashboard',
+    path: '/registeredCoursesDashboard',
     sidebarName: 'My Courses',
     navbarName: 'My Courses',
     icon: Work,
-    component: PortfolioDashboard
+    component: RegisteredCoursesDashboard
   },
   {
     path:'/aboutPage',

@@ -10,13 +10,11 @@ const disposition = "accepted";
 export class PortfolioList extends React.Component {
   constructor(props) {
     super(props);
-    //props.setUUIDFilter(firebase.auth().currentUser.uid);
+    this.state = {
+      userid: firebase.auth().currentUser.uid,
+      courseid: ''
+    }
   }
-
-  state = {
-    userid: firebase.auth().currentUser.uid,
-    courseid: ''
-   }
 
   getRegistrationStatus(courseId) {
     const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};

@@ -205,7 +205,8 @@ class OfferingListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-                <div className="content-container">
+              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
+              <div className="content-container">
                   <h4 className="page-header__title">{this.props.name}</h4>
                 </div>
               </div>
@@ -252,15 +253,6 @@ class OfferingListItem extends React.Component {
                               startIcon={<Work />}
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register Now</Typography>
                             </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              color="primary"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<CloseSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography></Button>
                           </Grid>
                         </Grid>
                       </Grid>

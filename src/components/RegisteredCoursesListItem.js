@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
-import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
+import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -17,11 +17,12 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
+import { deepOrange, red } from '@material-ui/core/colors';
 import { firebase } from '../firebase/firebase';
 import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 
 
-class CourseSelectionListItem extends React.Component {
+class RegisteredCoursesListItem extends React.Component {
   constructor(props){
       super(props);
       this.state = {
@@ -35,47 +36,13 @@ class CourseSelectionListItem extends React.Component {
         currentDescription: props.coursedescription,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
-        statusAvatarUrl: this.setStatusAvatarURL(props.disposition),
+        statusAvatarUrl: this.setStatusAvatarURL('Approved'),
         timeEnteredModal: Date.now(),
         instructor: props.instructor,
-        fee: props.fee,
-        userid: firebase.auth().currentUser.uid
+        fee: props.fee
       }
   }
   
-  toggleModalWithRegister = () => {
-
-    if(this.state.showModal == true)
-    {
-
-      const registrationData = {courseid: this.state.courseid, 
-        course_name: this.state.currentTitle, 
-        course_instructor: this.state.instructor, 
-        course_fee: this.state.fee, 
-        userid: this.state.userid, 
-        user_email: firebase.auth().currentUser.email, 
-        registration_status: 'requested'};
-
-      this.props.startAddRegistrationToUser(registrationData);
-
-      this.setState({newDisposition: `Registered`});
-
-      if(this.state.newRating != this.state.currentRating)
-        this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
-
-      this.recordDisposition(this.props.id, 'Registered', this.props.courseid, this.props.userid);
-
-    }
-
-    this.setState({
-      showModal: !this.state.showModal,
-      statusAvatarUrl: this.setStatusAvatarURL('Registered')
-
-    });
-    this.recordTimeInModal('register', this.state.currentRating);
-
-  }
-
   handleRatingChange = event => {
     this.setState({newRating: event.target.value});
   }
@@ -84,22 +51,15 @@ class CourseSelectionListItem extends React.Component {
     this.setState({newRating: rating});
   }
 
-  recordRating = (id,rating,courseid,userid) => {
+  recordRating = (id,rating,disposition,courseid,userid) => {
     this.setState({currentRating: rating});
-    const ratingData = {rating: rating};
+    const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseSelection(id, ratingData);
     this.props.startSetCourseSelections();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
-    this.props.startAddRatingsByUserSelection(ratingCapture);
-  }
-
-  recordDisposition = (id,newDisposition,courseid,userid) => {
-    this.setState({disposition: newDisposition});
-    const dispositionData = {disposition: newDisposition};
-    this.props.startEditCourseSelection(id, dispositionData);
-    this.props.startSetCourseSelections();
+    this.props.startAddRatingsByUserCourse(ratingCapture);
   }
 
   toggleModalWithSave = () => {
@@ -109,12 +69,9 @@ class CourseSelectionListItem extends React.Component {
       this.props.startSetCourseSelections();
     }
 
-    if(this.state.newRating != this.state.currentRating)
-      this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid);
+    if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
+      this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid);
 
-    if(this.state.disposition != this.state.newDisposition)
-      this.recordDisposition(this.props.id, this.state.newDisposition, this.props.courseid, this.props.userid);
-    
     this.setState({
       showModal: !this.state.showModal
     });
@@ -161,8 +118,10 @@ class CourseSelectionListItem extends React.Component {
           return `/images/shopping_cart.webp`;
         case `Registered`:
           return `/images/noun_submit_icon.png`;
+        case 'Approved':
+          return `/images/briefcase.jpg`
         default:
-          return `/images/shopping_cart.webp`;
+          return `/images/briefcase.jpg`;
       }
     }
   }
@@ -266,7 +225,7 @@ class CourseSelectionListItem extends React.Component {
 
               <div>
               <form action="">
-              <label className="statement">This Course Satisfies My Expectation For This Semester's Offerings.</label>
+              <label className="statement">This Course Satisfied My Expectations and Learning Goals.</label>
               <ul className='likert'>
                 <li>
                   <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
@@ -315,17 +274,6 @@ class CourseSelectionListItem extends React.Component {
                               startIcon={<SaveSharp />}
                               onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
-                          <Grid item>
-                            <Button
-                              disabled={this.state.isRegistered}
-                              color="primary"
-                              aria-label="Register"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save and Register</Typography>
-                            </Button>
-                          </Grid>
                         </Grid>
                       </Grid>
                     </div>
@@ -348,8 +296,8 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
-  startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
+  startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (CourseSelectionListItem);
+export default connect(mapStateToProps, mapDispatchToProps) (RegisteredCoursesListItem);

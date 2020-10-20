@@ -127,6 +127,7 @@ class PortfolioListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseRecommendation(id, ratingData);
+    this.props.startSetCourseRecommendations();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
@@ -255,7 +256,8 @@ class PortfolioListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-                <div className="content-container">
+              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
+              <div className="content-container">
                   <h3 className="page-header__title">{this.props.coursename}</h3>
                 </div>
               </div>
@@ -268,7 +270,7 @@ class PortfolioListItem extends React.Component {
                </div>
                <div>
                   <form action="">
-                    <label className="statement">This Course satisfied my Selected Learning Outcomes.</label>
+                    <label className="statement">This Course Satisfied My Expectations and Learning Goals.</label>
                     <ul className='likert'>
                       <li>
                         <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
@@ -314,15 +316,6 @@ class PortfolioListItem extends React.Component {
                         title="Accept"
                         startIcon={<SaveSharp />}
                         onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        color="primary"
-                        aria-label="Cancel"
-                        style={{fontWeight: "bold"}}
-                        title="Cancel"
-                        startIcon={<CloseSharp />}
-                        onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
                     </Grid>
                   </Grid>
                 </Grid>

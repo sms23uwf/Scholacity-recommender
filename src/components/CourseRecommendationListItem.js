@@ -49,8 +49,11 @@ class CourseRecommendationListItem extends React.Component {
       this.props.startSetCourseRecommendations();
     }
 
-    if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
-      this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid, this.props.learningobjectives);
+    if(this.state.newRating != this.state.currentRating)
+      this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
+
+    if(this.state.disposition != this.state.newDisposition)
+      this.recordDisposition(this.props.id, this.state.newDisposition, this.props.courseid, this.props.userid);
 
     this.setState({
       showModal: !this.state.showModal
@@ -103,9 +106,16 @@ class CourseRecommendationListItem extends React.Component {
     this.setState({newRating: rating});
   }
 
-  recordRating = (id,rating,disposition,courseid,userid,learningobjectives) => {
+  recordDisposition = (id,newDisposition,courseid,userid) => {
+    this.setState({disposition: newDisposition});
+    const dispositionData = {disposition: newDisposition};
+    this.props.startEditCourseRecommendation(id, dispositionData);
+    this.props.startSetCourseRecommendations();
+  }
+
+  recordRating = (id,rating,courseid,userid,learningobjectives) => {
     this.setState({currentRating: rating});
-    const ratingData = {rating: rating, disposition: disposition};
+    const ratingData = {rating: rating};
     this.props.startEditCourseRecommendation(id, ratingData);
     this.props.startSetCourseRecommendations();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
@@ -124,10 +134,6 @@ class CourseRecommendationListItem extends React.Component {
     if(this.state.showModal == true)
     {
 
-      this.setState({newDisposition: 'Registered'});
-
-      this.recordRating(this.props.id, this.state.newRating, 'Registered', this.props.courseid, this.props.userid, this.props.learningobjectives);
-
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
         course_instructor: this.state.instructor, 
@@ -137,6 +143,14 @@ class CourseRecommendationListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
+
+      this.setState({newDisposition: 'Registered'});
+
+      if(this.state.newRating != this.state.currentRating)
+        this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
+
+      this.recordDisposition(this.props.id, "Registered", this.props.courseid, this.props.userid);
+
     }
 
     this.setState({
@@ -256,7 +270,8 @@ class CourseRecommendationListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-                <div className="content-container">
+              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
+              <div className="content-container">
                   <h4 className="page-header__title">{this.props.coursename}</h4>
                 </div>
               </div>
@@ -327,15 +342,6 @@ class CourseRecommendationListItem extends React.Component {
                               startIcon={<Work />}
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              color="primary"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<CloseSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography></Button>
                           </Grid>
                         </Grid>
                       </Grid>

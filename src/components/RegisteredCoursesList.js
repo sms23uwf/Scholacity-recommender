@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CourseSelectionListItem from './CourseSelectionListItem';
+import RegisteredCoursesListItem from './RegisteredCoursesListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
 import SelectCourseSelections from '../selectors/courseselections';
 import { firebase } from '../firebase/firebase';
 
 
-export class CourseSelectionList extends React.Component {
+export class RegisteredCoursesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userid: firebase.auth().currentUser.uid,
-      courseid: ''
+        userid: firebase.auth().currentUser.uid,
+        courseid: ''
+      }
     }
-  }
 
   getRegistration(courseId) {
     const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
@@ -25,25 +25,27 @@ export class CourseSelectionList extends React.Component {
 
       <div className="content-container-course">
         <div className="list-header">
-          <div className="show-for-mobile">Course Selections</div>
-          <div className="show-for-desktop">Course Selections</div>
+          <div className="show-for-mobile">Approved</div>
+          <div className="show-for-desktop">Approved Registrations</div>
         </div>
         <div className="list-body">
           {
             this.props.courseselections.length === 0 ? (
               <div className="list-item list-item--message">
-                <span>No Course Selections</span>
+                <span>NADA</span>
               </div>
             ) : (
+
                 this.props.courseselections.map((courseselection) => {
                   
                   const registrationRecord = this.getRegistration(courseselection.courseid);
                   const registrationId = registrationRecord.id;
                   const registration_status = registrationRecord.registration_status;
 
+                  console.log(`inside RegisteredCoursesList with registration_status: ${registration_status}`);
 
-                  if (registration_status != 'approved')
-                    return <CourseSelectionListItem key={courseselection.id} id={courseselection.id} {...courseselection} registrationId={registrationId}/>;
+                  if (registration_status == 'approved')
+                    return <RegisteredCoursesListItem key={courseselection.id} id={courseselection.id} {...courseselection} registrationId={registrationId}/>;
                 })
               )
           }
@@ -66,5 +68,5 @@ export class CourseSelectionList extends React.Component {
     };
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(CourseSelectionList);
+  export default connect(mapStateToProps, mapDispatchToProps)(RegisteredCoursesList);
   
