@@ -43,6 +43,7 @@ export class RegistrationList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
+  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
 })
 

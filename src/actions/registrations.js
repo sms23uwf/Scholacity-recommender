@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import database from '../firebase/firebase';
+import { startsetAllRegistrations } from './registrations_admin';
 
 export const addRegistrationToUser = (registrationUserPairing) => ({
   type: 'ADD_REGISTRATION_USER',
@@ -26,6 +27,7 @@ export const startAddRegistrationToUser = (registrationData = {}) => {
         id: ref.key,
         ...registrationUserPairing
       }));
+      dispatch(startsetAllRegistrations());
     });
   };
 };
@@ -66,9 +68,10 @@ export const startApproveRegistrationForUser_Course = (registrationUserPairing =
 
     return database.ref(`users_tables/${registration_userid}/registration/${registration_id}`).update(updates).then(() => {
       dispatch(approveRegistrationForUser_Course(registration_id, updates));
+      dispatch(startsetAllRegistrations());
+      dispatch(startsetRegistrationsByUser());
     });
   };
-
 }
 
   // SET_REGISTRATION_USER

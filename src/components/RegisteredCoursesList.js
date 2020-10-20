@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import RegisteredCoursesListItem from './RegisteredCoursesListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
-import SelectCourseSelections from '../selectors/courseselections';
+import selectCourses from '../selectors/courses';
 import { firebase } from '../firebase/firebase';
 
 
@@ -20,6 +20,12 @@ export class RegisteredCoursesList extends React.Component {
     return pairing;
   }
   
+  getCourse(courseId) {
+    const pairing = this.props.courses.find(p => p.id === courseId) || {id:0};
+    return pairing;
+  }
+
+
   render() {
     return (
 
@@ -30,24 +36,27 @@ export class RegisteredCoursesList extends React.Component {
         </div>
         <div className="list-body">
           {
-            this.props.courseselections.length === 0 ? (
+            this.props.registrations_user.length === 0  ? (
               <div className="list-item list-item--message">
-                <span>No Approved Registrations</span>
+                <span>No Registrations</span>
               </div>
             ) : (
 
-                this.props.courseselections.map((courseselection) => {
-                  
-                  const registrationRecord = this.getRegistration(courseselection.courseid);
-                  const registrationId = registrationRecord.id;
-                  const registration_status = registrationRecord.registration_status;
 
-                  console.log(`inside RegisteredCoursesList with registration_status: ${registration_status}`);
+                this.props.registrations_user.map((registration) => {
+                  
+                  const matchingCourse = this.getCourse(registration.courseid);
+
+                  const registrationId = registration.id;
+                  const registration_status = registration.registration_status;
+
+                  console.log(`inside registered courses list`);
 
                   if (registration_status == 'approved')
-                    return <RegisteredCoursesListItem key={courseselection.id} id={courseselection.id} {...courseselection} registrationId={registrationId}/>;
+                    return <RegisteredCoursesListItem key={matchingCourse.id} courseid={registration.courseid} {...matchingCourse} registrationId={registrationId}/>;
                 })
               )
+
           }
         </div>
       </div>
@@ -62,7 +71,7 @@ export class RegisteredCoursesList extends React.Component {
   
   const mapStateToProps = (state) => {
     return {
-      courseselections: SelectCourseSelections(state.courseselections, state.filters),
+      courses: selectCourses(state.courses, state.filters),
       registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
       filters: state.filters
     };

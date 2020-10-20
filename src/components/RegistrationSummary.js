@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectCourses from '../selectors/courses';
 import selectCoursesTotal from '../selectors/courses-total';
+import { startsetAllRegistrations } from '../actions/registrations_admin';
 
 export const RegistrationSummary = ({ coursesCount, coursesTotal }) => {
   return (
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => {
 
   return {
     coursesCount: visibleCourses.length,
-    coursesTotal: selectCoursesTotal(visibleCourses)
+    coursesTotal: selectCoursesTotal(visibleCourses),
+    allRegistrations: startsetAllRegistrations()
   };
 };
 

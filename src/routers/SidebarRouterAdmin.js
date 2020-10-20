@@ -1,10 +1,12 @@
 import { Home, DateRangeSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
 
 import DashboardPage from '../components/DashboardPage';
+import PlannerDashboard from '../components/PlannerDashboard';
+import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import OfferingsDashboard from '../components/OfferingsDashboard';
 import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
-import PortfolioDashboard from '../components/PortfolioDashboard';
+import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
@@ -32,6 +34,20 @@ const SidebarRouterAlt = [
     component: DOWDashboard
   },
   {
+    path: '/plannerDashboard',
+    sidebarName: 'Learning Opportunities',
+    navbarName: 'Learning Opportunities',
+    icon: PlaylistAddCheck,
+    component: PlannerDashboard
+  },
+  {
+    path: '/recommendationsDashboard',
+    sidebarName: 'My Recommendations',
+    navbarName: 'My Recommendations',
+    icon: ShoppingCart,
+    component: RecommendationsDashboard
+  },
+  {
     path: '/selectionsDashboard',
     sidebarName: 'My Selections',
     navbarName: 'My Selections',
@@ -39,13 +55,12 @@ const SidebarRouterAlt = [
     component: SelectionsDashboard
   },
   {
-    path: '/portfolioDashboard',
+    path: '/registeredCoursesDashboard',
     sidebarName: 'My Courses',
     navbarName: 'My Courses',
     icon: Work,
-    component: PortfolioDashboard
+    component: RegisteredCoursesDashboard
   },
-
   {
     path: '/adminDashboard',
     sidebarName: 'Administration',

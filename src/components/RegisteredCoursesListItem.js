@@ -12,7 +12,6 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
-import selectCourseSelections from '../selectors/courseselections';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
@@ -32,8 +31,8 @@ class RegisteredCoursesListItem extends React.Component {
         currentRating: props.rating,
         newRating: props.rating,
         isRegistered: props.disposition === `Registered` ? true : false,
-        currentTitle: props.coursename,
-        currentDescription: props.coursedescription,
+        currentTitle: props.name,
+        currentDescription: props.description,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         statusAvatarUrl: this.setStatusAvatarURL('Approved'),
@@ -51,10 +50,10 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({newRating: rating});
   }
 
-  recordRating = (id,rating,disposition,courseid,userid) => {
+  recordRating = (id,rating,courseid,userid) => {
     this.setState({currentRating: rating});
-    const ratingData = {rating: rating, disposition: disposition};
-    this.props.startEditCourseSelection(id, ratingData);
+    const ratingData = {rating: rating};
+    this.props.startEditCourseRegistration(id, ratingData);
     this.props.startSetCourseSelections();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
@@ -69,8 +68,8 @@ class RegisteredCoursesListItem extends React.Component {
       this.props.startSetCourseSelections();
     }
 
-    if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
-      this.recordRating(this.props.id, this.state.newRating, this.state.newDisposition, this.props.courseid, this.props.userid);
+    if(this.state.newRating != this.state.currentRating)
+      this.recordRating(this.props.courseid, this.state.newRating, this.props.courseid, this.props.userid);
 
     this.setState({
       showModal: !this.state.showModal
@@ -286,9 +285,7 @@ class RegisteredCoursesListItem extends React.Component {
 };
 
 const mapStateToProps = (state, props) => ({
-  courseselections: selectCourseSelections(state.courseselections, state.filters),
-  courseselection: state.courseselections.find((courseselection) => courseselection.id === props.id),
-  sessions: selectSessions(state.sessions, props.courseid),
+  sessions: selectSessions(state.sessions, props.id),
   filters: state.filters
 });
 
