@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
+import { startEditCourseRegistration } from '../actions/registrations';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRegistrationToUser } from '../actions/registrations';
 import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -24,21 +23,23 @@ import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseShar
 class RegisteredCoursesListItem extends React.Component {
   constructor(props){
       super(props);
+
       this.state = {
         showModal: false,
+        registrationId: props.id,
         disposition: props.disposition,
         newDisposition: props.disposition,
         currentRating: props.rating,
         newRating: props.rating,
-        isRegistered: props.disposition === `Registered` ? true : false,
-        currentTitle: props.name,
-        currentDescription: props.description,
+        currentTitle: props.course_name,
+        currentDescription: props.course_description,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
         statusAvatarUrl: this.setStatusAvatarURL('Approved'),
         timeEnteredModal: Date.now(),
-        instructor: props.instructor,
-        fee: props.fee
+        instructor: props.course_instructor,
+        fee: props.course_fee,
+        userid: firebase.auth().currentUser.uid
       }
   }
   
@@ -54,7 +55,6 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseRegistration(id, ratingData);
-    this.props.startSetCourseSelections();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
@@ -63,13 +63,10 @@ class RegisteredCoursesListItem extends React.Component {
 
   toggleModalWithSave = () => {
 
-    if(this.state.showModal == true)
-    {
-      this.props.startSetCourseSelections();
-    }
+    console.log(`inside toggleModalWithSave with registration.id: ${this.state.registrationId}`);
 
     if(this.state.newRating != this.state.currentRating)
-      this.recordRating(this.props.courseid, this.state.newRating, this.props.courseid, this.props.userid);
+      this.recordRating(this.state.registrationId, this.state.newRating, this.props.courseid, this.state.userid);
 
     this.setState({
       showModal: !this.state.showModal
@@ -84,7 +81,7 @@ class RegisteredCoursesListItem extends React.Component {
 
     let timeInModal = timeStamp - this.state.timeEnteredModal;
 
-    const timeInModalCapture = {timeInModal: timeInModal, userid: this.props.courseselection.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
+    const timeInModalCapture = {timeInModal: timeInModal, userid: this.state.userid, disposition: disposition, rating: rating, timeEnteredModal: this.state.timeEnteredModal, timeClosedModal: timeStamp};
     this.props.startAddUserTimeInModal(timeInModalCapture);
   }
 
@@ -105,7 +102,6 @@ class RegisteredCoursesListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      isRegistered: false
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -211,13 +207,13 @@ class RegisteredCoursesListItem extends React.Component {
     
                 <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
                 <div className="content-container">
-                  <h4 className="page-header__title">{this.props.coursename}</h4>
+                  <h4 className="page-header__title">{this.state.currentTitle}</h4>
                 </div>
               </div>
               <div className="content-container">
                 <span>
                 <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.props.coursedescription}
+                  {this.state.currentDescription}
                 </Typography>
                 </span>
               </div>
@@ -285,14 +281,12 @@ class RegisteredCoursesListItem extends React.Component {
 };
 
 const mapStateToProps = (state, props) => ({
-  sessions: selectSessions(state.sessions, props.id),
+  sessions: selectSessions(state.sessions, props.courseid),
   filters: state.filters
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
-  startSetCourseSelections: () => dispatch(startSetCourseSelections()),
-  startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startEditCourseRegistration: (id, ratingData) => dispatch(startEditCourseRegistration(id, ratingData)),
   startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

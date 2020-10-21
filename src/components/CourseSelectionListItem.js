@@ -50,6 +50,8 @@ class CourseSelectionListItem extends React.Component {
 
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
+        course_description: this.state.currentDescription,
+        rating: `-1`,
         course_instructor: this.state.instructor, 
         course_fee: this.state.fee, 
         userid: this.state.userid, 

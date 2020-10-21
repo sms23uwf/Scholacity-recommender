@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startApproveRegistrationForUser_Course } from '../actions/registrations';
+import { startApproveRegistrationForUser_Course, startsetRegistrationsByUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -73,9 +73,6 @@ class RegistrationListItem extends React.Component {
           registration_id: this.state.registration_id, 
           registration_userid: this.state.registration_userid
        };
-
-       console.log(`inside toggleModalWithApproval with registration_id: ${this.state.registration_id}`);
-
        this.props.startApproveRegistrationForUser_Course(registrationUserPairing);
     }
 
@@ -196,7 +193,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startApproveRegistrationForUser_Course: (registrationUserPairing) => dispatch(startApproveRegistrationForUser_Course(registrationUserPairing)),
-  startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
+  startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture)),
+  startsetRegistrationsByUser: () => dispatch(startsetRegistrationsByUser())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationListItem);

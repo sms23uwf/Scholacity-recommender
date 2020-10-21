@@ -1,6 +1,5 @@
 import uuid from 'uuid';
 import database from '../firebase/firebase';
-import { startsetAllRegistrations } from './registrations_admin';
 
 export const addRegistrationToUser = (registrationUserPairing) => ({
   type: 'ADD_REGISTRATION_USER',
@@ -13,6 +12,8 @@ export const startAddRegistrationToUser = (registrationData = {}) => {
     const {
       courseid = ``,
       course_name = ``,
+      course_description = ``,
+      rating = ``,
       course_instructor = ``,
       course_fee = ``, 
       userid = ``,
@@ -20,14 +21,13 @@ export const startAddRegistrationToUser = (registrationData = {}) => {
       registration_status = ``
     } = registrationData;
 
-    const registrationUserPairing = { courseid, course_name, course_instructor, course_fee, userid, user_email, registration_status};
+    const registrationUserPairing = { courseid, course_name, course_description, rating, course_instructor, course_fee, userid, user_email, registration_status};
 
     return database.ref(`users_tables/${uid}/registration`).push({...registrationUserPairing}).then((ref) => {
       dispatch(addRegistrationToUser({
         id: ref.key,
         ...registrationUserPairing
       }));
-      dispatch(startsetAllRegistrations());
     });
   };
 };
@@ -49,6 +49,23 @@ export const startRemoveRegistrationFromUser = (registrationPairing = {}) => {
   };
 };
  
+// EDIT_COURSE_REGISTRATION
+export const editCourseRegistration = (id, updates) => ({
+  type: 'EDIT_COURSE_REGISTRATION',
+  id,
+  updates
+});
+
+export const startEditCourseRegistration = (id, updates) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users_tables/${uid}/registration/${id}`).update(updates).then(() => {
+      dispatch(editCourseRegistration(id, updates));
+      dispatch(startsetRegistrationsByUser());
+    });
+  };
+};
+
 // APPROVE_REGISTRATION
 export const approveRegistrationForUser_Course = (id, updates) => ({
   type: 'APPROVE_REGISTRATION',
@@ -68,8 +85,6 @@ export const startApproveRegistrationForUser_Course = (registrationUserPairing =
 
     return database.ref(`users_tables/${registration_userid}/registration/${registration_id}`).update(updates).then(() => {
       dispatch(approveRegistrationForUser_Course(registration_id, updates));
-      dispatch(startsetAllRegistrations());
-      dispatch(startsetRegistrationsByUser());
     });
   };
 }

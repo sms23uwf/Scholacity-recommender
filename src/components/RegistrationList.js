@@ -9,11 +9,11 @@ import { firebase } from '../firebase/firebase';
 export class RegistrationList extends React.Component {
   constructor(props) {
     super(props);
-  }
+    this.state = {
+      userid: firebase.auth().currentUser.uid
+     }
+    }
 
-  state = {
-    userid: firebase.auth().currentUser.uid
-   }
 
   render() {
     return (
@@ -43,7 +43,6 @@ export class RegistrationList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
-  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
 })
 

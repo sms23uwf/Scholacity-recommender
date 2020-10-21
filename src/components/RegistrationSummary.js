@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import selectCourses from '../selectors/courses';
-import selectCoursesTotal from '../selectors/courses-total';
-import { startsetAllRegistrations } from '../actions/registrations_admin';
+import selectRegistrationsAll from '../selectors/registration_all';
+import selectRegistrationsTotal from '../selectors/registrations-total';
 
 export const RegistrationSummary = ({ coursesCount, coursesTotal }) => {
   return (
@@ -15,12 +14,11 @@ export const RegistrationSummary = ({ coursesCount, coursesTotal }) => {
 };
 
 const mapStateToProps = (state) => {
-  const visibleCourses= selectCourses(state.courses, state.filters);
+  const visibleRegistrations= selectRegistrationsAll(state.registrations_all, state.filters);
 
   return {
-    coursesCount: visibleCourses.length,
-    coursesTotal: selectCoursesTotal(visibleCourses),
-    allRegistrations: startsetAllRegistrations()
+    registrationsCount: visibleRegistrations.length,
+    registrationsTotal: selectRegistrationsTotal(visibleRegistrations)
   };
 };
 

@@ -13,8 +13,8 @@ export default (state = registrationsUserSelectReducerDefaultState, action) => {
       return state.filter(({ id }) => id !== action.id);
     case 'SET_REGISTRATION_USER':
       return action.registrations_user;
-    case 'SET_ALL_REGISTRATIONS':
-        return action.registrations_all;
+    case 'APPROVE_REGISTRATION':
+      return action.registrations_user;
     default:
       return state;
   }

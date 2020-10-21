@@ -11,13 +11,6 @@ export class RegistrationListFilters extends React.Component {
   //constructor(props) {
     //super(props);
 
-   state = {
-     selectedOption: [{id: this.props.courses[0].id, label: this.props.courses[0].name}]
-    };
-      rows = this.props.courses.map(item => {
-        return item = {'value': item.id, 'label': item.content};
-     });
-
     componentDidMount() {
       this.recordNavigationEvent('AdminDashboard');
     }
@@ -40,15 +33,7 @@ export class RegistrationListFilters extends React.Component {
     this.props.startAddUserNavigationEvent(navigationEventCapture);
   }
 
-  onFocusChange = (calendarFocused) => {
-    this.setState(() => ({ calendarFocused }));
-  }
-  onTextChange = (e) => {
-    this.props.setTextFilter(e);
-  };
-
   render() {
-    const { selectedOption } = this.state;
     return (
       <div className="content-container">
         <div className="input-group">

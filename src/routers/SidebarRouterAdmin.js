@@ -35,8 +35,8 @@ const SidebarRouterAlt = [
   },
   {
     path: '/plannerDashboard',
-    sidebarName: 'Learning Opportunities',
-    navbarName: 'Learning Opportunities',
+    sidebarName: 'My Interests',
+    navbarName: 'My Interests',
     icon: PlaylistAddCheck,
     component: PlannerDashboard
   },
