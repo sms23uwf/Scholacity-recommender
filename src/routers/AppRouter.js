@@ -15,6 +15,7 @@ import PortfolioDashboard from '../components/PortfolioDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
+import AdminAboutPage from '../components/AdminAboutPage';
 
 export const history = createHistory();
 
@@ -35,6 +36,7 @@ const AppRouter = () => (
         <PrivateRoute path="/registeredCoursesDashboard" component={RegisteredCoursesDashboard}/>
         <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
+        <PrivateRoute path="/adminAboutPage" component={AdminAboutPage}/>
         <Route component={NotFoundPage} />
       </Switch>
     </div>

@@ -69,10 +69,10 @@
 
   .modal .close_modal {
     position: absolute;
-    left: 2%;
+    left: 5%;
     font-weight: bold;
     color: red;
-    top: 6px;
+    top: 6%;
     cursor: pointer;
     font-size: 14px;
     opacity: 1.00;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
+import { startsetAllRegistrations } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -120,6 +121,7 @@ class DOWListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
+      this.props.startsetAllRegistrations();
     }
 
     this.setState({
@@ -279,6 +281,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddCourseSelection: (userCourse) => dispatch(startAddCourseSelection(userCourse)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

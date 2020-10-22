@@ -31,6 +31,8 @@ import LoadingPage from './components/LoadingPage';
 import { setUUIDFilter, setDomainFilter } from './actions/filters';
 import { startSetRatingsByUserCourseLO } from './actions/ratingsByUserCourseLO';
 import getVisibleRatingsByUserCourseLO from './selectors/ratingsByUserCourseLO';
+import { startSetRatingsByUserSelection } from './actions/ratingsByUserSelection';
+import { startSetRatingsByUserCourse } from './actions/ratingsByUserCourse';
 import { startAddUserNavigationEvent } from './actions/navigationEvents';
 import { connect } from 'react-redux';
 
@@ -87,6 +89,8 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(startsetCourseSelectionsByUser());
     store.dispatch(startSetLOCourses());
     store.dispatch(startSetRatingsByUserCourseLO());
+    store.dispatch(startSetRatingsByUserSelection());
+    store.dispatch(startSetRatingsByUserCourse());
     store.dispatch(startSetKnowledgeAreas()).then(() => {
       renderApp();
       if (history.location.pathname === '/') {

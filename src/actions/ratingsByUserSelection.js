@@ -47,7 +47,7 @@ export const startSetRatingsByUserSelection = () => {
           });
       });
 
-      dispatch(setRatingsByUserCourse(ratings_user_selection));
+      dispatch(setRatingsByUserSelection(ratings_user_selection));
     });
   };
 };

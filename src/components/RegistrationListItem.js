@@ -74,6 +74,7 @@ class RegistrationListItem extends React.Component {
           registration_userid: this.state.registration_userid
        };
        this.props.startApproveRegistrationForUser_Course(registrationUserPairing);
+       this.props.startsetRegistrationsByUser(this.state.userid)
     }
 
     this.setState({

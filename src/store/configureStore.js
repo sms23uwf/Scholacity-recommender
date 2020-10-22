@@ -17,7 +17,9 @@ import recommendationLearningObjectiveReducer from '../reducers/recommendation_l
 import usersReducer from '../reducers/users.js';
 import filtersReducer from '../reducers/filters';
 import authReducer from '../reducers/auth';
-import ratingsReducer from '../reducers/ratingsByUserCourseLO';
+import ratingsByUserCourseLOReducer from '../reducers/ratingsByUserCourseLO';
+import ratingsByUserSelectionReducer from '../reducers/ratingsByUserSelection';
+import ratingsByUserCourseReducer from '../reducers/ratingsByUserCourse';
 import navigationEventsReducer from '../reducers/navigationEvents';
 import selectionEventsReducer from '../reducers/selectionEvents';
 import timeInModalReducer from '../reducers/timeInModal';
@@ -44,7 +46,9 @@ export default () => {
       users: usersReducer,
       filters: filtersReducer,
       auth: authReducer,
-      ratings_user_course_lo: ratingsReducer,
+      ratings_user_course_lo: ratingsByUserCourseLOReducer,
+      ratings_user_selection: ratingsByUserSelectionReducer,
+      ratings_user_course: ratingsByUserCourseLOReducer,
       user_navigation_events: navigationEventsReducer,
       user_selection_events: selectionEventsReducer,
       user_times_in_modals: timeInModalReducer

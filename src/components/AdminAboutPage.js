@@ -11,6 +11,11 @@ import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import { AssignmentSharp } from '@material-ui/icons';
 
 //require('bootstrap/dist/css/bootstrap.css');
 
@@ -98,21 +103,8 @@ class AdminAboutPage extends React.Component {
     }
   }
 
-  setTitleBasedOnRating = (rating) => {
-    switch(rating) {
-      case '0':
-        return 'Average Rating: Rejected';
-      case `1`:
-        return `Average Rating: Undecided`;
-      case `2`:
-        return `Average Rating: Accepted`;
-      case `3`:
-        return `Average Rating: Accepted`;
-      case `4`:
-        return `Average Rating: Accepted`;
-      default:
-          return `No Ratings`;
-    }
+  getLOAlignmentTitle = () => {
+    return 'Average Rating of Alignment of Learning Outcomes with Course Description:'
   }
 
   getAverageLOAlignmentRating() {
@@ -127,6 +119,34 @@ class AdminAboutPage extends React.Component {
     return parseInt((total/count)).toString();
 
   }
+
+  getAverageOfferingExpectationRating = () => {
+
+    var count = 0;
+    var total = 0;
+
+    this.props.ratingsByUserSelection.map((ratingByUserSelection) => {
+      total+= parseInt(ratingByUserSelection.rating);
+      count++;
+    });
+    return parseInt((total/count)).toString();
+
+  }
+
+
+  getAverageCourseSatisfactionRating = () => {
+
+    var count = 0;
+    var total = 0;
+
+    this.props.ratingsByUserCourse.map((ratingByUserCourse) => {
+      total+= parseInt(ratingByUserCourse.rating);
+      count++;
+    });
+    return parseInt((total/count)).toString();
+
+  }
+
 
   getUseabilityScore() {
     var count = 0;
@@ -159,36 +179,42 @@ class AdminAboutPage extends React.Component {
           >
           <div>
             <Card>
-              <CardHeader avatar={<Avatar src={this.setAvatarURL(this.state.avgRating)} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.setTitleBasedOnRating(this.state.avgRating)}/>
+              <CardHeader titleTypographyProps={{variant:'h4'}} title="About Scholacity Administration"/>
               <CardContent>
-                <Typography variant="h5" component="h2" gutterBottom>
-                  Scholacity, Scholarship and Tenacity, is the trait of Lifelong Learning.
+                <Typography variant="h5" component="h5" gutterBottom>
+                  Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
+                </Typography>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
+                The only Administrative activity currently available is the Approval of Course Registrations. More to come. The Program Director and/or system administrator may also review and test the functionality available to the users.
                 </Typography>
                 <Divider/>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                    Here are the menu options:
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Interests"</b>} menu option takes you to a page from which you may select one or more Learning Outcomes that are of interest. These Learning Outcomes are derived from the course descriptions in the UWF Leisure Learning Course Catalog for the upcoming semester, and are grouped by Knowledge Area.
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Recommendations"</b>} menu option takes you to a page containing the recommendations made by the application based on the Learning Outcomes that you have selected in {'"My Interests"'}. Please {<b>click the recommendation and rate it</b>} using the provided Likert scale.  If you wish to register for the recommended course please also select {<b>"Maintain in Saved Courses"</b>} and then click the "Save" button.
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Courses"</b>} menu option takes you to a page containing the recommendations that you have chosen to save. You may click the saved recommendation and change your rating or de-select it as a saved course at any time.
-                  </Typography>
-                  <Divider/>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                    The Information at the top of this dialog is the average  for all of the recommendations that you have rated.
-                  </Typography>
+                <List>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setAvatarURL(this.state.avgLOAlignmentRating)}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={`Average User Rating of Stated Learning Outcomes`} />
+                  </ListItem>
+
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={`Average User Rating of Offerings Expectations`} />
+                  </ListItem>
+
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={`Average User Rating of Course Satisfaction`} />
+                  </ListItem>
+                </List>
                 </CardContent>
                 <br/>
             </Card>
-            <br/>
-            <br/>
-            <br/>
             <div>
-              <Button title="Close" className="close_modal" onClick={this.closeModal}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography></Button>
+              <Button title="Close" className="close_modal" onClick={this.closeModal}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
             </div>
           </div>
         </Modal>
@@ -200,11 +226,13 @@ class AdminAboutPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     ratingsByUserCourseLO: state.ratings_user_course_lo,
+    ratingsByUserSelection: state.ratings_user_selection,
+    ratingsByUserCourse: state.ratings_user_course,
     userNavigationEvents: state.user_navigation_events,
     userSelectionEvents: state.user_selection_events,
     userTimesInModals: state.user_times_in_modals
   };
 };
 
-export default connect(mapStateToProps)(AboutPage);
+export default connect(mapStateToProps)(AdminAboutPage);
 

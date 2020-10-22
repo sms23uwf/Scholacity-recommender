@@ -4,6 +4,7 @@ import { startSetCourseRecommendations, startEditCourseRecommendation } from '..
 import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
+import { startsetAllRegistrations } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -145,6 +146,7 @@ class CourseRecommendationListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
+      this.props.startsetAllRegistrations();
 
       this.setState({newDisposition: 'Registered'});
 
@@ -367,6 +369,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
   startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

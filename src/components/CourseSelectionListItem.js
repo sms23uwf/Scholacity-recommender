@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
+import { startsetAllRegistrations } from '../actions/registrations_admin';
 import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -59,6 +60,7 @@ class CourseSelectionListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
+      this.props.startsetAllRegistrations();
 
       this.setState({newDisposition: `Registered`});
 
@@ -315,7 +317,7 @@ class CourseSelectionListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Save"
                               startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating Only</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
@@ -325,7 +327,7 @@ class CourseSelectionListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save and Register</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
                           </Grid>
                         </Grid>
@@ -350,6 +352,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
