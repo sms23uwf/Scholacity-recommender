@@ -148,7 +148,11 @@ class CourseRecommendationListItem extends React.Component {
       this.props.startAddRegistrationToUser(registrationData);
       this.props.startsetAllRegistrations();
 
-      this.setState({newDisposition: 'Registered'});
+      this.setState({
+        newDisposition: `Registered`,
+        isRegistered: true
+      });
+
 
       if(this.state.newRating != this.state.currentRating)
         this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
@@ -274,10 +278,9 @@ class CourseRecommendationListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
               <div className="content-container">
                   <h4 className="page-header__title">{this.props.coursename}</h4>
-                </div>
+              </div>
               </div>
               <div className="content-container">
                 <span>
@@ -351,7 +354,10 @@ class CourseRecommendationListItem extends React.Component {
                       </Grid>
                     </div>
                 </span>
-          </React.Fragment>
+                <div>
+                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+                </div>
+              </React.Fragment>
         </Modal>
       </div>
     );

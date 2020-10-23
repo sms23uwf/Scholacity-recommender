@@ -256,7 +256,6 @@ class PortfolioListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
               <div className="content-container">
                   <h3 className="page-header__title">{this.props.coursename}</h3>
                 </div>
@@ -322,6 +321,9 @@ class PortfolioListItem extends React.Component {
 
               </div>
             </span>
+            <div>
+              <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+            </div>
           </React.Fragment>
         </Modal>
       </div>

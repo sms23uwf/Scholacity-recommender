@@ -112,10 +112,11 @@ class AdminAboutPage extends React.Component {
     var count = 0;
     var total = 0;
 
-    this.props.ratingsByUserCourseLO.map((ratingByUserCourselO) => {
-      total+= parseInt(ratingByUserCourselO.rating);
+    this.props.ratings_lo_alignment.map((record) => {
+      total+= parseInt(record.rating);
       count++;
     });
+    console.log(`total lo alignment ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }
@@ -125,10 +126,11 @@ class AdminAboutPage extends React.Component {
     var count = 0;
     var total = 0;
 
-    this.props.ratingsByUserSelection.map((ratingByUserSelection) => {
-      total+= parseInt(ratingByUserSelection.rating);
+    this.props.ratings_course_offerings.map((record) => {
+      total+= parseInt(record.rating);
       count++;
     });
+    console.log(`total course offerings ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }
@@ -139,10 +141,11 @@ class AdminAboutPage extends React.Component {
     var count = 0;
     var total = 0;
 
-    this.props.ratingsByUserCourse.map((ratingByUserCourse) => {
-      total+= parseInt(ratingByUserCourse.rating);
+    this.props.ratings_course_satisfaction.map((record) => {
+      total+= parseInt(record.rating);
       count++;
     });
+    console.log(`total course satisfaction ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }
@@ -225,9 +228,9 @@ class AdminAboutPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    ratingsByUserCourseLO: state.ratings_user_course_lo,
-    ratingsByUserSelection: state.ratings_user_selection,
-    ratingsByUserCourse: state.ratings_user_course,
+    ratings_lo_alignment: state.ratings_all_lo_alignment,
+    ratings_course_offerings: state.ratings_all_course_offerings,
+    ratings_course_satisfaction: state.ratings_all_course_satisfaction,
     userNavigationEvents: state.user_navigation_events,
     userSelectionEvents: state.user_selection_events,
     userTimesInModals: state.user_times_in_modals

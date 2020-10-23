@@ -31,12 +31,12 @@ class CourseSelectionListItem extends React.Component {
         newDisposition: props.disposition,
         currentRating: props.rating,
         newRating: props.rating,
-        isRegistered: props.disposition === `Registered` ? true : false,
+        isRegistered: props.registrationId === 0 ? false : true,
         currentTitle: props.coursename,
         currentDescription: props.coursedescription,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
-        statusAvatarUrl: this.setStatusAvatarURL(props.disposition),
+        statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? props.disposition : "Registered"),
         timeEnteredModal: Date.now(),
         instructor: props.instructor,
         fee: props.fee,
@@ -62,7 +62,10 @@ class CourseSelectionListItem extends React.Component {
       this.props.startAddRegistrationToUser(registrationData);
       this.props.startsetAllRegistrations();
 
-      this.setState({newDisposition: `Registered`});
+      this.setState({
+        newDisposition: `Registered`,
+        isRegistered: true
+      });
 
       if(this.state.newRating != this.state.currentRating)
         this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
@@ -153,7 +156,6 @@ class CourseSelectionListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      isRegistered: false
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -255,7 +257,6 @@ class CourseSelectionListItem extends React.Component {
             <div>
               <div className="modal-header">
     
-                <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
                 <div className="content-container">
                   <h4 className="page-header__title">{this.props.coursename}</h4>
                 </div>
@@ -334,7 +335,10 @@ class CourseSelectionListItem extends React.Component {
                       </Grid>
                     </div>
                 </span>
-          </React.Fragment>
+                <div>
+                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+                </div>
+              </React.Fragment>
         </Modal>
       </div>
     );

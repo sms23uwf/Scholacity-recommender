@@ -157,12 +157,12 @@ class AboutPage extends React.Component {
           >
           <div>
             <Card>
-              <CardHeader avatar={<Avatar src={this.setAvatarURL(this.state.avgRating)} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.setTitleBasedOnRating(this.state.avgRating)}/>
-              <CardContent>
-                <Typography variant="h5" component="h2" gutterBottom>
-                  Scholacity, Scholarship and Tenacity, is the trait of Lifelong Learning.
-                </Typography>
-                <Divider/>
+            <CardHeader titleTypographyProps={{variant:'h4'}} title="About Scholacity Web Application"/>
+            <CardContent>
+              <Typography variant="h5" component="h5" gutterBottom>
+                Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
+              </Typography>
+              <Divider/>
                   <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
                     Here are the menu options:
                   </Typography>
@@ -186,7 +186,7 @@ class AboutPage extends React.Component {
             <br/>
             <br/>
             <div>
-              <Button title="Close" className="close_modal" onClick={this.closeModal}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography></Button>
+              <Button title="Close" className="close_modal" onClick={this.closeModal}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
             </div>
           </div>
         </Modal>

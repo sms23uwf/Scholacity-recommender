@@ -204,8 +204,6 @@ class RegisteredCoursesListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-    
-                <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
                 <div className="content-container">
                   <h4 className="page-header__title">{this.state.currentTitle}</h4>
                 </div>
@@ -273,7 +271,10 @@ class RegisteredCoursesListItem extends React.Component {
                       </Grid>
                     </div>
                 </span>
-          </React.Fragment>
+                <div>
+                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+                </div>
+              </React.Fragment>
         </Modal>
       </div>
     );

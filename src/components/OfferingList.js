@@ -43,8 +43,12 @@ export class OfferingList extends React.Component {
                 this.props.courses.map((course) => {
                   if(this.props.id === course.knowledgeareaid)
                   {
-                    const registrationId = this.getRegistrationPairing(course.id);
-                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId}/>;
+
+                    const registrationRecord = this.getRegistration(course.id);
+                    const registrationId = registrationRecord.id;
+                    const registration_status = registrationRecord.registration_status;
+  
+                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId} registration_status={registration_status}/>;
                   }
                 })
               )

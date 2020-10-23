@@ -14,6 +14,9 @@ import { startSetKnowledgeAreas } from './actions/knowledgeAreas';
 import { startsetLOSelectionsByUser } from './actions/learningobjective_userselect';
 import { startsetRegistrationsByUser } from './actions/registrations';
 import { startsetAllRegistrations } from './actions/registrations_admin';
+import { startsetAllLOAlignmentRatings } from './actions/admin_ratings_lo_alignment';
+import { startsetAllCourseOfferingRatings } from './actions/admin_ratings_course_offerings';
+import { startsetAllCourseSatisfactionRatings } from './actions/admin_ratings_course_satisfaction';
 import { startsetCourseSelectionsByUser } from './actions/course_userselect';
 import { startSetLOCourses } from './actions/learningobjective_course';
 import { startSetRecommendationLearningObjectives } from './actions/recommendation_learningobjective';
@@ -91,6 +94,9 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(startSetRatingsByUserCourseLO());
     store.dispatch(startSetRatingsByUserSelection());
     store.dispatch(startSetRatingsByUserCourse());
+    store.dispatch(startsetAllLOAlignmentRatings());
+    store.dispatch(startsetAllCourseOfferingRatings());
+    store.dispatch(startsetAllCourseSatisfactionRatings());
     store.dispatch(startSetKnowledgeAreas()).then(() => {
       renderApp();
       if (history.location.pathname === '/') {

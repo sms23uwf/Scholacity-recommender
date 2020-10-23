@@ -45,9 +45,6 @@ export class RegisteredCoursesList extends React.Component {
 
                 this.props.registrations_user.map((registration) => {
                   
-                  //const matchingCourse = this.getCourse(registration.courseid);
-
-                  //const registrationId = registration.id;
                   const registration_status = registration.registration_status;
 
                   if (registration_status == 'approved')

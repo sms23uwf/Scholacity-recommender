@@ -36,7 +36,7 @@ class OfferingListItem extends React.Component {
         currentTitle: props.name,
         currentRating: '-1',
         currentDescription: props.description,
-        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ? 'Open' : 'Registered'),
+        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ? 'Open' : props.registration_status === 'approved' ? 'approved' : 'requested'),
         timeEnteredModal: Date.now(),
         userid: firebase.auth().currentUser.uid
       }
@@ -59,8 +59,6 @@ class OfferingListItem extends React.Component {
         fee: this.state.fee
       };
   
-      console.log(`inside toggleModalWithSaveToCart with courseid: ${this.state.courseid}`);
-
       this.props.startAddCourseSelection(userCourse);
       this.props.startSetCourseSelections();
 
@@ -122,12 +120,30 @@ class OfferingListItem extends React.Component {
 
       this.props.startAddRegistrationToUser(registrationData);
       this.props.startsetAllRegistrations();
+
+      const userCourse = {
+        userid: this.state.userid, 
+        courseid: this.state.courseid, 
+        disposition: 'Cart',
+        counter: '1',
+        rating: '-1',
+        knowledgearea: this.state.knowledeAreaId,
+        coursename: this.state.currentTitle,
+        coursedescription: this.state.currentDescription,
+        instructor: this.state.instructor,
+        fee: this.state.fee
+      };
+  
+      this.props.startAddCourseSelection(userCourse);
+      this.props.startSetCourseSelections();
+
     }
 
     this.setState({
       showModal: !this.state.showModal,
-      disposition: 'Registered',
-      currentAvatarUrl: this.setAvatarURL('Registered')
+      disposition: 'requested',
+      isRegistered: true,
+      currentAvatarUrl: this.setAvatarURL('requested')
     });
     this.recordTimeInModal('register', this.state.currentRating);
   }
@@ -139,7 +155,9 @@ class OfferingListItem extends React.Component {
           return '/images/local_library.png';
         case `Cart`:
             return `/images/shopping_cart.webp`;
-        case `Registered`:
+        case `requested`:
+          return `/images/noun_submit_icon.png`;
+        case `approved`:
             return `/images/briefcase.jpg`;
         default:
             return '/images/local_library.png';
@@ -209,7 +227,6 @@ class OfferingListItem extends React.Component {
           <React.Fragment>
             <div>
               <div className="modal-header">
-              <div className="close_modal"><Avatar className="close-modal" onClick={this.toggleModalWithCancel}>X</Avatar></div>
               <div className="content-container">
                   <h4 className="page-header__title">{this.props.name}</h4>
                 </div>
@@ -262,7 +279,10 @@ class OfferingListItem extends React.Component {
                       </Grid>
                     </div>
                 </span>
-          </React.Fragment>
+                <div>
+                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+                </div>
+              </React.Fragment>
         </Modal>
       </div>
     );
