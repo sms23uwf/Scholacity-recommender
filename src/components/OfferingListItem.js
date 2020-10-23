@@ -154,9 +154,9 @@ class OfferingListItem extends React.Component {
         case 'Open':
           return '/images/local_library.png';
         case `Cart`:
-            return `/images/shopping_cart.webp`;
+            return `/images/shopping-cart.png`;
         case `requested`:
-          return `/images/noun_submit_icon.png`;
+          return `/images/pending-order.png`;
         case `approved`:
             return `/images/briefcase.jpg`;
         default:
@@ -256,6 +256,7 @@ class OfferingListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              disabled={this.state.isRegistered}
                               color="primary"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}

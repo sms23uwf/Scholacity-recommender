@@ -138,9 +138,9 @@ class PortfolioListItem extends React.Component {
     {
       switch(status) {
         case `Cart`:
-          return `/images/shopping_cart.webp`;
+          return `/images/shopping-cart.png`;
         case `Registered`:
-          return `/images/noun_submit_icon.png`;
+          return `/images/pending-order.png`;
         case 'Approved':
           return `/images/briefcase.jpg`
         default:
