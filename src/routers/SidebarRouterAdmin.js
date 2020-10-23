@@ -19,48 +19,6 @@ const SidebarRouterAlt = [
     showModal: false
   },
   {
-    path: '/offeringsDashboard',
-    sidebarName: 'Course Offerings',
-    navbarName: 'Course Offerings',
-    icon: LocalLibrarySharp,
-    component: OfferingsDashboard
-  },
-  {
-    path: '/dowDashboard',
-    sidebarName: 'Daily Offerings',
-    navbarName: 'Daily Offerings',
-    icon: DateRangeSharp,
-    component: DOWDashboard
-  },
-  {
-    path: '/plannerDashboard',
-    sidebarName: 'My Interests',
-    navbarName: 'My Interests',
-    icon: PlaylistAddCheck,
-    component: PlannerDashboard
-  },
-  {
-    path: '/recommendationsDashboard',
-    sidebarName: 'My Recommendations',
-    navbarName: 'My Recommendations',
-    icon: ShoppingCart,
-    component: RecommendationsDashboard
-  },
-  {
-    path: '/selectionsDashboard',
-    sidebarName: 'My Selections',
-    navbarName: 'My Selections',
-    icon: ShoppingCart,
-    component: SelectionsDashboard
-  },
-  {
-    path: '/registeredCoursesDashboard',
-    sidebarName: 'My Courses',
-    navbarName: 'My Courses',
-    icon: Work,
-    component: RegisteredCoursesDashboard
-  },
-  {
     path: '/adminDashboard',
     sidebarName: 'Administration',
     navbarName: 'Administration',
