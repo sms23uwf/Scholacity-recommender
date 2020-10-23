@@ -37,9 +37,6 @@ export class CourseSelectionList extends React.Component {
             ) : (
                 this.props.courseselections.map((courseselection) => {
                   
-                  console.log(`courseselection courseid: ${courseselection.courseid}`)
-                  console.log(`courseselection key: ${courseselection.key}`)
-                  
                   const registrationRecord = this.getRegistration(courseselection.courseid);
                   const registrationId = registrationRecord.id;
                   const registration_status = registrationRecord.registration_status;

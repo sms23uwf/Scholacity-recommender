@@ -44,7 +44,6 @@ export class PortfolioList extends React.Component {
                 this.props.courserecommendations.map((courserecommendation) => {
 
                   const registration_status = this.getRegistrationStatus(courserecommendation.courseid);
-                  console.log(`registration_status: ${registration_status}`)
                   if (registration_status == 'approved')
                     return <PortfolioListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation} />;
                 })

@@ -63,8 +63,6 @@ class RegisteredCoursesListItem extends React.Component {
 
   toggleModalWithSave = () => {
 
-    console.log(`inside toggleModalWithSave with registration.id: ${this.state.registrationId}`);
-
     if(this.state.newRating != this.state.currentRating)
       this.recordRating(this.state.registrationId, this.state.newRating, this.props.courseid, this.state.userid);
 

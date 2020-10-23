@@ -56,7 +56,6 @@ export class DashboardPage extends React.Component {
   }
 
   handleCancel = () => {
-    console.log('inside handleCancel')
     this.closeModal()
     {cancelLogin()}
     history.push('/cancel');

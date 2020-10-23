@@ -116,7 +116,6 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-    console.log(`total lo alignment ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }
@@ -130,7 +129,6 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-    console.log(`total course offerings ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }
@@ -145,7 +143,6 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-    console.log(`total course satisfaction ratings: ${total}`)
     return parseInt((total/count)).toString();
 
   }

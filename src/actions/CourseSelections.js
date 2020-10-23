@@ -22,8 +22,6 @@ export const startAddCourseSelection = (courseSelectionData = {}) => {
       fee = ``
     } = courseSelectionData;
 
-    console.log(`inside startAddCourseSelection with courseid: ${courseid}`);
-
     const courseUserPairing = { userid, courseid, rating, counter, rating, disposition, knowledgearea, coursename, coursedescription, instructor, fee };
 
     return database.ref(`users_tables/${uid}/courseselection`).push({...courseUserPairing}).then((ref) => {
