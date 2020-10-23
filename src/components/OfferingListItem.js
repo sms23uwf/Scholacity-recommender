@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
+import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/CourseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
 import { startsetAllRegistrations } from '../actions/registrations_admin';
