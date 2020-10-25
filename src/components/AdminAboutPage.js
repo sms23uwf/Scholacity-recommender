@@ -193,21 +193,33 @@ class AdminAboutPage extends React.Component {
                     <ListItemAvatar>
                       <Avatar src={this.setAvatarURL(this.state.avgLOAlignmentRating)}/>
                     </ListItemAvatar>
-                    <ListItemText primary={`Average User Rating of Stated Learning Outcomes`} />
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Stated Learning Outcomes</Typography>
+                      </React.Fragment>
+                      } />
                   </ListItem>
-
+                  <Divider/>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
                     </ListItemAvatar>
-                    <ListItemText primary={`Average User Rating of Offerings Expectations`} />
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Offerings Expectations</Typography>
+                      </React.Fragment>
+                      } />
                   </ListItem>
-
+                  <Divider/>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
                     </ListItemAvatar>
-                    <ListItemText primary={`Average User Rating of Course Satisfaction`} />
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Course Satisfaction</Typography>
+                      </React.Fragment>
+                      } />
                   </ListItem>
                 </List>
                 </CardContent>
