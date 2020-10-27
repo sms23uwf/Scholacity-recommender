@@ -6,10 +6,10 @@ import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 export class CourseSelectionListFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.props.setDispositionFilter('completed');
+    this.props.setDispositionFilter('Cart');
   }
   state = {
-    disposition: 'completed'
+    disposition: 'Cart'
   };
 
   componentDidMount() {
@@ -23,17 +23,6 @@ export class CourseSelectionListFilters extends React.Component {
     this.props.startAddUserNavigationEvent(navigationEventCapture);
   };
 
-  onFocusChange = (calendarFocused) => {
-    this.setState(() => ({ calendarFocused }));
-    setDispositionFilter();
-  }
-  onSortChange = (e) => {
-    if (e.target.value === 'knowledgearea') {
-      this.props.sortByKnowledgeArea();
-    } else if (e.target.value === 'content') {
-      this.props.sortByContent();
-    }
-  };
   render() {
     return (
       <div className="content-container">

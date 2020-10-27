@@ -17,7 +17,6 @@ import { startsetAllRegistrations } from './actions/registrations_admin';
 import { startsetAllLOAlignmentRatings } from './actions/admin_ratings_lo_alignment';
 import { startsetAllCourseOfferingRatings } from './actions/admin_ratings_course_offerings';
 import { startsetAllCourseSatisfactionRatings } from './actions/admin_ratings_course_satisfaction';
-import { startsetCourseSelectionsByUser } from './actions/course_userselect';
 import { startSetLOCourses } from './actions/learningobjective_course';
 import { startSetRecommendationLearningObjectives } from './actions/recommendation_learningobjective';
 import { login, logout } from './actions/auth';
@@ -84,7 +83,6 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(startsetLOSelectionsByUser());
     store.dispatch(startsetRegistrationsByUser());
     store.dispatch(startsetAllRegistrations());
-    store.dispatch(startsetCourseSelectionsByUser());
     store.dispatch(startSetLOCourses());
     store.dispatch(startSetRatingsByUserCourseLO());
     store.dispatch(startSetRatingsByUserSelection());

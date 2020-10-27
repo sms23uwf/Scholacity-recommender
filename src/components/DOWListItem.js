@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRegistrationToUser } from '../actions/registrations';
+import { startAddRegistrationToUser, setRegistrationsByUser } from '../actions/registrations';
 import { startsetAllRegistrations } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -60,7 +60,6 @@ class DOWListItem extends React.Component {
       };
   
       this.props.startAddCourseSelection(userCourse);
-      this.props.startSetCourseSelections();
 
     }
 
@@ -119,12 +118,11 @@ class DOWListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
-      this.props.startsetAllRegistrations();
 
       const userCourse = {
         userid: this.state.userid, 
         courseid: this.state.courseid, 
-        disposition: 'Cart',
+        disposition: 'Registered',
         counter: '1',
         rating: '-1',
         knowledgearea: this.state.knowledeAreaId,
@@ -135,7 +133,6 @@ class DOWListItem extends React.Component {
       };
   
       this.props.startAddCourseSelection(userCourse);
-      this.props.startSetCourseSelections();
 
     }
 
@@ -302,7 +299,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddCourseSelection: (userCourse) => dispatch(startAddCourseSelection(userCourse)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
-  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
+  setRegistrationsByUser: () => dispatch(setRegistrationsByUser()),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

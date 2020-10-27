@@ -20,6 +20,24 @@ export class CourseSelectionList extends React.Component {
     return pairing;
   }
   
+  getRegistrationId(courseId) {
+    const pairing = this.props.registrations_user.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing.id
+  }
+
+  registrationIsPending(courseId) {
+
+    const registrationRecord = this.getRegistration(courseId);
+    const registrationId = registrationRecord.id;
+    const registration_status = registrationRecord.registration_status;
+
+    if (registration_status != 'approved')
+      return true;
+
+    return false;
+
+  }
+  
   render() {
     return (
 
@@ -37,13 +55,10 @@ export class CourseSelectionList extends React.Component {
             ) : (
                 this.props.courseselections.map((courseselection) => {
                   
-                  const registrationRecord = this.getRegistration(courseselection.courseid);
-                  const registrationId = registrationRecord.id;
-                  const registration_status = registrationRecord.registration_status;
+                  const isPending = courseselection.disposition == "Registered" ? this.registrationIsPending(courseselection.courseid) : true
 
-
-                  if (registration_status != 'approved')
-                    return <CourseSelectionListItem key={courseselection.id} id={courseselection.id} {...courseselection} registrationId={registrationId}/>;
+                  if (isPending)
+                    return <CourseSelectionListItem courseselection = {courseselection} key={courseselection.id} id={courseselection.id} {...courseselection}/>;
                 })
               )
           }
@@ -60,7 +75,7 @@ export class CourseSelectionList extends React.Component {
   
   const mapStateToProps = (state) => {
     return {
-      courseselections: SelectCourseSelections(state.courseselections, state.filters),
+      courseselections: state.courseselections,
       registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
       filters: state.filters
     };
