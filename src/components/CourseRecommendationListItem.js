@@ -45,11 +45,6 @@ class CourseRecommendationListItem extends React.Component {
   
   toggleModalWithSave = () => {
 
-    if(this.state.showModal == true)
-    {
-      this.props.startSetCourseRecommendations();
-    }
-
     if(this.state.newRating != this.state.currentRating)
       this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
 
@@ -111,14 +106,12 @@ class CourseRecommendationListItem extends React.Component {
     this.setState({disposition: newDisposition});
     const dispositionData = {disposition: newDisposition};
     this.props.startEditCourseRecommendation(id, dispositionData);
-    this.props.startSetCourseRecommendations();
   }
 
   recordRating = (id,rating,courseid,userid,learningobjectives) => {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseRecommendation(id, ratingData);
-    this.props.startSetCourseRecommendations();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     var loData = {...learningobjectives};
@@ -146,13 +139,11 @@ class CourseRecommendationListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
-      this.props.startsetAllRegistrations();
 
       this.setState({
         newDisposition: `Registered`,
         isRegistered: true
       });
-
 
       if(this.state.newRating != this.state.currentRating)
         this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
