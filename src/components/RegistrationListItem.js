@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startApproveRegistrationForUser_Course, startsetRegistrationsByUser } from '../actions/registrations';
+import { startsetAllRegistrations, startApproveRegistrationForUser_Course } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -74,7 +74,6 @@ class RegistrationListItem extends React.Component {
           registration_userid: this.state.registration_userid
        };
        this.props.startApproveRegistrationForUser_Course(registrationUserPairing);
-       this.props.startsetRegistrationsByUser(this.state.userid)
     }
 
     this.setState({
@@ -194,8 +193,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startApproveRegistrationForUser_Course: (registrationUserPairing) => dispatch(startApproveRegistrationForUser_Course(registrationUserPairing)),
-  startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture)),
-  startsetRegistrationsByUser: () => dispatch(startsetRegistrationsByUser())
+  startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationListItem);

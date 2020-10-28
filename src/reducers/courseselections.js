@@ -14,6 +14,17 @@ export default (state = courseselectionsReducerDefaultState, action) => {
       return state.filter(({ id }) => id !== action.id);
     case 'SET_COURSE_SELECTIONS':
       return action.courseselections;
+    case 'EDIT_COURSE_SELECTION':
+      return state.map((courseselection) => {
+        if (courseselection.id === action.id) {
+          return {
+            ...courseselection,
+            ...action.updates
+          };
+        } else {
+          return courseselection;
+        };
+      });
     default:
       return state;
   }

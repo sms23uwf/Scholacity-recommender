@@ -95,7 +95,6 @@ class CourseSelectionListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseSelection(id, ratingData);
-    this.props.startSetCourseSelections();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
@@ -106,15 +105,9 @@ class CourseSelectionListItem extends React.Component {
     this.setState({disposition: newDisposition});
     const dispositionData = {disposition: newDisposition};
     this.props.startEditCourseSelection(id, dispositionData);
-    this.props.startSetCourseSelections();
   }
 
   toggleModalWithSave = () => {
-
-    if(this.state.showModal == true)
-    {
-      this.props.startSetCourseSelections();
-    }
 
     if(this.state.newRating != this.state.currentRating)
       this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid);

@@ -1,6 +1,29 @@
 import uuid from 'uuid';
 import database from '../firebase/firebase';
 
+// APPROVE_REGISTRATION
+export const approveRegistrationForUser_Course = (id, updates) => ({
+    type: 'APPROVE_REGISTRATION',
+    id,
+    updates
+  });
+  
+  export const startApproveRegistrationForUser_Course = (registrationUserPairing = {}) => {
+  
+    return (dispatch, getState) => {
+      const {
+        registration_userid = ``,
+        registration_id = ``
+      } = registrationUserPairing;
+  
+      const updates = { registration_status: 'approved' };
+  
+      return database.ref(`users_tables/${registration_userid}/registration/${registration_id}`).update(updates).then(() => {
+        dispatch(approveRegistrationForUser_Course(registration_id, updates));
+      });
+    };
+  }
+  
 // SET_ALL_REGISTRATIONS
 export const setAllRegistrations = (registrations_all) => ({
     type: 'SET_ALL_REGISTRATIONS',
