@@ -1,11 +1,9 @@
-import { Home, DateRangeSharp, HowToRegSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
-
+import { Home, DateRangeSharp, Info, Work, ShoppingCart, LocalLibrarySharp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import OfferingsDashboard from '../components/OfferingsDashboard';
 import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
-import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 
 const SidebarRouterAlt = [

@@ -1,9 +1,7 @@
-import { Home, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, PlaylistAddCheck } from '@material-ui/icons';
-
+import { Home, Info, Work, ShoppingCart, PlaylistAddCheck } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import PlannerDashboard from '../components/PlannerDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
-import PortfolioDashboard from '../components/PortfolioDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AboutPage from '../components/AboutPage';
 

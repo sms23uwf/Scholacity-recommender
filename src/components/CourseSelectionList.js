@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CourseSelectionListItem from './CourseSelectionListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
-import SelectCourseSelections from '../selectors/courseselections';
 import { firebase } from '../firebase/firebase';
 
 

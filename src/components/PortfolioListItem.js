@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseRecommendations, startEditCourseRecommendation, startRemoveCourseRecommendation } from '../actions/courseRecommendations';
+import { startEditCourseRecommendation, startRemoveCourseRecommendation } from '../actions/courseRecommendations';
 import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import Modal from './Modal';
@@ -13,10 +13,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import Rating from '@material-ui/lab/Rating';
-import selectCourseRecommendations, {findExistingCourseRecommendation} from '../selectors/courserecommendations';
-import { FormControlLabel }  from '@material-ui/core';
 import moment from 'moment/moment';
 import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
 import selectSessions from '../selectors/sessions';
@@ -43,10 +39,6 @@ class PortfolioListItem extends React.Component {
       }
   }
   toggleModalWithSave = () => {
-    if(this.state.showModal == true)
-    {
-      this.props.startSetCourseRecommendations();
-    }
 
     if((this.state.newRating != this.state.currentRating) || (this.state.newDisposition != this.state.disposition))
       this.recordRating(this.props.courserecommendation.id, this.state.newRating, this.state.newDisposition, this.props.courserecommendation.courseid, this.props.courserecommendation.userid, this.props.courserecommendation.learningobjectives);
@@ -54,7 +46,6 @@ class PortfolioListItem extends React.Component {
       if(this.state.itemIsKeeper == false)
       {
         this.props.startRemoveCourseRecommendation(this.state.recommendationPairing);
-        this.props.startSetCourseRecommendations();
       }
 
     this.setState({
@@ -127,7 +118,6 @@ class PortfolioListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseRecommendation(id, ratingData);
-    this.props.startSetCourseRecommendations();
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
@@ -338,7 +328,6 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
-  startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
   startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))

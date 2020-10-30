@@ -32,6 +32,11 @@ export class DOWList extends React.Component {
     return pairing;
   }
 
+  getSelectionPairing(courseId) {
+    const pairing = this.props.courseselections.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing.id;
+  }
+
   render() {
     return (
 
@@ -50,9 +55,15 @@ export class DOWList extends React.Component {
                 this.props.courses_by_dow.map((course_by_dow) => {
                   if(this.props.name === course_by_dow.DOW)
                   {
-                    const registrationId = this.getRegistrationPairing(course_by_dow.courseid);
+
+                    const registrationRecord = this.getRegistration(course_by_dow.courseid);
+                    const registrationId = registrationRecord.id;
+                    const registration_status = registrationRecord.registration_status;
+
                     const matchingCourse = this.getCourse(course_by_dow.courseid);
-                    return <DOWListItem key={course_by_dow.id} id={course_by_dow.id} {...matchingCourse} registrationId={registrationId}/>;
+                    const selectionId = this.getSelectionPairing(course_by_dow.courseid);
+
+                    return <DOWListItem key={course_by_dow.id} id={course_by_dow.id} {...matchingCourse} registrationId={registrationId} registration_status={registration_status} selectionId={selectionId}/>;
                   }
                 })
               )
@@ -71,6 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
   return {
+    courseselections: state.courseselections,
     courses: selectCourses(state.courses, state.filters),
     courses_by_dow: selectCoursesByDOW(state.courses_by_dow, state.filters),
     registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),

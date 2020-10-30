@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseRecommendations, startEditCourseRecommendation } from '../actions/courseRecommendations';
+import { startEditCourseRecommendation } from '../actions/courseRecommendations';
 import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
-import { startsetAllRegistrations } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -19,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
-import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { Work, SaveSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
@@ -364,9 +363,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
-  startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
-  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startAddCourseSelection, startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
+import { startAddCourseSelection, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRegistrationToUser, setRegistrationsByUser } from '../actions/registrations';
-import { startsetAllRegistrations } from '../actions/registrations_admin';
+import { startAddRegistrationToUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -18,7 +17,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
-import { Work, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { Work, ShoppingCart } from '@material-ui/icons';
 
 class DOWListItem extends React.Component {
   constructor(props){
@@ -31,12 +30,13 @@ class DOWListItem extends React.Component {
         newDisposition: props.registrationId === 0 ? 'Open' : 'Registered',
         isRegistered: props.registrationId === 0 ? false : true,
         isRegistrationApproved: props.registration_status == 'approved',
+        isInCart: props.selectionId === 0 ? false : true,
         courseid: props.id,
         knowledeAreaId: props.knowledgeareaid,
         currentTitle: props.name,
         currentRating: '-1',
         currentDescription: props.description,
-        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ? 'Open' : props.registration_status === 'approved' ? 'approved' : 'requested'),
+        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ?  props.selectionId === 0 ? 'Open' : 'Cart' : props.registration_status === 'approved' ? 'approved' : 'requested'),
         timeEnteredModal: Date.now(),
         userid: firebase.auth().currentUser.uid
       }
@@ -253,7 +253,7 @@ class DOWListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered}
+                              disabled={this.state.isRegistered || this.state.isInCart}
                               color="primary"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
@@ -264,7 +264,7 @@ class DOWListItem extends React.Component {
                           </Grid>
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered}
+                              disabled={this.state.isRegistered || this.state.isInCart}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
@@ -296,10 +296,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
-  startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddCourseSelection: (userCourse) => dispatch(startAddCourseSelection(userCourse)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
-  setRegistrationsByUser: () => dispatch(setRegistrationsByUser()),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

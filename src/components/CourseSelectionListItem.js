@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetCourseSelections, startEditCourseSelection } from '../actions/courseSelections';
+import { startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
-import { startsetAllRegistrations } from '../actions/registrations_admin';
 import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -19,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { Work, SaveSharp } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -60,7 +59,6 @@ class CourseSelectionListItem extends React.Component {
         registration_status: 'requested'};
 
       this.props.startAddRegistrationToUser(registrationData);
-      this.props.startsetAllRegistrations();
 
       this.setState({
         newDisposition: `Registered`,
@@ -347,9 +345,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
-  startSetCourseSelections: () => dispatch(startSetCourseSelections()),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
-  startsetAllRegistrations: () => dispatch(startsetAllRegistrations()),
   startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

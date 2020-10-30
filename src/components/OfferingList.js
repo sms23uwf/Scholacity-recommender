@@ -25,6 +25,11 @@ export class OfferingList extends React.Component {
     return pairing;
   }
   
+  getSelectionPairing(courseId) {
+    const pairing = this.props.courseselections.find(p => p.courseid === courseId && p.userid === this.state.userid) || {id:0};
+    return pairing.id;
+  }
+
   render() {
     return (
 
@@ -47,8 +52,9 @@ export class OfferingList extends React.Component {
                     const registrationRecord = this.getRegistration(course.id);
                     const registrationId = registrationRecord.id;
                     const registration_status = registrationRecord.registration_status;
+                    const selectionId = this.getSelectionPairing(course.id);
   
-                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId} registration_status={registration_status}/>;
+                    return <OfferingListItem key={course.id} id={course.id} {...course} registrationId={registrationId} registration_status={registration_status} selectionId={selectionId}/>;
                   }
                 })
               )
@@ -67,6 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
   return {
+    courseselections: state.courseselections,
     courses: selectCourses(state.courses, state.filters),
     registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
     filters: state.filters

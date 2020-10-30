@@ -1,11 +1,5 @@
-import { Home, AssignmentSharp, DateRangeSharp, ContentPaste, Notifications, AccountCircle, Info, WorkOutline, Work, Assessment, ShoppingCart, LocalLibrarySharp, PlaylistAddCheck } from '@material-ui/icons';
+import { Home, AssignmentSharp, Info } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
-import PlannerDashboard from '../components/PlannerDashboard';
-import RecommendationsDashboard from '../components/RecommendationsDashboard';
-import OfferingsDashboard from '../components/OfferingsDashboard';
-import DOWDashboard from '../components/DOWDashboard';
-import SelectionsDashboard from '../components/SelectionsDashboard';
-import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminAboutPage from '../components/AdminAboutPage';
 

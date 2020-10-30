@@ -13,7 +13,6 @@ import { firebase } from '../firebase/firebase';
 import database from '../firebase/firebase';
 import { setUUIDFilter, setLOFilter, setCourseFilter } from '../actions/filters';
 import selectCourseRecommendations, {findExistingCourseRecommendation} from '../selectors/courserecommendations';
-import { startSetCourseRecommendations } from '../actions/courseRecommendations';
 import { startAddUserSelectionEvent } from '../actions/selectionEvent';
 
 export class LearningObjectiveList extends React.Component {
@@ -85,7 +84,6 @@ export class LearningObjectiveList extends React.Component {
                   fee: course.fee};
 
                 this.props.startAddCourseRecommendation(userCourse);
-                this.props.startSetCourseRecommendations();
               }
             }
     
@@ -126,20 +124,17 @@ export class LearningObjectiveList extends React.Component {
                 else
                 {
                   database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
-                    this.props.startSetCourseRecommendations();
                   });
                 }
 
                 if(courserecommendation.disposition != "Registered")
                 {
                   this.props.startRemoveCourseRecommendation(recommendationPairing);
-                  this.props.startSetCourseRecommendations();
                 }
               }
               else
               {
                 database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
-                  this.props.startSetCourseRecommendations();
                 });
               }
             }
@@ -201,7 +196,6 @@ const mapDispatchToProps = (dispatch) => ({
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
   setLOFilter: (learningobjectiveid) => dispatch(setLOFilter(learningobjectiveid)),
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
-  startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startAddUserSelectionEvent: (selectionEventCapture) => dispatch(startAddUserSelectionEvent(selectionEventCapture))
 });
 

@@ -15,9 +15,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
-import { deepOrange, red } from '@material-ui/core/colors';
 import { firebase } from '../firebase/firebase';
-import { Work, SaveSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { SaveSharp } from '@material-ui/icons';
 
 
 class RegisteredCoursesListItem extends React.Component {

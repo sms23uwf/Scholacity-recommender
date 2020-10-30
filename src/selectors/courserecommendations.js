@@ -14,7 +14,7 @@
 
 export default (courserecommendations, { userid, disposition }) => {
   return courserecommendations.sort((a, b) => {
-      return a.rating > b.rating ? 1 : -1;
+      return a.rating < b.rating ? 1 : -1;
   });
 };
 
@@ -24,7 +24,7 @@ export const findExistingCourseRecommendation = (courserecommendations, {userid,
     const courseMatch = courserecommendation.courseid === courseid;
     return courseMatch;
   }).sort((a, b) => {
-      return a.rating > b.rating ? 1 : -1;
+      return a.rating < b.rating ? 1 : -1;
   });
 
 };

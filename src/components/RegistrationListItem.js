@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startsetAllRegistrations, startApproveRegistrationForUser_Course } from '../actions/registrations_admin';
+import { startApproveRegistrationForUser_Course } from '../actions/registrations_admin';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -13,7 +13,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
-import { ThumbsUpDownSharp, ThumbsUpWork, CheckSharp, Assessment, ShoppingCart, LocalLibrarySharp, CloseSharp } from '@material-ui/icons';
+import { CheckSharp, CloseSharp } from '@material-ui/icons';
 
 class RegistrationListItem extends React.Component {
   constructor(props){
