@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CourseSelectionListItem from './CourseSelectionListItem';
 import selectRegistrationsForUser from '../selectors/registration_user';
+import selectCourseSelections from '../selectors/courseselections';
 import { firebase } from '../firebase/firebase';
 
 
@@ -74,7 +75,7 @@ export class CourseSelectionList extends React.Component {
   
   const mapStateToProps = (state) => {
     return {
-      courseselections: state.courseselections,
+      courseselections: selectCourseSelections(state.courseselections, state.filters),
       registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
       filters: state.filters
     };

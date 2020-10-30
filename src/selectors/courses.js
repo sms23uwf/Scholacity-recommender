@@ -4,6 +4,6 @@ import moment from 'moment/moment';
 
 export default (courses, { disposition, sortBy, startDate, endDate }) => {
   return courses.sort((a, b) => {
-    return a.knowledgearea > b.knowledgearea ? 1 : -1;
+    return a.name > b.name ? 1 : -1;
   });
 };
