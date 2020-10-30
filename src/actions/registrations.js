@@ -38,10 +38,11 @@ export const removeRegistrationFromUser = ({ id } = {}) => ({
     id
   });
   
-export const startRemoveRegistrationFromUser = (registrationPairing = {}) => {
+export const startRemoveRegistrationFromUser = (id) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const id = registrationPairing.id;
+
+    console.log(`inside of startRemoveRegistrationFromUser with id: ${id}`)
 
     return database.ref(`users_tables/${uid}/registration/${id}`).remove().then(() => {
       dispatch(removeRegistrationFromUser({ id }));

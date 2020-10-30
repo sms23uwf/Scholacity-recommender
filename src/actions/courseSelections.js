@@ -39,10 +39,9 @@ export const removeCourseSelection = ({ id } = {}) => ({
   id
 });
 
-export const startRemoveCourseSelection = (selectionPairing = {}) => {
+export const startRemoveCourseSelection = (id) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const id = selectionPairing.id;
     
     return database.ref(`users_tables/${uid}/courseselection/${id}`).remove().then(() => {
       dispatch(removeCourseSelection({ id }));

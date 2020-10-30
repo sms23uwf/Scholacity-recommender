@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startEditCourseSelection } from '../actions/courseSelections';
+import { startEditCourseSelection, startRemoveCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRegistrationToUser } from '../actions/registrations';
+import { startAddRegistrationToUser, startRemoveRegistrationFromUser } from '../actions/registrations';
 import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import { Work, SaveSharp } from '@material-ui/icons';
+import { Work, SaveSharp, BackspaceSharp } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -26,16 +26,18 @@ class CourseSelectionListItem extends React.Component {
       super(props);
       this.state = {
         showModal: false,
+        courseselectionid: props.id,
         disposition: props.disposition,
         newDisposition: props.disposition,
         currentRating: props.rating,
         newRating: props.rating,
-        isRegistered: props.disposition == "Registered" ? true : false,
+        isRegistered: props.registrationId === 0 ? false : true,
+        registrationId: props.registrationId,
         currentTitle: props.coursename,
         currentDescription: props.coursedescription,
         courseid: props.courseid,
         currentAvatarUrl: this.setAvatarURL(props.rating),
-        statusAvatarUrl: this.setStatusAvatarURL(props.disposition),
+        statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? 'Cart' : 'Registered'),
         timeEnteredModal: Date.now(),
         instructor: props.instructor,
         fee: props.fee,
@@ -43,6 +45,38 @@ class CourseSelectionListItem extends React.Component {
       }
   }
   
+  toggleModalWithRemove = () => {
+
+    if(this.state.showModal == true)
+    {
+      console.log(`inside toggleModalWithRemove with course selection id: ${this.props.id}`);
+
+      this.props.startRemoveCourseSelection(this.props.id);
+    }
+  
+    this.setState({
+      showModal: !this.state.showModal
+    });
+    this.recordTimeInModal('remove selection', this.state.currentRating);
+  }
+
+  toggleModalWithUnRegister = () => {
+
+    if(this.state.showModal == true)
+    {
+      console.log(`inside toggleModalWithUnRegister with course registration id: ${this.props.registrationId}`);
+
+      this.props.startRemoveRegistrationFromUser(this.props.registrationId);
+    }
+  
+    this.setState({
+      showModal: !this.state.showModal,
+      statusAvatarUrl: this.setStatusAvatarURL('Cart'),
+      isRegistered: false
+    });
+    this.recordTimeInModal('remove selection', this.state.currentRating);
+  }
+
   toggleModalWithRegister = () => {
 
     if(this.state.showModal == true)
@@ -309,11 +343,11 @@ class CourseSelectionListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Save"
                               startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating Only</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered}
+                              hidden={this.state.isRegistered}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
@@ -321,6 +355,30 @@ class CourseSelectionListItem extends React.Component {
                               startIcon={<Work />}
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
+                            <Grid item>
+                              <Button
+                                hidden={this.state.isRegistered}
+                                color="primary"
+                                aria-label="Remove"
+                                style={{fontWeight: "bold"}}
+                                title="Register"
+                                startIcon={<BackspaceSharp />}
+                                onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove From Cart</Typography>
+                              </Button>
+                            </Grid>
+
+                            <Grid item>
+                              <Button
+                                hidden={!this.state.isRegistered}
+                                color="primary"
+                                aria-label="Remove"
+                                style={{fontWeight: "bold"}}
+                                title="Register"
+                                startIcon={<BackspaceSharp />}
+                                onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
+                              </Button>
+                            </Grid>
+
                           </Grid>
                         </Grid>
                       </Grid>
@@ -345,7 +403,9 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseSelection: (id, ratingData) => dispatch(startEditCourseSelection(id, ratingData)),
+  startRemoveCourseSelection: (id) => dispatch(startRemoveCourseSelection(id)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
+  startRemoveRegistrationFromUser: (id) => dispatch(startRemoveRegistrationFromUser(id)),
   startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
