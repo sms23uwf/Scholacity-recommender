@@ -52,9 +52,6 @@ export class CourseRecommendationsList extends React.Component {
                   const registrationId = registrationRecord.id;
                   const registration_status = registrationRecord.registration_status;
 
-                  //const registrationId = this.getRegistrationPairing(courserecommendation.courseid);
-                  //const registration_status = this.getRegistrationStatus(courserecommendation.courseid);
-
                   if (registration_status != 'approved')
                     return <CourseRecommendationListItem key={courserecommendation.id} id={courserecommendation.id} {...courserecommendation} registrationId={registrationId}/>;
                 })

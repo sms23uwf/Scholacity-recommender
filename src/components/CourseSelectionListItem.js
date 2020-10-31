@@ -49,8 +49,6 @@ class CourseSelectionListItem extends React.Component {
 
     if(this.state.showModal == true)
     {
-      console.log(`inside toggleModalWithRemove with course selection id: ${this.props.id}`);
-
       this.props.startRemoveCourseSelection(this.props.id);
     }
   

@@ -4,6 +4,9 @@ import { startEditCourseRecommendation } from '../actions/courseRecommendations'
 import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser } from '../actions/registrations';
+import selectLOSelectionsForUser from '../selectors/learningobjective_userselect';
+import { startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
+import { startRemoveCourseRecommendation} from '../actions/courseRecommendations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -18,7 +21,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
-import { Work, SaveSharp } from '@material-ui/icons';
+import { Work, SaveSharp, BackspaceSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
@@ -27,6 +30,7 @@ class CourseRecommendationListItem extends React.Component {
         showModal: false,
         instructor: props.instructor,
         fee: props.fee,
+        courserecommendationId: props.id,
         currentRating: props.rating,
         disposition: props.disposition,
         newDisposition: props.disposition,
@@ -42,6 +46,43 @@ class CourseRecommendationListItem extends React.Component {
       }
   }
   
+  getLOSelectionPairing(loId) {
+    const pairing = this.props.learningobjective_userselects.find(p => p.learningobjectiveid === loId) || {id:0};
+    return pairing.id;
+  }
+
+
+  toggleModalWithRemove = () => {
+
+    if(this.state.showModal == true)
+    {
+
+      this.props.courserecommendations.map((courserecommendation) => {
+        if(courserecommendation.id == this.state.courserecommendationId)
+        {
+          var loData = {...courserecommendation.learningobjectives};
+          Object.keys(loData).map((key) => {
+            const currentLO = loData[key]
+            const loSelectionPairingId = this.getLOSelectionPairing(currentLO.learningobjectiveid)
+            const loPairing = {id: loSelectionPairingId};
+            console.log(`loSelectionPairing: ${loSelectionPairingId}`);
+            this.props.startRemoveLOSelectionFromUser(loPairing);
+          })
+        }
+    
+      })
+      
+      const recommendationPairing = {id: this.props.id};
+      this.props.startRemoveCourseRecommendation(recommendationPairing);
+    }
+  
+    this.setState({
+      showModal: !this.state.showModal
+    });
+    this.recordTimeInModal('remove recommendation', this.state.currentRating);
+    
+  }
+
   toggleModalWithSave = () => {
 
     if(this.state.newRating != this.state.currentRating)
@@ -186,7 +227,7 @@ class CourseRecommendationListItem extends React.Component {
           case `4`:
             return `/images/veryhappy.png`;
           default:
-              return ``;
+              return `/images/rate_me_icon.png`;
         }
       }
   }
@@ -327,7 +368,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Accept"
                               startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
@@ -340,6 +381,19 @@ class CourseRecommendationListItem extends React.Component {
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
                           </Grid>
+
+                          <Grid item>
+                            <Button
+                              hidden={this.state.isRegistered}
+                              color="primary"
+                              aria-label="Remove"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              startIcon={<BackspaceSharp />}
+                              onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                            </Button>
+                          </Grid>
+
                         </Grid>
                       </Grid>
                     </div>
@@ -357,6 +411,7 @@ class CourseRecommendationListItem extends React.Component {
 const mapStateToProps = (state, props) => ({
   courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters),
   courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.courseid),
+  learningobjective_userselects: selectLOSelectionsForUser(state.learningobjective_userselects, state.filters),
   sessions: selectSessions(state.sessions, props.courseid),
   filters: state.filters
 });
@@ -365,6 +420,8 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
   startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
+  startRemoveLOSelectionFromUser: (loPairing) => dispatch(startRemoveLOSelectionFromUser(loPairing)),
+  startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
