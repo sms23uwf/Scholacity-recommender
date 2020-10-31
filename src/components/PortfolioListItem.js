@@ -153,8 +153,8 @@ class PortfolioListItem extends React.Component {
           case `4`:
             return `/images/veryhappy.png`;
           default:
-              return ``;
-        }
+            return `/images/rate_me_icon.png`;
+          }
       }
   }
   

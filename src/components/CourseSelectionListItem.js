@@ -72,7 +72,7 @@ class CourseSelectionListItem extends React.Component {
       statusAvatarUrl: this.setStatusAvatarURL('Cart'),
       isRegistered: false
     });
-    this.recordTimeInModal('remove selection', this.state.currentRating);
+    this.recordTimeInModal('remove registration', this.state.currentRating);
   }
 
   toggleModalWithRegister = () => {
@@ -210,8 +210,8 @@ class CourseSelectionListItem extends React.Component {
         case `4`:
           return `/images/veryhappy.png`;
         default:
-            return ``;
-      }
+          return `/images/rate_me_icon.png`;
+        }
     }
 }
 
