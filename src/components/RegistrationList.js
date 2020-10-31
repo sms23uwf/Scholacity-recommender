@@ -31,7 +31,10 @@ export class RegistrationList extends React.Component {
               </div>
             ) : (
                 this.props.registrations_all.map((registration) => {
-                  return <RegistrationListItem key={registration.id} id={registration.id} {...registration} />;
+                  if(this.props.id === registration.courseid)
+                  {
+                    return <RegistrationListItem key={registration.id} id={registration.id} {...registration} />;
+                  }
                 })
               )
           }

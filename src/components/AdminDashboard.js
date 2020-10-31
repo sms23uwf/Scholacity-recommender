@@ -9,7 +9,7 @@ const AdminDashboard = () => (
   <div>
     <RegistrationSummary />
     <RegistrationListFilters/>
-    <RegistrationList />
+    <RegistrationsCollapsible />
   </div>
 );
 
