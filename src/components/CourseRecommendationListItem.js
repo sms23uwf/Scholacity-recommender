@@ -161,8 +161,6 @@ class CourseRecommendationListItem extends React.Component {
 
     if(this.state.showModal == true)
     {
-      console.log(`inside toggleModalWithUnRegister with course registration id: ${this.props.registrationId}`);
-
       this.props.startRemoveRegistrationFromUser(this.props.registrationId);
     }
   
@@ -187,7 +185,7 @@ class CourseRecommendationListItem extends React.Component {
         course_fee: this.state.fee, 
         userid: this.state.userid, 
         user_email: firebase.auth().currentUser.email, 
-        registration_status: 'requested'};
+        registration_status: 'approved'};
 
       this.props.startAddRegistrationToUser(registrationData);
 

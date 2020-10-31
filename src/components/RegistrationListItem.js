@@ -89,11 +89,11 @@ class RegistrationListItem extends React.Component {
     {
       switch(status) {
         case `requested`:
-          return `/images/noun_request_icon.png`;
+          return `/images/briefcase.jpg`
         case `approved`:
-          return `/images/noun_approved_icon.png`;
+          return `/images/briefcase.jpg`
         default:
-          return `/images/noun_request_icon.png`;
+          return `/images/briefcase.jpg`
         }
     }
   }
@@ -158,7 +158,7 @@ class RegistrationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.status == 'approved'}
+                              hidden={true}
                               color="primary"
                               aria-label="Approve"
                               style={{fontWeight: "bold"}}
@@ -167,19 +167,13 @@ class RegistrationListItem extends React.Component {
                               onClick={this.toggleModalWithApproval}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.approve_button_label}</Typography>
                             </Button>
                           </Grid>
-                          <Grid item>
-                            <Button
-                              color="primary"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<CloseSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography></Button>
-                          </Grid>
                         </Grid>
                       </Grid>
                     </div>
                 </span>
+                <div>
+                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
+                </div>
           </React.Fragment>
         </Modal>
       </div>

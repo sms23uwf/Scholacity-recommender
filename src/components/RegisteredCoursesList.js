@@ -32,7 +32,7 @@ export class RegisteredCoursesList extends React.Component {
       <div className="content-container-course">
         <div className="list-header">
           <div className="show-for-mobile">Approved</div>
-          <div className="show-for-desktop">Approved Registrations</div>
+          <div className="show-for-desktop">Registrations</div>
         </div>
         <div className="list-body">
           {

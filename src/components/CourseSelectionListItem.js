@@ -88,7 +88,7 @@ class CourseSelectionListItem extends React.Component {
         course_fee: this.state.fee, 
         userid: this.state.userid, 
         user_email: firebase.auth().currentUser.email, 
-        registration_status: 'requested'};
+        registration_status: 'approved'};
 
       this.props.startAddRegistrationToUser(registrationData);
 
@@ -189,7 +189,7 @@ class CourseSelectionListItem extends React.Component {
         case `Cart`:
           return `/images/shopping-cart.png`;
         case `Registered`:
-          return `/images/pending-order.png`;
+          return `/images/briefcase.jpg`
         default:
           return `/images/shopping-cart.png`;
       }

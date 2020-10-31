@@ -36,7 +36,7 @@ class DOWListItem extends React.Component {
         currentTitle: props.name,
         currentRating: '-1',
         currentDescription: props.description,
-        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ?  props.selectionId === 0 ? 'Open' : 'Cart' : props.registration_status === 'approved' ? 'approved' : 'requested'),
+        currentAvatarUrl: this.setAvatarURL(props.registrationId === 0 ?  props.selectionId === 0 ? 'Open' : 'Cart' : props.registration_status === 'approved' ? 'approved' : 'approved'),
         timeEnteredModal: Date.now(),
         userid: firebase.auth().currentUser.uid
       }
@@ -115,7 +115,7 @@ class DOWListItem extends React.Component {
         course_fee: this.state.fee, 
         userid: this.state.userid, 
         user_email: firebase.auth().currentUser.email, 
-        registration_status: 'requested'};
+        registration_status: 'approved'};
 
       this.props.startAddRegistrationToUser(registrationData);
 
@@ -138,9 +138,9 @@ class DOWListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      disposition: 'requested',
+      disposition: 'approved',
       isRegistered: true,
-      currentAvatarUrl: this.setAvatarURL('requested')
+      currentAvatarUrl: this.setAvatarURL('approved')
     });
     this.recordTimeInModal('register', this.state.currentRating);
   }

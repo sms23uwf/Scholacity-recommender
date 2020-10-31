@@ -195,7 +195,9 @@ class AdminAboutPage extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={
                       <React.Fragment>
-                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Stated Learning Outcomes</Typography>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      Average User Rating of Stated Learning Outcomes
+                      </Typography>
                       </React.Fragment>
                       } />
                   </ListItem>
@@ -206,7 +208,9 @@ class AdminAboutPage extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={
                       <React.Fragment>
-                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Offerings Expectations</Typography>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      Average User Rating of Offerings Expectations
+                      </Typography>
                       </React.Fragment>
                       } />
                   </ListItem>
@@ -217,7 +221,9 @@ class AdminAboutPage extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={
                       <React.Fragment>
-                      <Typography variant="h5" component="h5" gutterBottom>Average User Rating of Course Satisfaction</Typography>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      Average User Rating of Course Satisfaction
+                      </Typography>
                       </React.Fragment>
                       } />
                   </ListItem>

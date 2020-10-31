@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startEditCourseRegistration } from '../actions/registrations';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
+import { startRemoveRegistrationFromUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
 import Card from "@material-ui/core/Card";
@@ -16,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import { SaveSharp } from '@material-ui/icons';
+import { SaveSharp, BackspaceSharp } from '@material-ui/icons';
 
 
 class RegisteredCoursesListItem extends React.Component {
@@ -58,6 +59,21 @@ class RegisteredCoursesListItem extends React.Component {
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
     this.props.startAddRatingsByUserCourse(ratingCapture);
+  }
+
+  toggleModalWithUnRegister = () => {
+
+    if(this.state.showModal == true)
+    {
+      this.props.startRemoveRegistrationFromUser(this.state.registrationId);
+    }
+  
+    this.setState({
+      showModal: !this.state.showModal,
+      statusAvatarUrl: this.setStatusAvatarURL('Cart'),
+      isRegistered: false
+    });
+    this.recordTimeInModal('remove registration', this.state.currentRating);
   }
 
   toggleModalWithSave = () => {
@@ -109,7 +125,7 @@ class RegisteredCoursesListItem extends React.Component {
         case `Cart`:
           return `/images/shopping-cart.png`;
         case `Registered`:
-          return `/images/pending-order.png`;
+          return `/images/briefcase.jpg`
         case 'Approved':
           return `/images/briefcase.jpg`
         default:
@@ -264,6 +280,18 @@ class RegisteredCoursesListItem extends React.Component {
                               startIcon={<SaveSharp />}
                               onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
+
+                          <Grid item>
+                            <Button
+                              color="primary"
+                              aria-label="Remove"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              startIcon={<BackspaceSharp />}
+                              onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
+                            </Button>
+                          </Grid>
+
                         </Grid>
                       </Grid>
                     </div>
@@ -286,6 +314,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRegistration: (id, ratingData) => dispatch(startEditCourseRegistration(id, ratingData)),
   startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
+  startRemoveRegistrationFromUser: (id) => dispatch(startRemoveRegistrationFromUser(id)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
 
