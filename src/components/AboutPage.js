@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 import Modal from './Modal';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardMedia from '@material-ui/core/CardMedia';
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,6 +12,10 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { withRouter } from 'react-router';
 
 //require('bootstrap/dist/css/bootstrap.css');
@@ -76,8 +82,22 @@ class AboutPage extends React.Component {
     });
   }
 
-  setAvatarURL = (rating) => {
+  setWorkflowAvatarURL = (status) => {
+    {
+      switch(status) {
+        case 'Open':
+          return '/images/local_library.png';
+        case `Cart`:
+            return `/images/shopping-cart.png`;
+        case `Registered`:
+            return `/images/briefcase.jpg`;
+        default:
+            return '/images/local_library.png';
+      }
+    }
+  }
 
+  setAvatarURL = (rating) => {
     {
       switch(rating) {
         case '0':
@@ -94,6 +114,10 @@ class AboutPage extends React.Component {
             return ``;
       }
     }
+  }
+
+  setWorkflowURL = () => {
+    return '/images/scholacity_workflow.png'
   }
 
   setTitleBasedOnRating = (rating) => {
@@ -157,29 +181,56 @@ class AboutPage extends React.Component {
           >
           <div>
             <Card>
-            <CardHeader titleTypographyProps={{variant:'h4'}} title="About Scholacity Web Application"/>
-            <CardContent>
-              <Typography variant="h5" component="h5" gutterBottom>
-                Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
-              </Typography>
-              <Divider/>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                    Here are the menu options:
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Interests"</b>} menu option takes you to a page from which you may select one or more Learning Outcomes that are of interest. These Learning Outcomes are derived from the course descriptions in the UWF Leisure Learning Course Catalog for the upcoming semester, and are grouped by Knowledge Area.
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Recommendations"</b>} menu option takes you to a page containing the recommendations made by the application based on the Learning Outcomes that you have selected in {'"My Interests"'}. Please {<b>click the recommendation and rate it</b>} using the provided Likert scale.  If you wish to register for the recommended course please also select {<b>"Maintain in Saved Courses"</b>} and then click the "Save" button.
-                  </Typography>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>  
-                    {<b>"My Courses"</b>} menu option takes you to a page containing the recommendations that you have chosen to save. You may click the saved recommendation and change your rating or de-select it as a saved course at any time.
-                  </Typography>
+            <CardHeader titleTypographyProps={{variant:'h4'}} title="Scholacity Work Flow"/>
+            <CardActionArea>
+              <CardContent>
+                <Typography variant="h5" component="h5" gutterBottom>
+                  Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
+                </Typography>
+
+                <List>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setWorkflowAvatarURL('Open')}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      {<b>"My Interests"</b>} menu option takes you to a page from which you may select one or more Learning Outcomes that are of interest. These Learning Outcomes are derived from the course descriptions in the UWF Leisure Learning Course Catalog for the upcoming semester, and are grouped by Knowledge Area.
+                      </Typography>
+                      </React.Fragment>
+                      } />
+                  </ListItem>
                   <Divider/>
-                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                    The Information at the top of this dialog is the average  for all of the recommendations that you have rated.
-                  </Typography>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setWorkflowAvatarURL('Cart')}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      {<b>"My Recommendations"</b>} menu option takes you to a page containing the recommendations made by the application based on the Learning Outcomes that you have selected in {'"My Interests"'}. Please {<b>click the recommendation and rate it</b>} using the provided Likert scale.  If you wish to register for the recommended course please also select {<b>"Maintain in Saved Courses"</b>} and then click the "Save" button.                      
+                      </Typography>
+                      </React.Fragment>
+                      } />
+                  </ListItem>
+                  <Divider/>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar src={this.setWorkflowAvatarURL('Registered')}/>
+                    </ListItemAvatar>
+                    <ListItemText primary={
+                      <React.Fragment>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      {<b>"My Courses"</b>} menu option takes you to a page containing the recommendations that you have chosen to save. You may click the saved recommendation and change your rating or de-select it as a saved course at any time.
+                      </Typography>
+                      </React.Fragment>
+                      } />
+                  </ListItem>
+                </List>
+
                 </CardContent>
+            </CardActionArea>
                 <br/>
             </Card>
             <br/>
