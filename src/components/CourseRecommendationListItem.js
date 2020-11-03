@@ -387,7 +387,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Move To Courses</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -398,7 +398,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Recommendation</Typography>
+                              onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                             </Button>
                           </Grid>
 
@@ -410,7 +410,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
+                              onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                             </Button>
                           </Grid>
 

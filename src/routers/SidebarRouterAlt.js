@@ -4,7 +4,7 @@ import OfferingsDashboard from '../components/OfferingsDashboard';
 import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
-import AboutPage from '../components/AboutPage';
+import AltAboutPage from '../components/AltAboutPage';
 
 const SidebarRouterAlt = [
   {
@@ -44,11 +44,11 @@ const SidebarRouterAlt = [
     component: RegisteredCoursesDashboard
   },
   {
-    path:'/aboutPage',
+    path:'/altAboutPage',
     sidebarName: 'How To Use',
     navbarName: 'How To Use',
     icon: Info,
-    component: AboutPage,
+    component: AltAboutPage,
     showModal:true
   }
   

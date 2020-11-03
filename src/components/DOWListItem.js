@@ -270,7 +270,7 @@ class DOWListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register Now</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
                             </Button>
                           </Grid>
                         </Grid>

@@ -55,11 +55,11 @@ export class CourseSelectionList extends React.Component {
             ) : (
                 this.props.courseselections.map((courseselection) => {
                   
-                  const isPending = courseselection.disposition == "Registered" ? this.registrationIsPending(courseselection.courseid) : true
+                  // const isPending = courseselection.disposition == "Registered" ? this.registrationIsPending(courseselection.courseid) : true
                   const registrationRecord = this.getRegistration(courseselection.courseid);
                   const registrationId = registrationRecord.id;
 
-                  if (isPending)
+                  if (registrationId === 0)
                     return <CourseSelectionListItem courseselection = {courseselection} key={courseselection.id} id={courseselection.id} {...courseselection} registrationId={registrationId}/>;
                 })
               )

@@ -195,9 +195,14 @@ class AboutPage extends React.Component {
                     </ListItemAvatar>
                     <ListItemText primary={
                       <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<b>"My Interests"</b>} menu option takes you to a page from which you may select one or more Learning Outcomes that are of interest. These Learning Outcomes are derived from the course descriptions in the UWF Leisure Learning Course Catalog for the upcoming semester, and are grouped by Knowledge Area.
-                      </Typography>
+                        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                        {<b>"Courses By Domain"</b>} menu option takes you to a page from which you may browse all available courses, organized by Knowledge Area, and select one or more courses that are of interest. You may save it to your shopping cart for further review, or you may save it to the courses for which you intend to register.
+                        </Typography>
+                        <br/>
+                        <br/>
+                        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                        {<b>"Courses By Day"</b>} menu option takes you to a page from which you may browse all available courses, organized by Day of the Week, and select one or more courses that are of interest. You may save it to your shopping cart for further review, or you may save it to the courses for which you intend to register. 
+                        </Typography>
                       </React.Fragment>
                       } />
                   </ListItem>
@@ -209,7 +214,7 @@ class AboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                       <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<b>"My Recommendations"</b>} menu option takes you to a page containing the recommendations made by the application based on the Learning Outcomes that you have selected in {'"My Interests"'}. Please {<b>click the recommendation and rate it</b>} using the provided Likert scale.  If you wish to register for the recommended course please also select {<b>"Maintain in Saved Courses"</b>} and then click the "Save" button.                      
+                      {<b>"My Selections"</b>} menu option takes you to your shopping cart of selected courses saved for further review.                      
                       </Typography>
                       </React.Fragment>
                       } />
