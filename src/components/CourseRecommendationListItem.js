@@ -215,7 +215,7 @@ class CourseRecommendationListItem extends React.Component {
         case `Cart`:
           return `/images/shopping-cart.png`;
         case `Registered`:
-          return `/images/pending-order.png`;
+          return `/images/briefcase.jpg`
         default:
           return `/images/shopping-cart.png`;
       }

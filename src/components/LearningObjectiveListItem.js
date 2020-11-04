@@ -5,17 +5,18 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-const LearningObjectiveListItem = ({ id, knowledgearea, content, selected, pairingId, selectCallback }) => (
+const LearningObjectiveListItem = ({ id, knowledgearea, content, selected, pairingId, isRegistered, selectCallback }) => (
   <div>
     <CardActionArea>
-    <Card>
-      <CardContent>
-        <Typography className={"MuiTypography--content"} style={{ fontSize: '1.75em', fontWeight: `bold`, color: `#000000` }} variant={"h6"} gutterBottom>
-          <Checkbox type="checkbox" checked={selected} id={id} name={id} label={content} pairingId={pairingId} onCheckboxChange={(e) => selectCallback(id,content,pairingId,knowledgearea,e)}/>
-        </Typography>
-      </CardContent>
-    </Card>
-  </CardActionArea>
+      <Card>
+        <CardContent>
+          <Typography className={"MuiTypography--content"} style={{ fontSize: '1.75em', fontWeight: `bold`, color: `#000000` }} variant={"h6"} gutterBottom>
+            <Checkbox disabled={isRegistered} type="checkbox" checked={selected} id={id} name={id} label={content} pairingId={pairingId} onCheckboxChange={(e) => selectCallback(id,content,pairingId,knowledgearea,isRegistered, e)}/>
+          </Typography>
+        </CardContent>
+      </Card>
+    </CardActionArea>
+
 
   </div>
 );

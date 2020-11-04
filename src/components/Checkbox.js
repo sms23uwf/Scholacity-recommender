@@ -3,11 +3,12 @@ import Typography from "@material-ui/core/Typography";
 
 //require('bootstrap/dist/css/bootstrap.css');
 
-const Checkbox = ({ id, checked, label, pairingId, onCheckboxChange }) => (
+const Checkbox = ({ id, checked, label, pairingId, isRegistered, onCheckboxChange }) => (
   <div className="form-check">
     <label>
       <input
         type="checkbox"
+        disabled={isRegistered}
         id={id}
         name={id}
         checked={checked}
