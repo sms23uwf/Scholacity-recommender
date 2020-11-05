@@ -76,8 +76,10 @@ export class LearningObjectiveList extends React.Component {
     this.setState(() => ({learningobjectiveid}));
     this.props.setLOFilter(learningobjectiveid);
 
+
     if(isRegistered == true)
     {
+      console.log(`isRegistered: ${isRegistered}`)
       this.toggleModal();
       return;
     }
@@ -171,10 +173,7 @@ export class LearningObjectiveList extends React.Component {
                   });
                 }
 
-                if(courserecommendation.disposition != "Registered")
-                {
-                  this.props.startRemoveCourseRecommendation(recommendationPairing);
-                }
+                this.props.startRemoveCourseRecommendation(recommendationPairing);
               }
               else
               {
