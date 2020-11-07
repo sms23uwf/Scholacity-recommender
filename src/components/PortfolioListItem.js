@@ -171,7 +171,7 @@ class PortfolioListItem extends React.Component {
 
     var keeperCount = keepers.length;
 
-    var reasonData = {...this.props.portfolioobjectives};
+    var reasonData = {...this.props.learningojectives};
     const result = Object.keys(reasonData).map((key) => reasonData[key]);
 
     var reasons = [];

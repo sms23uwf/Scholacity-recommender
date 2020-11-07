@@ -38,7 +38,7 @@ export class DashboardPage extends React.Component {
     const userDomain = userDomainArray[1];
 
     //TODO: change this last one to 'uwf.edu'
-    if ((userDomain != 'scholacity.org') && (userDomain != 'scholarsanonymous.org') && (userDomain != 'students.uwf.edu')) {
+    if ((userDomain != 'scholacity.org') && (userDomain != 'scholarsanonymous.org')) {
       console.log('logged out due to unauthorized domain');
       this.setState({
         invalidUserDomain: true,

@@ -9,7 +9,7 @@ import selectCourses from '../selectors/courses';
 import selectRegistrationsForUser from '../selectors/registration_user';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddLOSelectionToUser, startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
-import { startAddCourseRecommendation , startRemoveCourseRecommendation} from '../actions/courseRecommendations';
+import { startAddCourseRecommendation , startSetCourseRecommendations, startRemoveCourseRecommendation, startRemoveCourseSelectedLO} from '../actions/courseRecommendations';
 import { startAddRecommendationLearningObjective , startRemoveRecommendationLearningObjective} from '../actions/recommendation_learningobjective';
 import { firebase } from '../firebase/firebase';
 import database from '../firebase/firebase';
@@ -77,15 +77,23 @@ export class LearningObjectiveList extends React.Component {
     this.props.setLOFilter(learningobjectiveid);
 
 
-    if(isRegistered == true)
-    {
-      console.log(`isRegistered: ${isRegistered}`)
-      this.toggleModal();
-      return;
-    }
+    // if(isRegistered == true)
+    // {
+    //   console.log(`isRegistered: ${isRegistered}`)
+    //   this.toggleModal();
+    //   //return;
+    // }
 
     if(e.target.checked===true)
     {
+
+      if(isRegistered == true)
+      {
+        console.log(`isRegistered: ${isRegistered}`)
+        this.toggleModal();
+        //return;
+      }
+  
       const userid = firebase.auth().currentUser.uid;
       const loData = {learningobjectiveid: learningobjectiveid, userid: userid};
 
@@ -118,7 +126,6 @@ export class LearningObjectiveList extends React.Component {
                   courseid: learningobjective_course.courseid, 
                   learningobjectiveid: learningobjective_course.learningobjectiveid,
                   learningobjectives: [{learningobjectiveid: learningobjective_course.learningobjectiveid, content: learningobjective}],
-                  portfolioobjectives: [{learningobjectiveid: learningobjective_course.learningobjectiveid, content: learningobjective}],
                   rating: '-1', 
                   counter: '1', 
                   disposition: 'recommended',
@@ -140,6 +147,14 @@ export class LearningObjectiveList extends React.Component {
     }
     else
     {
+
+      if(isRegistered == true)
+      {
+        console.log(`isRegistered: ${isRegistered}`)
+        this.toggleModal();
+        return;
+      }
+  
       if(pairingId != 0)
       {
         const loPairing = {id: pairingId};
@@ -156,6 +171,7 @@ export class LearningObjectiveList extends React.Component {
           Object.keys(loData).map((key) => {
 
             var currentLO = loData[key];
+            const recommendationLoPairing = {recommendation_id: courserecommendation.id, id: key};
 
             if(currentLO.learningobjectiveid === learningobjectiveid)
             {
@@ -169,24 +185,21 @@ export class LearningObjectiveList extends React.Component {
                 }
                 else
                 {
-                  database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
-                  });
+                  this.props.startRemoveCourseSelectedLO(recommendationLoPairing);
                 }
 
                 this.props.startRemoveCourseRecommendation(recommendationPairing);
               }
               else
               {
-                database.ref(`users_tables/${this.state.userid}/courserecommendation/${courserecommendation.id}`).child(`learningobjectives/${key}`).remove().then(() => {
-                });
+                this.props.startRemoveCourseSelectedLO(recommendationLoPairing);
               }
             }
           });
         })
       }
     }
-    
-    
+    this.props.startSetCourseRecommendations();
   };
 
   getRegistration(courseId) {
@@ -231,8 +244,8 @@ export class LearningObjectiveList extends React.Component {
                     const registrationId = this.getRegistrationId(learningobjective.courseid);
                     const isRegistered = registrationId != 0
   
-                    if (isRegistered)
-                      learningobjective.selected = true;
+                    // if (isRegistered)
+                    //   learningobjective.selected = true;
 
                     if(pairingId != 0)
                       learningobjective.selected = true;
@@ -301,10 +314,12 @@ const mapDispatchToProps = (dispatch) => ({
   startRemoveLOSelectionFromUser: (loPairing) => dispatch(startRemoveLOSelectionFromUser(loPairing)),
   startAddCourseRecommendation: (userCourse) => dispatch(startAddCourseRecommendation(userCourse)),
   startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
+  startRemoveCourseSelectedLO: (recommendationLoPairing) => dispatch(startRemoveCourseSelectedLO(recommendationLoPairing)),
   startAddRecommendationLearningObjective: (recommendationLoPairing) => dispatch(startAddRecommendationLearningObjective(recommendationLoPairing)),
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
   setLOFilter: (learningobjectiveid) => dispatch(setLOFilter(learningobjectiveid)),
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
+  startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture)),
   startAddUserSelectionEvent: (selectionEventCapture) => dispatch(startAddUserSelectionEvent(selectionEventCapture))
 });

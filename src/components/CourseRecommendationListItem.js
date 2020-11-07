@@ -243,7 +243,7 @@ class CourseRecommendationListItem extends React.Component {
 
   render() {
 
-    var reasonData = this.state.isRegistered ? {...this.props.portfolioobjectives} : {...this.props.learningobjectives};
+    var reasonData = {...this.props.learningobjectives};
     const result = Object.keys(reasonData).map((key) => reasonData[key]);
 
     var reasons = [];

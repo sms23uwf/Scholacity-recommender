@@ -8,7 +8,6 @@ const Checkbox = ({ id, checked, label, pairingId, isRegistered, onCheckboxChang
     <label>
       <input
         type="checkbox"
-        disabled={isRegistered}
         id={id}
         name={id}
         checked={checked}
