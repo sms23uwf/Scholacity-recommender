@@ -91,9 +91,10 @@ class RegisteredCoursesListItem extends React.Component {
     if(this.state.newRating != this.state.currentRating)
       this.recordRating(this.state.registrationId, this.state.newRating, this.props.courseid, this.state.userid);
 
-    this.setState({
-      showModal: !this.state.showModal
-    });
+    // this.setState({
+    //   showModal: !this.state.showModal
+    // });
+
     this.recordTimeInModal('save', this.state.currentRating);
   }
 
@@ -283,6 +284,7 @@ class RegisteredCoursesListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              disabled={this.state.currentRating == this.state.newRating}
                               color="inherit"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
@@ -293,6 +295,7 @@ class RegisteredCoursesListItem extends React.Component {
 
                           <Grid item>
                             <Button
+                              disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}

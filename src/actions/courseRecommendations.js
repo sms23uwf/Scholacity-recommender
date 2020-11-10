@@ -43,7 +43,7 @@ export const startAddCourseRecommendation = (courseRecommendationData = {}) => {
           ...courseUserPairing
         }));
         const recommendationLoPairing = {recommendationid: ref.key, learningobjectiveid: learningobjectiveid, userid: userid };
-        //database.ref(`users_tables/${uid}/recommendation_learningobjective`).push(recommendationLoPairing);
+        database.ref(`users_tables/${uid}/recommendation_learningobjective`).push(recommendationLoPairing);
       });
     }
     else
@@ -53,6 +53,9 @@ export const startAddCourseRecommendation = (courseRecommendationData = {}) => {
         learningobjectiveid: learningobjectives[0].learningobjectiveid,
         content: learningobjectives[0].content
       })
+
+      const recommendationLoPairing = {recommendationid: existingrecommendationid, learningobjectiveid: learningobjectiveid, userid: userid };
+      database.ref(`users_tables/${uid}/recommendation_learningobjective`).push(recommendationLoPairing);
 
       dispatch(addRecommendationLO({
         id: existingrecommendationid

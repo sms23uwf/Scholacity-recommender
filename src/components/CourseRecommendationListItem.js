@@ -369,6 +369,7 @@ class CourseRecommendationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              disabled={this.state.currentRating == this.state.newRating}
                               color="inherit"
                               aria-label="Accept"
                               style={{fontWeight: "bold"}}

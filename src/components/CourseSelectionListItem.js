@@ -97,8 +97,8 @@ class CourseSelectionListItem extends React.Component {
         isRegistered: true
       });
 
-      if(this.state.newRating != this.state.currentRating)
-        this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
+      // if(this.state.newRating != this.state.currentRating)
+      //   this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
 
       this.recordDisposition(this.props.id, 'Registered', this.props.courseid, this.props.userid);
 
@@ -145,9 +145,10 @@ class CourseSelectionListItem extends React.Component {
     if(this.state.disposition != this.state.newDisposition)
       this.recordDisposition(this.props.id, this.state.newDisposition, this.props.courseid, this.props.userid);
     
-    this.setState({
-      showModal: !this.state.showModal
-    });
+    // this.setState({
+    //   showModal: !this.state.showModal
+    // });
+
     this.recordTimeInModal('save', this.state.currentRating);
   }
 
@@ -336,16 +337,18 @@ class CourseSelectionListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              disabled={this.state.currentRating == this.state.newRating}
                               color="inherit"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
                               title="Save"
                               startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
+                              disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
@@ -356,6 +359,7 @@ class CourseSelectionListItem extends React.Component {
                             <Grid item>
                               <Button
                                 hidden={this.state.isRegistered}
+                                disabled={this.state.currentRating == "-1"}
                                 color="primary"
                                 aria-label="Remove"
                                 style={{fontWeight: "bold"}}
@@ -368,6 +372,7 @@ class CourseSelectionListItem extends React.Component {
                             <Grid item>
                               <Button
                                 hidden={!this.state.isRegistered}
+                                disabled={this.state.currentRating == "-1"}
                                 color="primary"
                                 aria-label="Remove"
                                 style={{fontWeight: "bold"}}

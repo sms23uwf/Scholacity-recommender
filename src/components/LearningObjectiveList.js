@@ -137,6 +137,7 @@ export class LearningObjectiveList extends React.Component {
                   fee: course.fee};
 
                 this.props.startAddCourseRecommendation(userCourse);
+
               }
             }
     
