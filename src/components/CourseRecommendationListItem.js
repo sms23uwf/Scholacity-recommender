@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startEditCourseRecommendation } from '../actions/courseRecommendations';
-import { startAddRatingsByUserCourseLO } from '../actions/ratingsByUserCourseLO';
+import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser, startRemoveRegistrationFromUser } from '../actions/registrations';
 import selectLOSelectionsForUser from '../selectors/learningobjective_userselect';
@@ -80,14 +80,16 @@ class CourseRecommendationListItem extends React.Component {
   toggleModalWithSave = () => {
 
     if(this.state.newRating != this.state.currentRating)
-      this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
+      this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid);
 
     if(this.state.disposition != this.state.newDisposition)
       this.recordDisposition(this.props.id, this.state.newDisposition, this.props.courseid, this.props.userid);
 
-    this.setState({
-      showModal: !this.state.showModal
-    });
+    // may want to put this back in but for now, do not close modal on save rating only
+    // this.setState({
+    //   showModal: !this.state.showModal
+    // });
+
     this.recordTimeInModal('save', this.state.currentRating);
   }
 
@@ -142,34 +144,29 @@ class CourseRecommendationListItem extends React.Component {
     this.props.startEditCourseRecommendation(id, dispositionData);
   }
 
-  recordRating = (id,rating,courseid,userid,learningobjectives) => {
+  // recordRating = (id,rating,courseid,userid,learningobjectives) => {
+  //   this.setState({currentRating: rating});
+  //   const ratingData = {rating: rating};
+  //   this.props.startEditCourseRecommendation(id, ratingData);
+  //   this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
+
+  //   var loData = {...learningobjectives};
+
+  //   Object.keys(loData).map((key) => {
+  //     var currentLO = loData[key];
+  //     const ratingCapture = {courseid: courseid, learningobjectiveid: currentLO.learningobjectiveid, userid: userid, rating: rating};
+  //     this.props.startAddRatingsByUserCourseLO(ratingCapture);
+  //   })
+  // }
+
+  recordRating = (id,rating,courseid,userid) => {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseRecommendation(id, ratingData);
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
-    var loData = {...learningobjectives};
-
-    Object.keys(loData).map((key) => {
-      var currentLO = loData[key];
-      const ratingCapture = {courseid: courseid, learningobjectiveid: currentLO.learningobjectiveid, userid: userid, rating: rating};
-      this.props.startAddRatingsByUserCourseLO(ratingCapture);
-    })
-  }
-
-  toggleModalWithUnRegister = () => {
-
-    if(this.state.showModal == true)
-    {
-      this.props.startRemoveRegistrationFromUser(this.props.registrationId);
-    }
-  
-    this.setState({
-      showModal: !this.state.showModal,
-      statusAvatarUrl: this.setStatusAvatarURL('Cart'),
-      isRegistered: false
-    });
-    this.recordTimeInModal('remove registration', this.state.currentRating);
+    const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
+    this.props.startAddRatingsByUserSelection(ratingCapture);
   }
 
   toggleModalWithRegister = () => {
@@ -180,7 +177,7 @@ class CourseRecommendationListItem extends React.Component {
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
         course_description: this.props.coursedescription,
-        rating: `-1`,
+        rating: this.state.newRating,
         course_instructor: this.state.instructor, 
         course_fee: this.state.fee, 
         userid: this.state.userid, 
@@ -194,8 +191,8 @@ class CourseRecommendationListItem extends React.Component {
         isRegistered: true
       });
 
-      if(this.state.newRating != this.state.currentRating)
-        this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
+      // if(this.state.newRating != this.state.currentRating)
+      //   this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
 
       this.recordDisposition(this.props.id, "Registered", this.props.courseid, this.props.userid);
 
@@ -331,7 +328,7 @@ class CourseRecommendationListItem extends React.Component {
                 </div>
                   <div>
                     <form action="">
-                    <label className="statement">This Recommendation Fits With a Desired Learning Outcome.</label>
+                    <label className="statement">This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
                     <ul className='likert'>
                       <li>
                         <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
@@ -377,11 +374,12 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Accept"
                               startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography></Button>
+                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
                           </Grid>
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
+                              disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
@@ -393,6 +391,7 @@ class CourseRecommendationListItem extends React.Component {
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
+                              disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}
@@ -401,19 +400,6 @@ class CourseRecommendationListItem extends React.Component {
                               onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                             </Button>
                           </Grid>
-
-                          <Grid item>
-                            <Button
-                              hidden={!this.state.isRegistered}
-                              color="primary"
-                              aria-label="Remove"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
-                            </Button>
-                          </Grid>
-
                         </Grid>
                       </Grid>
                     </div>
@@ -440,7 +426,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRecommendation: (id, ratingData) => dispatch(startEditCourseRecommendation(id, ratingData)),
   startAddRegistrationToUser: (registrationData) => dispatch(startAddRegistrationToUser(registrationData)),
   startRemoveRegistrationFromUser: (id) => dispatch(startRemoveRegistrationFromUser(id)),
-  startAddRatingsByUserCourseLO: (ratingCapture) => dispatch(startAddRatingsByUserCourseLO(ratingCapture)),
+  startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startRemoveLOSelectionFromUser: (loPairing) => dispatch(startRemoveLOSelectionFromUser(loPairing)),
   startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))

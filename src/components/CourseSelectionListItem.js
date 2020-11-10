@@ -83,7 +83,7 @@ class CourseSelectionListItem extends React.Component {
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
         course_description: this.state.currentDescription,
-        rating: `-1`,
+        rating: this.state.newRating,
         course_instructor: this.state.instructor, 
         course_fee: this.state.fee, 
         userid: this.state.userid, 
@@ -294,7 +294,7 @@ class CourseSelectionListItem extends React.Component {
 
               <div>
               <form action="">
-              <label className="statement">This Course Satisfies My Expectation For This Semester's Offerings.</label>
+              <label className="statement">This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
               <ul className='likert'>
                 <li>
                   <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>

@@ -51,6 +51,16 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({newRating: rating});
   }
 
+  // recordRating = (id,rating,courseid,userid) => {
+  //   this.setState({currentRating: rating});
+  //   const ratingData = {rating: rating};
+  //   this.props.startEditCourseRegistration(id, ratingData);
+  //   this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
+
+  //   const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
+  //   this.props.startAddRatingsByUserCourse(ratingCapture);
+  // }
+
   recordRating = (id,rating,courseid,userid) => {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
@@ -58,7 +68,7 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
-    this.props.startAddRatingsByUserCourse(ratingCapture);
+    this.props.startAddRatingsByUserSelection(ratingCapture);
   }
 
   toggleModalWithUnRegister = () => {
@@ -231,7 +241,7 @@ class RegisteredCoursesListItem extends React.Component {
 
               <div>
               <form action="">
-              <label className="statement">This Course Satisfied My Expectations and Learning Goals.</label>
+              <label className="statement">This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
               <ul className='likert'>
                 <li>
                   <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
