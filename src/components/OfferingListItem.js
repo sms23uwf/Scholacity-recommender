@@ -254,6 +254,16 @@ class OfferingListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
                               disabled={this.state.isRegistered || this.state.isInCart}
                               color="primary"
                               aria-label="Save"
@@ -274,17 +284,6 @@ class OfferingListItem extends React.Component {
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
                             </Button>
                           </Grid>
-                          <Grid item>
-                            <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-
                         </Grid>
                       </Grid>
                     </div>

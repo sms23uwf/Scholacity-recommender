@@ -289,6 +289,16 @@ class RegisteredCoursesListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
                               disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Remove"
@@ -298,18 +308,6 @@ class RegisteredCoursesListItem extends React.Component {
                               onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
                             </Button>
                           </Grid>
-
-                          <Grid item>
-                            <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-
                         </Grid>
                       </Grid>
                     </div>

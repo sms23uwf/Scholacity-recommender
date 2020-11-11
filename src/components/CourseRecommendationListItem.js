@@ -374,6 +374,16 @@ class CourseRecommendationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
                               hidden={this.state.isRegistered}
                               disabled={this.state.currentRating == "-1"}
                               color="primary"
@@ -396,17 +406,6 @@ class CourseRecommendationListItem extends React.Component {
                               onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                             </Button>
                           </Grid>
-                          <Grid item>
-                            <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-    
                         </Grid>
                       </Grid>
                     </div>
