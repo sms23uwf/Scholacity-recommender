@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import { Work, SaveSharp, BackspaceSharp } from '@material-ui/icons';
+import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -119,6 +119,11 @@ class CourseSelectionListItem extends React.Component {
 
   recordLocalRating = (rating,e) => {
     this.setState({newRating: rating});
+
+    if(rating != this.state.currentRating)
+      this.recordRating(this.props.id, rating, this.props.courseid, this.props.userid);
+
+    this.setState({currentRating: rating});
   }
 
   recordRating = (id,rating,courseid,userid) => {
@@ -330,21 +335,11 @@ class CourseSelectionListItem extends React.Component {
                     container 
                     spacing={1}
                     >
-                        <Grid
+                      <Grid
                         justify="center" 
                         container 
                         spacing={2}
                         >
-                          <Grid item>
-                            <Button
-                              disabled={this.state.currentRating == this.state.newRating}
-                              color="inherit"
-                              aria-label="Save"
-                              style={{fontWeight: "bold"}}
-                              title="Save"
-                              startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
-                          </Grid>
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
@@ -354,8 +349,9 @@ class CourseSelectionListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Move To Courses</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
                             </Button>
+                            </Grid>
                             <Grid item>
                               <Button
                                 hidden={this.state.isRegistered}
@@ -371,25 +367,19 @@ class CourseSelectionListItem extends React.Component {
 
                             <Grid item>
                               <Button
-                                hidden={!this.state.isRegistered}
-                                disabled={this.state.currentRating == "-1"}
-                                color="primary"
-                                aria-label="Remove"
+                                color="inherit"
+                                aria-label="Cancel"
                                 style={{fontWeight: "bold"}}
-                                title="Register"
-                                startIcon={<BackspaceSharp />}
-                                onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
+                                title="Cancel"
+                                startIcon={<ClearSharp />}
+                                onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
                               </Button>
                             </Grid>
 
-                          </Grid>
                         </Grid>
                       </Grid>
                     </div>
                 </span>
-                <div>
-                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
-                </div>
               </React.Fragment>
         </Modal>
       </div>

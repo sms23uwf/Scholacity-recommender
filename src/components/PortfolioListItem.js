@@ -112,6 +112,11 @@ class PortfolioListItem extends React.Component {
 
   recordLocalRating = (rating,e) => {
     this.setState({newRating: rating});
+
+    if(rating != this.state.currentRating)
+      this.recordRating(this.props.id, rating, this.props.courseid, this.props.userid);
+
+    this.setState({currentRating: rating});
   }
 
   recordRating = (id,rating,disposition,courseid,userid) => {

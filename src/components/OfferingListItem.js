@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
-import { Work, ShoppingCart } from '@material-ui/icons';
+import { Work, ShoppingCart, ClearSharp } from '@material-ui/icons';
 
 class OfferingListItem extends React.Component {
   constructor(props){
@@ -274,13 +274,21 @@ class OfferingListItem extends React.Component {
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
                             </Button>
                           </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+
                         </Grid>
                       </Grid>
                     </div>
                 </span>
-                <div>
-                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
-                </div>
               </React.Fragment>
         </Modal>
       </div>

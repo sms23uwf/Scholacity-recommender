@@ -9,8 +9,7 @@ import selectCourses from '../selectors/courses';
 import selectRegistrationsForUser from '../selectors/registration_user';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddLOSelectionToUser, startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
-import { startAddCourseRecommendation , startSetCourseRecommendations, startRemoveCourseRecommendation, startRemoveCourseSelectedLO} from '../actions/courseRecommendations';
-import { startAddRecommendationLearningObjective , startRemoveRecommendationLearningObjective} from '../actions/recommendation_learningobjective';
+import { startAddCourseRecommendation , startRemoveCourseRecommendation, startRemoveCourseSelectedLO} from '../actions/courseRecommendations';
 import { firebase } from '../firebase/firebase';
 import database from '../firebase/firebase';
 import { setUUIDFilter, setLOFilter, setCourseFilter } from '../actions/filters';
@@ -200,7 +199,6 @@ export class LearningObjectiveList extends React.Component {
         })
       }
     }
-    this.props.startSetCourseRecommendations();
   };
 
   getRegistration(courseId) {
@@ -316,11 +314,9 @@ const mapDispatchToProps = (dispatch) => ({
   startAddCourseRecommendation: (userCourse) => dispatch(startAddCourseRecommendation(userCourse)),
   startRemoveCourseRecommendation: (recommendationId) => dispatch(startRemoveCourseRecommendation(recommendationId)),
   startRemoveCourseSelectedLO: (recommendationLoPairing) => dispatch(startRemoveCourseSelectedLO(recommendationLoPairing)),
-  startAddRecommendationLearningObjective: (recommendationLoPairing) => dispatch(startAddRecommendationLearningObjective(recommendationLoPairing)),
   setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid)),
   setLOFilter: (learningobjectiveid) => dispatch(setLOFilter(learningobjectiveid)),
   setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
-  startSetCourseRecommendations: () => dispatch(startSetCourseRecommendations()),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture)),
   startAddUserSelectionEvent: (selectionEventCapture) => dispatch(startAddUserSelectionEvent(selectionEventCapture))
 });

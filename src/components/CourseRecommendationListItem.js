@@ -21,7 +21,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
-import { Work, SaveSharp, BackspaceSharp } from '@material-ui/icons';
+import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
@@ -136,6 +136,11 @@ class CourseRecommendationListItem extends React.Component {
 
   recordLocalRating = (rating,e) => {
     this.setState({newRating: rating});
+
+    if(rating != this.state.currentRating)
+      this.recordRating(this.props.id, rating, this.props.courseid, this.props.userid);
+
+    this.setState({currentRating: rating});
   }
 
   recordDisposition = (id,newDisposition,courseid,userid) => {
@@ -369,16 +374,6 @@ class CourseRecommendationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.currentRating == this.state.newRating}
-                              color="inherit"
-                              aria-label="Accept"
-                              style={{fontWeight: "bold"}}
-                              title="Accept"
-                              startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
                               hidden={this.state.isRegistered}
                               disabled={this.state.currentRating == "-1"}
                               color="primary"
@@ -386,7 +381,7 @@ class CourseRecommendationListItem extends React.Component {
                               style={{fontWeight: "bold"}}
                               title="Register"
                               startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Move To Courses</Typography>
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -401,13 +396,21 @@ class CourseRecommendationListItem extends React.Component {
                               onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                             </Button>
                           </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+    
                         </Grid>
                       </Grid>
                     </div>
                 </span>
-                <div>
-                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
-                </div>
               </React.Fragment>
         </Modal>
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startEditCourseRegistration } from '../actions/registrations';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
+import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
 import { startRemoveRegistrationFromUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import { SaveSharp, BackspaceSharp } from '@material-ui/icons';
+import { SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
 class RegisteredCoursesListItem extends React.Component {
@@ -49,6 +49,11 @@ class RegisteredCoursesListItem extends React.Component {
 
   recordLocalRating = (rating,e) => {
     this.setState({newRating: rating});
+
+    if(rating != this.state.currentRating)
+      this.recordRating(this.props.id, rating, this.props.courseid, this.props.userid);
+
+    this.setState({currentRating: rating});
   }
 
   // recordRating = (id,rating,courseid,userid) => {
@@ -284,17 +289,6 @@ class RegisteredCoursesListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.currentRating == this.state.newRating}
-                              color="inherit"
-                              aria-label="Save"
-                              style={{fontWeight: "bold"}}
-                              title="Save"
-                              startIcon={<SaveSharp />}
-                              onClick={this.toggleModalWithSave}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save Rating</Typography></Button>
-                          </Grid>
-
-                          <Grid item>
-                            <Button
                               disabled={this.state.currentRating == "-1"}
                               color="primary"
                               aria-label="Remove"
@@ -305,13 +299,21 @@ class RegisteredCoursesListItem extends React.Component {
                             </Button>
                           </Grid>
 
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
+                            </Button>
+                          </Grid>
+
                         </Grid>
                       </Grid>
                     </div>
                 </span>
-                <div>
-                  <Button title="Close" className="close_modal" onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
-                </div>
               </React.Fragment>
         </Modal>
       </div>
@@ -326,7 +328,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRegistration: (id, ratingData) => dispatch(startEditCourseRegistration(id, ratingData)),
-  startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
+  startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
   startRemoveRegistrationFromUser: (id) => dispatch(startRemoveRegistrationFromUser(id)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });
