@@ -65,7 +65,6 @@ class AdminAboutPage extends React.Component {
 
     this.state = {
       showModal: true,
-      avgLOAlignmentRating: this.getAverageLOAlignmentRating(),
       avgOfferingExpectationRating: this.getAverageOfferingExpectationRating(),
       avgCourseSatisfactionRating: this.getAverageCourseSatisfactionRating(),
       usabilityScore: this.getUseabilityScore()
@@ -105,19 +104,6 @@ class AdminAboutPage extends React.Component {
 
   getLOAlignmentTitle = () => {
     return 'Average Rating of Alignment of Learning Outcomes with Course Description:'
-  }
-
-  getAverageLOAlignmentRating() {
-
-    var count = 0;
-    var total = 0;
-
-    this.props.ratings_lo_alignment.map((record) => {
-      total+= parseInt(record.rating);
-      count++;
-    });
-    return parseInt((total/count)).toString();
-
   }
 
   getAverageOfferingExpectationRating = () => {
@@ -185,23 +171,10 @@ class AdminAboutPage extends React.Component {
                   Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
                 </Typography>
                 <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                The only Administrative activity currently available is the Approval of Course Registrations. More to come. The Program Director and/or system administrator may also review and test the functionality available to the users.
+                The only Administrative activities currently available are Viewing Course Registrations, and Viewing Course Offerings. More to come.
                 </Typography>
                 <Divider/>
                 <List>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setAvatarURL(this.state.avgLOAlignmentRating)}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      Average User Rating of Stated Learning Outcomes
-                      </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-                  <Divider/>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
@@ -209,7 +182,7 @@ class AdminAboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                       <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      Average User Rating of Offerings Expectations
+                      Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
                       </Typography>
                       </React.Fragment>
                       } />
@@ -222,7 +195,7 @@ class AdminAboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                       <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      Average User Rating of Course Satisfaction
+                      Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
                       </Typography>
                       </React.Fragment>
                       } />
@@ -243,7 +216,6 @@ class AdminAboutPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    ratings_lo_alignment: state.ratings_all_lo_alignment,
     ratings_course_offerings: state.ratings_all_course_offerings,
     ratings_course_satisfaction: state.ratings_all_course_satisfaction,
     userNavigationEvents: state.user_navigation_events,

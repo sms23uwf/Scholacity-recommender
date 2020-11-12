@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startEditCourseRegistration } from '../actions/registrations';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
-import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelection';
+import { startAddRatingsByUserCourse } from '../actions/ratingsByUserCourse';
 import { startRemoveRegistrationFromUser } from '../actions/registrations';
 import Modal from './Modal';
 import Avatar from '@material-ui/core/Avatar';
@@ -73,7 +73,7 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
-    this.props.startAddRatingsByUserSelection(ratingCapture);
+    this.props.startAddRatingsByUserCourse(ratingCapture);
   }
 
   toggleModalWithUnRegister = () => {
@@ -247,7 +247,7 @@ class RegisteredCoursesListItem extends React.Component {
 
               <div>
               <form action="">
-              <label className="statement">This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
+              <label className="statement">Having taken this course, I found that it satisfied my learning goals and expectations.</label>
               <ul className='likert'>
                 <li>
                   <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
@@ -326,7 +326,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   startEditCourseRegistration: (id, ratingData) => dispatch(startEditCourseRegistration(id, ratingData)),
-  startAddRatingsByUserSelection: (ratingCapture) => dispatch(startAddRatingsByUserSelection(ratingCapture)),
+  startAddRatingsByUserCourse: (ratingCapture) => dispatch(startAddRatingsByUserCourse(ratingCapture)),
   startRemoveRegistrationFromUser: (id) => dispatch(startRemoveRegistrationFromUser(id)),
   startAddUserTimeInModal: (timeInModalCapture) => dispatch(startAddUserTimeInModal(timeInModalCapture))
 });

@@ -1,7 +1,8 @@
-import { Home, AssignmentSharp, Info } from '@material-ui/icons';
+import { Home, AssignmentSharp, Info, LocalLibrarySharp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminAboutPage from '../components/AdminAboutPage';
+import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
 
 const SidebarRouterAlt = [
   {
@@ -14,10 +15,17 @@ const SidebarRouterAlt = [
   },
   {
     path: '/adminDashboard',
-    sidebarName: 'Administration',
-    navbarName: 'Administration',
+    sidebarName: 'View Registrations',
+    navbarName: 'View Registrations',
     icon: AssignmentSharp,
     component: AdminDashboard
+  },
+  {
+    path: '/adminOfferingsDashboard',
+    sidebarName: 'View Courses',
+    navbarName: 'View Courses',
+    icon: LocalLibrarySharp,
+    component: AdminOfferingsDashboard
   },
   {
     path:'/adminAboutPage',
