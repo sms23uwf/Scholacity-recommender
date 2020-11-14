@@ -71,6 +71,61 @@ class AdminOfferingListItem extends React.Component {
     }
   }
 
+  showAverageOfferingRating = () => {
+    
+    if (this.state.avgOfferingExpectationRating == `-1`)
+      return null;
+
+    return (
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
+        </ListItemAvatar>
+        <ListItemText primary={
+          <React.Fragment>
+          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+          Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
+          </Typography>
+          </React.Fragment>
+          } />
+      </ListItem>
+      )
+  }
+
+  showAverageSatisfactionRating = () => {
+    
+    if (this.state.avgCourseSatisfactionRating == `-1`)
+      return null;
+
+    return (
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
+        </ListItemAvatar>
+        <ListItemText primary={
+          <React.Fragment>
+          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+          Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
+          </Typography>
+          </React.Fragment>
+          } />
+      </ListItem>
+      )
+  }
+
+  showAverageCourseRatings = () => {
+    if (this.state.avgOfferingExpectationRating == `-1` && this.state.avgCourseSatisfactionRating == `-1`)
+      return null;
+
+    return (
+      <List>
+        {this.showAverageOfferingRating()}  
+        {this.showAverageSatisfactionRating()}
+      </List>
+
+    )    
+  }
+
   render() {
 
     const sessionItems = this.props.sessions.map((session) =>
@@ -114,33 +169,7 @@ class AdminOfferingListItem extends React.Component {
               </Typography>
               <br/>
               <Divider/>
-              <List>
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
-                  </ListItemAvatar>
-                  <ListItemText primary={
-                    <React.Fragment>
-                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                    Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
-                    </Typography>
-                    </React.Fragment>
-                    } />
-                </ListItem>
-                <Divider/>
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
-                  </ListItemAvatar>
-                  <ListItemText primary={
-                    <React.Fragment>
-                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                    Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
-                    </Typography>
-                    </React.Fragment>
-                    } />
-                </ListItem>
-              </List>
+              {this.showAverageCourseRatings()}
               <Divider/>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 Sessions:

@@ -86,13 +86,6 @@ export class LearningObjectiveList extends React.Component {
     if(e.target.checked===true)
     {
 
-      if(isRegistered == true)
-      {
-        console.log(`isRegistered: ${isRegistered}`)
-        this.toggleModal();
-        //return;
-      }
-  
       const userid = firebase.auth().currentUser.uid;
       const loData = {learningobjectiveid: learningobjectiveid, userid: userid};
 
@@ -148,13 +141,6 @@ export class LearningObjectiveList extends React.Component {
     else
     {
 
-      if(isRegistered == true)
-      {
-        console.log(`isRegistered: ${isRegistered}`)
-        this.toggleModal();
-        return;
-      }
-  
       if(pairingId != 0)
       {
         const loPairing = {id: pairingId};

@@ -27,6 +27,10 @@ export class AdminOfferingList extends React.Component {
         count++;
       }
     });
+  
+    if (count == 0)
+      return `-1`;
+
     return parseInt((total/count)).toString();
 
   }
@@ -44,6 +48,10 @@ export class AdminOfferingList extends React.Component {
         count++;
       }
     });
+
+    if (count == 0)
+      return `-1`;
+
     return parseInt((total/count)).toString();
 
   }

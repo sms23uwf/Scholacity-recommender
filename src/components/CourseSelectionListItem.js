@@ -14,10 +14,15 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import selectCourseSelections from '../selectors/courseselections';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
@@ -83,7 +88,7 @@ class CourseSelectionListItem extends React.Component {
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
         course_description: this.state.currentDescription,
-        rating: this.state.newRating,
+        rating: `-1`,
         course_instructor: this.state.instructor, 
         course_fee: this.state.fee, 
         userid: this.state.userid, 
@@ -265,13 +270,44 @@ class CourseSelectionListItem extends React.Component {
               </Typography>
               <br/>
               <Divider/>
-              <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                Sessions:
-                <ul>
-                  {sessionItems}
-                </ul>
-              </Typography>
+              <Grid container spacing={1}>
+                <Grid item xs>
+                  <Paper style={{
+                    padding: 2,
+                    textAlign: 'left',
+                    }}>
+                      Sessions:
+                      <ul>
+                        {sessionItems}
+                      </ul>
+                  </Paper>
+                </Grid>
+                <Grid item xs>
+
+                  <Paper style={{
+                    padding: 2,
+                    textAlign: 'center',
+                    align: 'center',
+                    }}>
+
+                    <List>
+                      <ListItem alignItems="flex-start">
+                        <ListItemText primary={
+                          <React.Fragment>
+                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                            My Rating:
+                          </Typography>
+                          </React.Fragment>
+                          } />
+                          <ListItemAvatar>
+                          <Avatar src={this.state.currentAvatarUrl}/>
+                        </ListItemAvatar>
+                      </ListItem>
+                    </List>
+                  </Paper>
+                  </Grid>
+              </Grid>
+
               <br/>
               <Divider/>
             </CardContent>
