@@ -21,6 +21,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
+import RecommendationGrid from './RecommendationGrid';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
@@ -250,7 +251,11 @@ class CourseRecommendationListItem extends React.Component {
 
     var reasons = [];
     result.forEach((reason) => (
-      reasons.push(<li key={reason.learningobjectiveid}>{reason.content}</li>)
+      reasons.push(<li key={reason.learningobjectiveid}>
+        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+          {reason.content}
+        </Typography>
+        </li>)
     ));
 
     const sessionItems = this.props.sessions.map((session) =>
@@ -261,19 +266,29 @@ class CourseRecommendationListItem extends React.Component {
           spacing={1}
         >
           <Grid item>
-            {session.session_number}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {session.session_number}
+            </Typography>
           </Grid>
           <Grid item>
-            {session.DOW.padEnd(9)}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {session.DOW.padEnd(9)}
+            </Typography>
           </Grid>
           <Grid item>
-            {moment(session.session_date).format('DD MMM YYYY')}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_date).format('DD MMM YYYY')}
+            </Typography>
           </Grid>
           <Grid item>
-            {moment(session.session_time_start).format('hh:mm A')}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_time_start).format('hh:mm A')}
+            </Typography>
           </Grid>
           <Grid item>
-            {moment(session.session_time_end).format('hh:mm A')}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_time_end).format('hh:mm A')}
+            </Typography>
           </Grid>
         </Grid>
       </li>
@@ -282,36 +297,15 @@ class CourseRecommendationListItem extends React.Component {
     return (
       <div>
       <Divider/>
-        <CardActionArea onClick={this.toggleModal}>
-          <Card>
-            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle} />
-            <CardContent>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.props.coursedescription}
-              </Typography>
-              <br/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
-              </Typography>
-              <Divider/>
-              <Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>               
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                Based on your selection of:
-                <ul>
-                  {reasons}
-                </ul>
-              </Typography>
-              <br/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                Sessions:
-                <ul>
-                  {sessionItems}
-                </ul>
-              </Typography>
-              <br/>
-            </CardContent>
-          </Card>
-        </CardActionArea>
+      <CardActionArea onClick={this.toggleModal}>
+        <Card>
+          <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
+          <CardContent>
+            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} my_rating = {<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
+          </CardContent>
+        </Card>
+      </CardActionArea>
+
 
         <Modal
           show={this.state.showModal}

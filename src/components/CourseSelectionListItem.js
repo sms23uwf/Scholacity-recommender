@@ -23,6 +23,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import CourseGrid from './CourseGrid';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
@@ -236,19 +237,29 @@ class CourseSelectionListItem extends React.Component {
           spacing={1}
         >
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.session_number}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.DOW.padEnd(9)}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_date).format('DD MMM YYYY')}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_time_start).format('hh:mm A')}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_time_end).format('hh:mm A')}
+            </Typography>
           </Grid>
         </Grid>
       </li>
@@ -261,55 +272,7 @@ class CourseSelectionListItem extends React.Component {
           <Card>
             <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.currentDescription}
-              </Typography>
-              <br/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
-              </Typography>
-              <br/>
-              <Divider/>
-              <Grid container spacing={1}>
-                <Grid item xs>
-                  <Paper style={{
-                    padding: 2,
-                    textAlign: 'left',
-                    }}>
-                      Sessions:
-                      <ul>
-                        {sessionItems}
-                      </ul>
-                  </Paper>
-                </Grid>
-                <Grid item xs>
-
-                  <Paper style={{
-                    padding: 2,
-                    textAlign: 'center',
-                    align: 'center',
-                    }}>
-
-                    <List>
-                      <ListItem alignItems="flex-start">
-                        <ListItemText primary={
-                          <React.Fragment>
-                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                            My Rating:
-                          </Typography>
-                          </React.Fragment>
-                          } />
-                          <ListItemAvatar>
-                          <Avatar src={this.state.currentAvatarUrl}/>
-                        </ListItemAvatar>
-                      </ListItem>
-                    </List>
-                  </Paper>
-                  </Grid>
-              </Grid>
-
-              <br/>
-              <Divider/>
+              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} my_rating = {<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
             </CardContent>
           </Card>
         </CardActionArea>
