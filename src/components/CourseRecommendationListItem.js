@@ -22,6 +22,7 @@ import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
 import RecommendationGrid from './RecommendationGrid';
+import Paper from '@material-ui/core/Paper';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
@@ -272,7 +273,7 @@ class CourseRecommendationListItem extends React.Component {
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {session.DOW.padEnd(9)}
+            {session.DOW.substring(0,3).toUpperCase()}
             </Typography>
           </Grid>
           <Grid item>
@@ -301,7 +302,7 @@ class CourseRecommendationListItem extends React.Component {
         <Card>
           <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
           <CardContent>
-            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} my_rating = {<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
+            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
           </CardContent>
         </Card>
       </CardActionArea>
@@ -325,32 +326,37 @@ class CourseRecommendationListItem extends React.Component {
                 </Typography>
                 </span>
                 </div>
+                <br/>
+                <Divider/>
                   <div>
-                    <form action="">
-                    <label className="statement">This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
-                    <ul className='likert'>
-                      <li>
-                        <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
-                        <label>Strongly Disagree</label>
-                      </li>
-                      <li>
-                        <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
-                        <label>Disagree</label>
-                      </li>
-                      <li>
-                        <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
-                        <label>Neutral</label>
-                      </li>
-                      <li>
-                        <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
-                        <label>Agree</label>
-                      </li>
-                      <li>
-                        <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
-                        <label>Strongly Agree</label>
-                      </li>
-                    </ul>
-                    </form>
+                    <Paper>
+                      <form action="">
+                        <label className="statement">Please Rate Your Agreement with the Following Statement: <br/>This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
+                        <ul className='likert'>
+                          <li>
+                            <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
+                            <label><b>Strongly Disagree</b></label>
+                          </li>
+                          <li>
+                            <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
+                            <label><b>Disagree</b></label>
+                          </li>
+                          <li>
+                            <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
+                            <label><b>  Neutral</b></label>
+                          </li>
+                          <li>
+                            <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
+                            <label><b> Agree</b></label>
+                          </li>
+                          <li>
+                            <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
+                            <label><b>Strongly Agree</b></label>
+                          </li>
+                        </ul>
+                      </form>
+                    
+                    </Paper>
 
                   </div>
                 </div>

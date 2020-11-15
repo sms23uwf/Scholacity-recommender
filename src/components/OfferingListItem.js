@@ -173,19 +173,29 @@ class OfferingListItem extends React.Component {
           spacing={1}
         >
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.session_number}
+            </Typography>
           </Grid>
           <Grid item>
-            {session.DOW.padEnd(9)}
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            {session.DOW.substring(0,3).toUpperCase()}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_date).format('DD MMM YYYY')}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_time_start).format('hh:mm A')}
+            </Typography>
           </Grid>
           <Grid item>
+            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {moment(session.session_time_end).format('hh:mm A')}
+            </Typography>
           </Grid>
         </Grid>
       </li>

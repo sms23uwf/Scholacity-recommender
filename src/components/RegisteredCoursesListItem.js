@@ -18,6 +18,7 @@ import selectSessions from '../selectors/sessions';
 import CourseGrid from './CourseGrid';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
+import Paper from '@material-ui/core/Paper';
 import { SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
@@ -186,7 +187,7 @@ class RegisteredCoursesListItem extends React.Component {
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {session.DOW.padEnd(9)}
+            {session.DOW.substring(0,3).toUpperCase()}
             </Typography>
           </Grid>
           <Grid item>
@@ -215,7 +216,7 @@ class RegisteredCoursesListItem extends React.Component {
           <Card>
             <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
-              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} my_rating = {<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
+              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
             </CardContent>
           </Card>
         </CardActionArea>
@@ -239,34 +240,39 @@ class RegisteredCoursesListItem extends React.Component {
                 </span>
               </div>
 
-              <div>
-              <form action="">
-              <label className="statement">Having taken this course, I found that it satisfied my learning goals and expectations.</label>
-              <ul className='likert'>
-                <li>
-                  <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
-                  <label>Strongly Disagree</label>
-                </li>
-                <li>
-                  <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
-                  <label>Disagree</label>
-                </li>
-                <li>
-                  <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
-                  <label>Neutral</label>
-                </li>
-                <li>
-                  <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
-                  <label>Agree</label>
-                </li>
-                <li>
-                  <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
-                  <label>Strongly Agree</label>
-                </li>
-              </ul>
-              </form>
+              <br/>
+              <Divider/>
+                <div>
+                  <Paper>
+                    <form action="">
+                      <label className="statement">Please Rate Your Agreement with the Following Statement: <br/>Having taken this course, I found that it satisfied my learning goals and expectations.</label>
+                      <ul className='likert'>
+                        <li>
+                          <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
+                          <label><b>Strongly Disagree</b></label>
+                        </li>
+                        <li>
+                          <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
+                          <label><b>Disagree</b></label>
+                        </li>
+                        <li>
+                          <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
+                          <label><b>  Neutral</b></label>
+                        </li>
+                        <li>
+                          <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
+                          <label><b> Agree</b></label>
+                        </li>
+                        <li>
+                          <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
+                          <label><b>Strongly Agree</b></label>
+                        </li>
+                      </ul>
+                    </form>
+                  
+                  </Paper>
 
-            </div>
+                </div>
 
             </div>
                 <span>
