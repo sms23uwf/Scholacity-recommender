@@ -268,7 +268,7 @@ class CourseSelectionListItem extends React.Component {
           <Card>
             <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
-              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
+              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} rating = {this.state.currentRating} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
             </CardContent>
           </Card>
         </CardActionArea>

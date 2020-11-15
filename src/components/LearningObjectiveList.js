@@ -75,14 +75,6 @@ export class LearningObjectiveList extends React.Component {
     this.setState(() => ({learningobjectiveid}));
     this.props.setLOFilter(learningobjectiveid);
 
-
-    // if(isRegistered == true)
-    // {
-    //   console.log(`isRegistered: ${isRegistered}`)
-    //   this.toggleModal();
-    //   //return;
-    // }
-
     if(e.target.checked===true)
     {
 

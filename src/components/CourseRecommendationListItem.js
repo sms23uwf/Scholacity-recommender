@@ -15,7 +15,6 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
-import selectCourseRecommendations from '../selectors/courserecommendations';
 import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -302,7 +301,7 @@ class CourseRecommendationListItem extends React.Component {
         <Card>
           <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
           <CardContent>
-            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
+            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} rating = {this.state.currentRating} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
           </CardContent>
         </Card>
       </CardActionArea>
@@ -418,7 +417,6 @@ class CourseRecommendationListItem extends React.Component {
 };
 
 const mapStateToProps = (state, props) => ({
-  courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters),
   courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.id),
   learningobjective_userselects: selectLOSelectionsForUser(state.learningobjective_userselects, state.filters),
   sessions: selectSessions(state.sessions, props.courseid),

@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
+import { List, ListItem, ListItemText, ListItemAvatar, ListItemIcon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,13 +29,20 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(4),
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(5),
+    height: theme.spacing(5),
   },  
 }));
 
 export default function RecommendationGrid(props) {
   const classes = useStyles();
+
+  const myRatingLabel = () => {
+    if (props.rating == `-1`)
+      return ""
+
+    return "My Rating"
+  };
 
   return (
     <div className={classes.root}>
@@ -64,9 +72,18 @@ export default function RecommendationGrid(props) {
             <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <Paper className={classes.avatar_paper}>
-                          {<b>My Rating</b>}<Avatar alt="My Rating" src={props.avatarSrc} className={classes.medium}/>
-                        </Paper>
+                      <List>
+                        <ListItem alignItems="flex-start" dense={true}>
+                        <ListItemText primary={
+                          <React.Fragment>
+                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
+                          </React.Fragment>
+                        }/>
+                        <ListItemAvatar alignitems="left" valign="top">
+                            <Avatar alt="My Rating" src={props.avatarSrc} className={classes.large}/>
+                          </ListItemAvatar>
+                        </ListItem>
+                      </List>
                     </Grid>
                 </Grid>
             </Grid>
