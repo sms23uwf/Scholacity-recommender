@@ -53,7 +53,7 @@ export default function RecommendationGrid(props) {
                 <ul>{props.reasons}</ul>
                 </Paper>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={8}>
                 <Paper className={classes.paper}>
                 <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                     Sessions:
@@ -61,7 +61,7 @@ export default function RecommendationGrid(props) {
                 <ul>{props.sessions}</ul>
                 </Paper>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <Paper className={classes.avatar_paper}>
