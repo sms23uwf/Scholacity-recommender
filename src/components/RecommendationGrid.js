@@ -72,18 +72,14 @@ export default function RecommendationGrid(props) {
             <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <List>
-                        <ListItem alignItems="flex-start" dense={true}>
-                        <ListItemText primary={
-                          <React.Fragment>
-                            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
-                          </React.Fragment>
-                        }/>
-                        <ListItemAvatar alignitems="left" valign="top">
-                            <Avatar alt="My Rating" src={props.avatarSrc} className={classes.large}/>
-                          </ListItemAvatar>
-                        </ListItem>
-                      </List>
+                      <Grid container>
+                         <Grid item>
+                           <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
+                         </Grid>
+                         <Grid item>
+                           {<Avatar alt="My Rating" src={props.avatarSrc} className={classes.large}/>}
+                         </Grid>
+                      </Grid>
                     </Grid>
                 </Grid>
             </Grid>
