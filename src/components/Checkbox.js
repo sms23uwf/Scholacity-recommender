@@ -1,8 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 
-//require('bootstrap/dist/css/bootstrap.css');
-
 const Checkbox = ({ id, checked, label, pairingId, onCheckboxChange }) => (
   <div className="form-check">
     <label>

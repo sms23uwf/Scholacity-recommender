@@ -76,7 +76,7 @@ export default function RecommendationGrid(props) {
                         <ListItem alignItems="flex-start" dense={true}>
                         <ListItemText primary={
                           <React.Fragment>
-                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
+                            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
                           </React.Fragment>
                         }/>
                         <ListItemAvatar alignitems="left" valign="top">

@@ -49,27 +49,6 @@ export class LearningObjectiveList extends React.Component {
     this.props.startAddUserTimeInModal(timeInModalCapture);
   }
 
-  toggleModal = () => {
-    let timeStamp = Date.now();
-    if(this.state.showModal == false)
-    {
-      this.setState({
-        timeEnteredModal: timeStamp
-      })
-    } 
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  }
-
-  toggleModalWithCancel = () => {
-
-    this.setState({
-      showModal: !this.state.showModal,
-    });
-    this.recordTimeInModal('acknowledged', this.state.currentRating);
-  }
-
   handleChange = (learningobjectiveid,learningobjective,pairingId,knowledgearea,isRegistered,e) => {
 
     this.setState(() => ({learningobjectiveid}));
@@ -210,7 +189,6 @@ export class LearningObjectiveList extends React.Component {
               <span>No Learning Objectives</span>
             </div>
           ) : (
-
               this.props.learningobjectives.map((learningobjective) => {
                 if(this.props.id === learningobjective.knowledgeareaid)
                   {
@@ -221,9 +199,6 @@ export class LearningObjectiveList extends React.Component {
                     const registrationId = this.getRegistrationId(learningobjective.courseid);
                     const isRegistered = registrationId != 0
   
-                    // if (isRegistered)
-                    //   learningobjective.selected = true;
-
                     if(pairingId != 0)
                       learningobjective.selected = true;
 
@@ -233,55 +208,6 @@ export class LearningObjectiveList extends React.Component {
             )
         }
       </div>
-
-      <Modal
-      show={this.state.showModal}
-      customClass="custom_modal_class"
-      >
-        <React.Fragment>
-          <div>
-            <div className="modal-header">
-  
-              <div className="content-container">
-                <h4 className="page-header__title">Registration Accomplished</h4>
-              </div>
-            </div>
-            <div className="content-container">
-              <span>
-              <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                You have already registered for a course that is associated with this Learning Outcome.
-              </Typography>
-              </span>
-            </div>
-          </div>
-          <span>
-          <div>
-            <Grid
-            justify="center" 
-            container 
-            spacing={1}
-            >
-              <Grid
-              justify="center" 
-              container 
-              spacing={2}
-              >
-                <Grid item>
-                  <Button
-                    color="inherit"
-                    aria-label="Save"
-                    style={{fontWeight: "bold"}}
-                    title="Save"
-                    onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography></Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </div>
-        </span>
-  
-        </React.Fragment>
-      </Modal>
-  
     </div>
       )
   }};

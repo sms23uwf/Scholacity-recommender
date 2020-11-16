@@ -23,8 +23,6 @@ export const findExistingCourseRecommendation = (courserecommendations, {userid,
   return courserecommendations.filter((courserecommendation) => {
     const courseMatch = courserecommendation.courseid === courseid;
     return courseMatch;
-  }).sort((a, b) => {
-      return a.rating < b.rating ? 1 : -1;
   });
 
 };
