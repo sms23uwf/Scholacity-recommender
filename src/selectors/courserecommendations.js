@@ -12,14 +12,14 @@
 //   });
 // };
 
-export default (courserecommendations, { userid, disposition }) => {
+export default (courserecommendations) => {
   return courserecommendations.sort((a, b) => {
-    return a.rating < b.rating && a.rating == `-1` ? -1 : a.rating < b.rating ? 1 : -1;
+    return a.rating == `-1` ? -1 : a.rating < b.rating ? 1 : -1;
   });
 };
 
 
-export const findExistingCourseRecommendation = (courserecommendations, {userid, courseid}) => {
+export const findExistingCourseRecommendation = (courserecommendations, {courseid}) => {
   return courserecommendations.filter((courserecommendation) => {
     const courseMatch = courserecommendation.courseid === courseid;
     return courseMatch;

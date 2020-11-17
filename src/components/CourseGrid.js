@@ -62,22 +62,20 @@ export default function CourseGrid(props) {
                 </Paper>
             </Grid>
             <Grid item xs={4}>
-                <Grid container spacing={1}>
+              <Grid container spacing={1}>
                   <Grid item xs={12}>
-                    <List>
-                      <ListItem alignItems="flex-start" dense={true}>
-                      <ListItemText primary={
-                        <React.Fragment>
-                          <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
-                        </React.Fragment>
-                      }/>
-                      <ListItemAvatar alignitems="left" valign="top">
-                          <Avatar alt="My Rating" src={props.avatarSrc} className={classes.large}/>
-                        </ListItemAvatar>
-                      </ListItem>
-                    </List>
+                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <img src={props.avatarSrc} width="42px" height="42px"/>
+                        </Grid>
+                    </Grid>
                   </Grid>
-                </Grid>
+              </Grid>
             </Grid>
         </Grid>  
     </div>

@@ -63,14 +63,13 @@ export class CourseRecommendationsList extends React.Component {
   };
 
   const mapDispatchToProps = (dispatch) => ({
-    setCourseFilter: (courseid) => dispatch(setCourseFilter(courseid)),
     setUUIDFilter: (userid) => dispatch(setUUIDFilter(userid))
   })
   
   
   const mapStateToProps = (state) => {
     return {
-      courserecommendations: selectCourseRecommendations(state.courserecommendations, state.filters),
+      courserecommendations: selectCourseRecommendations(state.courserecommendations),
       registrations_user: selectRegistrationsForUser(state.registrations_user, firebase.auth().currentUser.uid),
       filters: state.filters
     };

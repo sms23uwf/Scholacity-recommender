@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setDispositionFilter, sortByKnowledgeArea, sortByContent } from '../actions/filters';
 import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 
 export class CourseRecommendationListFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.props.setDispositionFilter('completed');
   }
-  state = {
-    disposition: 'completed'
-  };
 
   componentDidMount() {
     this.recordNavigationEvent('RecommendationsDashboard');
@@ -23,17 +18,6 @@ export class CourseRecommendationListFilters extends React.Component {
     this.props.startAddUserNavigationEvent(navigationEventCapture);
   };
 
-  onFocusChange = (calendarFocused) => {
-    this.setState(() => ({ calendarFocused }));
-    setDispositionFilter();
-  }
-  onSortChange = (e) => {
-    if (e.target.value === 'knowledgearea') {
-      this.props.sortByKnowledgeArea();
-    } else if (e.target.value === 'content') {
-      this.props.sortByContent();
-    }
-  };
   render() {
     return (
       <div className="content-container">
@@ -49,9 +33,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setDispositionFilter: (disposition) => dispatch(setDispositionFilter(disposition)),
-  sortByContent: () => dispatch(sortByContent()),
-  sortByKnowledgeArea: () => dispatch(sortByKnowledgeArea()),
   startAddUserNavigationEvent: (navigationEventCapture) => dispatch(startAddUserNavigationEvent(navigationEventCapture))
 });
 

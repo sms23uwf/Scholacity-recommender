@@ -5,6 +5,7 @@ import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelectio
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser, startRemoveRegistrationFromUser } from '../actions/registrations';
 import selectLOSelectionsForUser from '../selectors/learningobjective_userselect';
+import { findExistingCourseRecommendation } from '../selectors/courserecommendations';
 import { startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
 import { startRemoveCourseRecommendation} from '../actions/courseRecommendations';
 import Modal from './Modal';
@@ -417,7 +418,6 @@ class CourseRecommendationListItem extends React.Component {
 };
 
 const mapStateToProps = (state, props) => ({
-  courserecommendation: state.courserecommendations.find((courserecommendation) => courserecommendation.id === props.id),
   learningobjective_userselects: selectLOSelectionsForUser(state.learningobjective_userselects, state.filters),
   sessions: selectSessions(state.sessions, props.courseid),
   filters: state.filters

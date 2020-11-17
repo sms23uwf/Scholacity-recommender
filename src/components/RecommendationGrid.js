@@ -72,12 +72,14 @@ export default function RecommendationGrid(props) {
             <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <Grid container>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                          <Grid item>
                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
                          </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                          <Grid item>
-                           {<Avatar alt="My Rating" src={props.avatarSrc} className={classes.large}/>}
+                          <img src={props.avatarSrc} width="42px" height="42px"/>
                          </Grid>
                       </Grid>
                     </Grid>
