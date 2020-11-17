@@ -17,6 +17,7 @@ import AdminDashboard from '../components/AdminDashboard';
 import AboutPage from '../components/AboutPage';
 import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
+import AdminDOWDashboard from '../components/AdminDOWDashboard';
 import AltAboutPage from '../components/AltAboutPage';
 
 export const history = createHistory();
@@ -39,6 +40,7 @@ const AppRouter = () => (
         <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
         <PrivateRoute path="/adminOfferingsDashboard" component={AdminOfferingsDashboard}/>
+        <PrivateRoute path="/adminDOWDashboard" component={AdminDOWDashboard}/>
         <PrivateRoute path="/adminAboutPage" component={AdminAboutPage}/>
         <PrivateRoute path="/altAboutPage" component={AltAboutPage}/>
         <Route component={NotFoundPage} />

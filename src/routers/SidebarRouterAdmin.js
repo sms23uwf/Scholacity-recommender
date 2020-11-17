@@ -3,6 +3,7 @@ import DashboardPage from '../components/DashboardPage';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
+import AdminDOWDashboard from '../components/AdminDOWDashboard';
 
 const SidebarRouterAlt = [
   {
@@ -22,10 +23,17 @@ const SidebarRouterAlt = [
   },
   {
     path: '/adminOfferingsDashboard',
-    sidebarName: 'View Courses',
-    navbarName: 'View Courses',
+    sidebarName: 'View Courses by Area',
+    navbarName: 'View Courses by Area',
     icon: LocalLibrarySharp,
     component: AdminOfferingsDashboard
+  },
+  {
+    path: '/adminDOWDashboard',
+    sidebarName: 'View Courses by Day',
+    navbarName: 'View Courses by Day',
+    icon: LocalLibrarySharp,
+    component: AdminDOWDashboard
   },
   {
     path:'/adminAboutPage',
