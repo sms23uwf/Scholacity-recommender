@@ -40,8 +40,8 @@ export default function RecommendationGrid(props) {
   const classes = useStyles();
 
   const myRatingLabel = () => {
-    if (props.rating == `-1`)
-      return ""
+    if (props.rating < `1`)
+      return "Rate Me"
 
     return "My Rating"
   };

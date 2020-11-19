@@ -19,6 +19,9 @@ import CourseGrid from './CourseGrid';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
 import Paper from '@material-ui/core/Paper';
+import ReactStars from "react-rating-stars-component";
+//import { FaStar } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 
@@ -173,6 +176,21 @@ class RegisteredCoursesListItem extends React.Component {
 
   render() {
 
+    const ratingSchema = {
+      size: 32,
+      count: 5,
+      color: "#CDCDCD",
+      activeColor: "black",
+      value: parseInt(this.state.currentRating),
+      ally: true,
+      isHalf: false,  
+      emptyIcon: <i className="far fa-star"></i>,
+      fullIcon: <i className="fa fa-star"></i>,   
+      onChange: newValue => {
+        this.recordLocalRating(newValue.toString()) 
+      }
+    };
+  
     const sessionItems = this.props.sessions.map((session) =>
       <li key={session.session_number}>
         <Grid
@@ -242,38 +260,24 @@ class RegisteredCoursesListItem extends React.Component {
 
               <br/>
               <Divider/>
-                <div>
-                  <Paper>
-                    <form action="">
-                      <label className="statement">Please Rate Your Agreement with the Following Statement: <br/>Having taken this course, I found that it satisfied my learning goals and expectations.</label>
-                      <ul className='likert'>
-                        <li>
-                          <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
-                          <label><b>Strongly Disagree</b></label>
-                        </li>
-                        <li>
-                          <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
-                          <label><b>Disagree</b></label>
-                        </li>
-                        <li>
-                          <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
-                          <label><b>  Neutral</b></label>
-                        </li>
-                        <li>
-                          <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
-                          <label><b> Agree</b></label>
-                        </li>
-                        <li>
-                          <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
-                          <label><b>Strongly Agree</b></label>
-                        </li>
-                      </ul>
-                    </form>
-                  
+              <div>
+                <Paper>
+                  <Grid container spacing={1}>
+                      <Grid item xs={12}>
+                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Please Rate Your Agreement with the Following Statement: <br/>Having taken this course, I found that it satisfied my learning goals and expectations.</Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                            <ReactStars {...ratingSchema} />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Paper>
-
                 </div>
-
             </div>
                 <span>
                   <div>

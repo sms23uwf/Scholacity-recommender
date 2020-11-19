@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
+import ReactStars from "react-rating-stars-component"; 
 import { List, ListItem, ListItemText, ListItemAvatar, ListItemIcon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,10 +39,24 @@ export default function CourseGrid(props) {
   const classes = useStyles();
 
   const myRatingLabel = () => {
-    if (props.rating == `-1`)
-      return ""
+    if (props.rating < `1`)
+      return "Rate Me"
 
     return "My Rating"
+  };
+
+
+  const currentRatingSchema = {
+    size: 32,
+    count: 5,
+    edit: false,
+    color: "#CDCDCD",
+    activeColor: "black",
+    value: parseInt(props.rating),
+    ally: true,
+    isHalf: false,  
+    emptyIcon: <i className="far fa-star"></i>,
+    fullIcon: <i className="fa fa-star"></i>
   };
 
   return (
@@ -62,20 +77,20 @@ export default function CourseGrid(props) {
                 </Paper>
             </Grid>
             <Grid item xs={4}>
-              <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                        <Grid item>
-                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
-                        </Grid>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                         <Grid item>
+                           <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
+                         </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                         <Grid item>
+                          <ReactStars {...currentRatingSchema} />
+                         </Grid>
+                      </Grid>
                     </Grid>
-                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                        <Grid item>
-                          <img src={props.avatarSrc} width="42px" height="42px"/>
-                        </Grid>
-                    </Grid>
-                  </Grid>
-              </Grid>
+                </Grid>
             </Grid>
         </Grid>  
     </div>

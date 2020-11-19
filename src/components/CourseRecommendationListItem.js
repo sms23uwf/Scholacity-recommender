@@ -287,9 +287,9 @@ class CourseRecommendationListItem extends React.Component {
     const ratingSchema = {
       size: 32,
       count: 5,
-      color: "gray",
+      color: "#CDCDCD",
       activeColor: "black",
-      value: 0,
+      value: parseInt(this.state.currentRating),
       ally: true,
       isHalf: false,  
       emptyIcon: <i className="far fa-star"></i>,
@@ -370,9 +370,22 @@ class CourseRecommendationListItem extends React.Component {
                 <Divider/>
                   <div>
                     <Paper>
-                    <ReactStars {...ratingSchema} />
-                  </Paper>
-
+                      <Grid container spacing={1}>
+                          <Grid item xs={12}>
+                            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                               <Grid item>
+                                 <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Please Rate this Recommendation based on Your Level of Agreement with the Following Statement: <br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
+                               </Grid>
+                            </Grid>
+                            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                               <Grid item>
+                                <ReactStars {...ratingSchema} />
+                               </Grid>
+                            </Grid>
+                          </Grid>
+                      </Grid>
+      
+                    </Paper>
                   </div>
                 </div>
                 <span>
