@@ -1,8 +1,9 @@
-import { Home, AssignmentSharp, Info, LocalLibrarySharp } from '@material-ui/icons';
+import { Home, AssignmentSharp, Info, LocalLibrarySharp, EditSharp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
+import MaintenanceDashboard from '../components/MaintenanceDashboard';
 import AdminDOWDashboard from '../components/AdminDOWDashboard';
 
 const SidebarRouterAlt = [
@@ -34,6 +35,13 @@ const SidebarRouterAlt = [
     navbarName: 'View Courses by Day',
     icon: LocalLibrarySharp,
     component: AdminDOWDashboard
+  },
+  {
+    path: '/maintenanceDashboard',
+    sidebarName: 'Maintain Courses',
+    navbarName: 'Maintain Courses',
+    icon: EditSharp,
+    component: MaintenanceDashboard
   },
   {
     path:'/adminAboutPage',

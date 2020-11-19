@@ -14,6 +14,7 @@ import SelectionsDashboard from '../components/SelectionsDashboard';
 import PortfolioDashboard from '../components/PortfolioDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AdminDashboard from '../components/AdminDashboard';
+import MaintenanceDashboard from '../components/MaintenanceDashboard';
 import AboutPage from '../components/AboutPage';
 import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
@@ -38,6 +39,7 @@ const AppRouter = () => (
         <PrivateRoute path="/portfolioDashboard" component={PortfolioDashboard}/>
         <PrivateRoute path="/registeredCoursesDashboard" component={RegisteredCoursesDashboard}/>
         <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
+        <PrivateRoute path="/maintenanceDashboard" component={MaintenanceDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
         <PrivateRoute path="/adminOfferingsDashboard" component={AdminOfferingsDashboard}/>
         <PrivateRoute path="/adminDOWDashboard" component={AdminDOWDashboard}/>

@@ -23,6 +23,9 @@ import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
 import RecommendationGrid from './RecommendationGrid';
 import Paper from '@material-ui/core/Paper';
+import ReactStars from "react-rating-stars-component";
+//import { FaStar } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
@@ -52,7 +55,6 @@ class CourseRecommendationListItem extends React.Component {
     const pairing = this.props.learningobjective_userselects.find(p => p.learningobjectiveid === loId) || {id:0};
     return pairing.id;
   }
-
 
   toggleModalWithRemove = () => {
 
@@ -136,6 +138,26 @@ class CourseRecommendationListItem extends React.Component {
     this.setState({newRating: event.target.value});
   }
 
+  handleStarRatingChange = (newRating) => {
+    this.setState({newRating: newRating});
+  };
+
+  recordLocalStarRating = (newRating) => {
+    this.setState({newRating: newRating});
+
+    console.log(`inside recordLocalStarRating with ${newRating}`);
+
+    console.log(`inside recordLocalStarRating, currentRating: ${this.state.currentRating}`);
+
+    console.log(`newRating != this.state.currentRating: ${newRating != this.state.currentRating}`);
+
+    if(newRating != this.state.currentRating)
+      this.recordRating(this.props.id, newRating, this.props.courseid, this.props.userid);
+
+    this.setState({currentRating: newRating});
+  }
+
+
   recordLocalRating = (rating,e) => {
     this.setState({newRating: rating});
 
@@ -167,6 +189,9 @@ class CourseRecommendationListItem extends React.Component {
   // }
 
   recordRating = (id,rating,courseid,userid) => {
+
+    console.log(`inside recordRating with ${rating}`)
+
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseRecommendation(id, ratingData);
@@ -229,15 +254,15 @@ class CourseRecommendationListItem extends React.Component {
   setAvatarURL = (rating) => {
       {
         switch(rating) {
-          case '0':
+          case '1':
             return '/images/verysad.png';
-          case `1`:
-              return `/images/sad.png`;
           case `2`:
-              return `/images/justso.png`;
+              return `/images/sad.png`;
           case `3`:
-               return `/images/happy.png`;
+              return `/images/justso.png`;
           case `4`:
+               return `/images/happy.png`;
+          case `5`:
             return `/images/veryhappy.png`;
           default:
               return `/images/rate_me_icon.png`;
@@ -258,6 +283,21 @@ class CourseRecommendationListItem extends React.Component {
         </Typography>
         </li>)
     ));
+
+    const ratingSchema = {
+      size: 32,
+      count: 5,
+      color: "gray",
+      activeColor: "black",
+      value: 0,
+      ally: true,
+      isHalf: false,  
+      emptyIcon: <i className="far fa-star"></i>,
+      fullIcon: <i className="fa fa-star"></i>,   
+      onChange: newValue => {
+        this.recordLocalRating(newValue.toString()) 
+      }
+    };
 
     const sessionItems = this.props.sessions.map((session) =>
       <li key={session.session_number}>
@@ -330,33 +370,8 @@ class CourseRecommendationListItem extends React.Component {
                 <Divider/>
                   <div>
                     <Paper>
-                      <form action="">
-                        <label className="statement">Please Rate Your Agreement with the Following Statement: <br/>This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</label>
-                        <ul className='likert'>
-                          <li>
-                            <input type="radio" name="likert" value="0" checked={this.state.newRating === "0"} onChange={(e) => this.recordLocalRating("0",e)}/>
-                            <label><b>Strongly Disagree</b></label>
-                          </li>
-                          <li>
-                            <input type="radio" name="likert" value="1" checked={this.state.newRating === "1"} onChange={(e) => this.recordLocalRating("1",e)}/>
-                            <label><b>Disagree</b></label>
-                          </li>
-                          <li>
-                            <input type="radio" name="likert" value="2" checked={this.state.newRating === "2"} onChange={(e) => this.recordLocalRating("2",e)}/>
-                            <label><b>  Neutral</b></label>
-                          </li>
-                          <li>
-                            <input type="radio" name="likert" value="3" checked={this.state.newRating === "3"} onChange={(e) => this.recordLocalRating("3",e)}/>
-                            <label><b> Agree</b></label>
-                          </li>
-                          <li>
-                            <input type="radio" name="likert" value="4" checked={this.state.newRating === "4"} onChange={(e) => this.recordLocalRating("4",e)}/>
-                            <label><b>Strongly Agree</b></label>
-                          </li>
-                        </ul>
-                      </form>
-                    
-                    </Paper>
+                    <ReactStars {...ratingSchema} />
+                  </Paper>
 
                   </div>
                 </div>

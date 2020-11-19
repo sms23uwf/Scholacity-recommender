@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
+import ReactStars from "react-rating-stars-component"; 
 import { List, ListItem, ListItemText, ListItemAvatar, ListItemIcon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },  
 }));
 
+
 export default function RecommendationGrid(props) {
   const classes = useStyles();
 
@@ -44,6 +46,19 @@ export default function RecommendationGrid(props) {
     return "My Rating"
   };
 
+  const currentRatingSchema = {
+    size: 32,
+    count: 5,
+    edit: false,
+    color: "#CDCDCD",
+    activeColor: "black",
+    value: parseInt(props.rating),
+    ally: true,
+    isHalf: false,  
+    emptyIcon: <i className="far fa-star"></i>,
+    fullIcon: <i className="fa fa-star"></i>
+  };
+  
   return (
     <div className={classes.root}>
         <Grid container spacing={1}>
@@ -79,7 +94,7 @@ export default function RecommendationGrid(props) {
                       </Grid>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                          <Grid item>
-                          <img src={props.avatarSrc} width="42px" height="42px"/>
+                          <ReactStars {...currentRatingSchema} />
                          </Grid>
                       </Grid>
                     </Grid>

@@ -32,6 +32,10 @@ import { startSetRatingsByUserSelection } from './actions/ratingsByUserSelection
 import { startSetRatingsByUserCourse } from './actions/ratingsByUserCourse';
 import { startAddUserNavigationEvent } from './actions/navigationEvents';
 import { connect } from 'react-redux';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faStar)
 
 require ('../public/images/favicon.ico');
 
