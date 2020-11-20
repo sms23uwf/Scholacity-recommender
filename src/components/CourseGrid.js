@@ -3,9 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
-import ReactStars from "react-rating-stars-component"; 
-import { List, ListItem, ListItemText, ListItemAvatar, ListItemIcon } from '@material-ui/core';
+import ReactDOM from 'react-dom';
+import StarRatingComponent from "react-star-rating-component"; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,20 +44,6 @@ export default function CourseGrid(props) {
     return "My Rating"
   };
 
-
-  var currentRatingSchema = {
-    size: 18,
-    count: 5,
-    edit: false,
-    color: "#CDCDCD",
-    activeColor: "black",
-    value: parseInt(props.rating),
-    ally: true,
-    isHalf: false,  
-    emptyIcon: <i className="far fa-star"></i>,
-    fullIcon: <i className="fa fa-star"></i>
-  };
-
   return (
     <div className={classes.root}>
         <Grid container spacing={1}>
@@ -86,7 +71,14 @@ export default function CourseGrid(props) {
                       </Grid>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                          <Grid item>
-                          <ReactStars {...currentRatingSchema} />
+                          <StarRatingComponent
+                            name="courseRating"
+                            starCount={5}
+                            starColor="black"
+                            emptyStarColor="#CDCDCD"
+                            value={props.rating}
+                            editing={false}
+                          />
                          </Grid>
                       </Grid>
                     </Grid>
