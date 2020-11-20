@@ -97,46 +97,6 @@ class AboutPage extends React.Component {
     }
   }
 
-  setAvatarURL = (rating) => {
-    {
-      switch(rating) {
-        case '0':
-          return '/images/verysad.png';
-        case `1`:
-            return `/images/sad.png`;
-        case `2`:
-            return `/images/justso.png`;
-        case `3`:
-             return `/images/happy.png`;
-        case `4`:
-          return `/images/veryhappy.png`;
-        default:
-            return ``;
-      }
-    }
-  }
-
-  setWorkflowURL = () => {
-    return '/images/scholacity_workflow.png'
-  }
-
-  setTitleBasedOnRating = (rating) => {
-    switch(rating) {
-      case '0':
-        return 'Average Rating: Rejected';
-      case `1`:
-        return `Average Rating: Undecided`;
-      case `2`:
-        return `Average Rating: Accepted`;
-      case `3`:
-        return `Average Rating: Accepted`;
-      case `4`:
-        return `Average Rating: Accepted`;
-      default:
-          return `No Ratings`;
-    }
-  }
-
   getAverageRating() {
 
     var count = 0;
@@ -146,7 +106,7 @@ class AboutPage extends React.Component {
       total+= parseInt(ratingByUserCourselO.rating);
       count++;
     });
-    return parseInt((total/count)).toString();
+    return parseInt((total/count));
 
   }
 

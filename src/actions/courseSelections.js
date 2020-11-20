@@ -14,7 +14,7 @@ export const startAddCourseSelection = (courseSelectionData = {}) => {
       courseid = ``,
       disposition = ``,
       counter = ``,
-      rating = ``,
+      rating = 0,
       knowledgearea = ``,
       coursename = ``,
       coursedescription = ``,

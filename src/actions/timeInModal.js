@@ -15,7 +15,7 @@ export const addUserTimeInModal = (user_time_in_modal) => ({
             timeInModal = ``,
             userid = ``,
             disposition = ``,
-            rating = ``,
+            rating = 0,
             timeEnteredModal = ``,
             timeClosedModal = ``
         } = timeData;

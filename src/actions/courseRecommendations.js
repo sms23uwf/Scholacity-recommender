@@ -14,7 +14,7 @@ export const startAddCourseRecommendation = (courseRecommendationData = {}) => {
       courseid = ``,
       learningobjectiveid = ``,
       learningobjectives = {}, 
-      rating = ``,
+      rating = 0,
       counter = ``,
       disposition = ``,
       knowledgearea = ``,

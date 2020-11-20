@@ -19,6 +19,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ReactStars from "react-rating-stars-component";
+//import { FaStar } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class AdminDOWListItem extends React.Component {
   constructor(props){
@@ -51,70 +54,92 @@ class AdminDOWListItem extends React.Component {
     }
   }
 
-  setAvatarURL = (rating) => {
-
-    {
-      switch(rating) {
-        case '0':
-          return '/images/verysad.png';
-        case `1`:
-            return `/images/sad.png`;
-        case `2`:
-            return `/images/justso.png`;
-        case `3`:
-             return `/images/happy.png`;
-        case `4`:
-          return `/images/veryhappy.png`;
-        default:
-            return ``;
-      }
-    }
-  }
 
   showAverageOfferingRating = () => {
     
-    if (this.state.avgOfferingExpectationRating == `-1`)
+    if (this.state.avgOfferingExpectationRating < 1)
       return null;
 
+      const selectionRatingSchema = {
+        size: 32,
+        count: 5,
+        edit: false,
+        color: "#CDCDCD",
+        activeColor: "black",
+        value: this.state.avgOfferingExpectationRating,
+        ally: true,
+        isHalf: false,  
+        emptyIcon: <i className="far fa-star"></i>,
+        fullIcon: <i className="fa fa-star"></i>
+      };
+    
     return (
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
-        </ListItemAvatar>
-        <ListItemText primary={
-          <React.Fragment>
-          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-          Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
-          </Typography>
-          </React.Fragment>
-          } />
-      </ListItem>
-      )
+      <div>
+        <br/>
+        <Divider/>
+        <br/>
+
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+              <Grid item>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."</Typography>
+              </Grid>
+            </Grid>
+            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+              <Grid item>
+                <ReactStars {...selectionRatingSchema} />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    )
   }
 
   showAverageSatisfactionRating = () => {
     
-    if (this.state.avgCourseSatisfactionRating == `-1`)
+    if (this.state.avgCourseSatisfactionRating < 1)
       return null;
 
+      const courseRatingSchema = {
+        size: 32,
+        count: 5,
+        edit: false,
+        color: "#CDCDCD",
+        activeColor: "black",
+        value: this.state.avgCourseSatisfactionRating,
+        ally: true,
+        isHalf: false,  
+        emptyIcon: <i className="far fa-star"></i>,
+        fullIcon: <i className="fa fa-star"></i>
+      };
+    
     return (
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
-        </ListItemAvatar>
-        <ListItemText primary={
-          <React.Fragment>
-          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-          Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
-          </Typography>
-          </React.Fragment>
-          } />
-      </ListItem>
-      )
+      <div>
+        <br/>
+        <Divider/>
+        <br/>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" padding="2em">
+              <Grid item>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Average Rating based on the following statement: "Having taken this course, I found that it satisfied my learning goals and expectations."</Typography>
+              </Grid>
+            </Grid>
+            <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+              <Grid item>
+                <ReactStars {...courseRatingSchema} />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    )
   }
 
   showAverageCourseRatings = () => {
-    if (this.state.avgOfferingExpectationRating == `-1` && this.state.avgCourseSatisfactionRating == `-1`)
+    if (this.state.avgOfferingExpectationRating < 1 && this.state.avgCourseSatisfactionRating < 1)
       return null;
 
     return (

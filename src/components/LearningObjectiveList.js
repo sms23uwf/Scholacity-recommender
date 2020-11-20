@@ -26,7 +26,7 @@ export class LearningObjectiveList extends React.Component {
     props.setUUIDFilter(firebase.auth().currentUser.uid);
     this.state = {
       showModal: false,
-      currentRating: '-1',
+      currentRating: 0,
       timeEnteredModal: Date.now(),
       userid: firebase.auth().currentUser.uid
     }
@@ -89,7 +89,7 @@ export class LearningObjectiveList extends React.Component {
                   courseid: learningobjective_course.courseid, 
                   learningobjectiveid: learningobjective_course.learningobjectiveid,
                   learningobjectives: [{learningobjectiveid: learningobjective_course.learningobjectiveid, content: learningobjective}],
-                  rating: '-1', 
+                  rating: 0, 
                   counter: '1', 
                   disposition: 'recommended',
                   knowledgearea: course.knowledgearea, 

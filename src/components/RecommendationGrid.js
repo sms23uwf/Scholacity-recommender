@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
 import ReactStars from "react-rating-stars-component"; 
 import { List, ListItem, ListItemText, ListItemAvatar, ListItemIcon } from '@material-ui/core';
+import { ViewArrayTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,14 +41,14 @@ export default function RecommendationGrid(props) {
   const classes = useStyles();
 
   const myRatingLabel = () => {
-    if (props.rating < `1`)
+    if (props.rating < 1)
       return "Rate Me"
 
     return "My Rating"
   };
 
-  const currentRatingSchema = {
-    size: 32,
+  var currentRatingSchema = {
+    size: 18,
     count: 5,
     edit: false,
     color: "#CDCDCD",

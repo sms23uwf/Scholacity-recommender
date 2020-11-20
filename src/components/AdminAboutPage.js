@@ -7,14 +7,12 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
-import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Grid from '@material-ui/core/Grid';
+import ReactStars from "react-rating-stars-component";
+//import { FaStar } from "react-icons/fa";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AssignmentSharp } from '@material-ui/icons';
 
 //require('bootstrap/dist/css/bootstrap.css');
@@ -82,30 +80,6 @@ class AdminAboutPage extends React.Component {
     });
   }
 
-  setAvatarURL = (rating) => {
-
-    {
-      switch(rating) {
-        case '0':
-          return '/images/verysad.png';
-        case `1`:
-            return `/images/sad.png`;
-        case `2`:
-            return `/images/justso.png`;
-        case `3`:
-             return `/images/happy.png`;
-        case `4`:
-          return `/images/veryhappy.png`;
-        default:
-            return ``;
-      }
-    }
-  }
-
-  getLOAlignmentTitle = () => {
-    return 'Average Rating of Alignment of Learning Outcomes with Course Description:'
-  }
-
   getAverageOfferingExpectationRating = () => {
 
     var count = 0;
@@ -115,7 +89,14 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-    return parseInt((total/count)).toString();
+
+    console.log(`total: ${total}`);
+    console.log(`count: ${count}`);
+
+    if (count == 0 || total == 0)
+      return 0;
+
+    return parseInt((total/count));
 
   }
 
@@ -129,7 +110,14 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-    return parseInt((total/count)).toString();
+
+    console.log(`total: ${total}`);
+    console.log(`count: ${count}`);
+
+    if (count == 0 || total == 0)
+    return 0;
+
+    return parseInt((total/count));
 
   }
 
@@ -152,6 +140,33 @@ class AdminAboutPage extends React.Component {
   }
 
   render() {
+
+    const selectionRatingSchema = {
+      size: 32,
+      count: 5,
+      edit: false,
+      color: "#CDCDCD",
+      activeColor: "black",
+      value: this.state.avgOfferingExpectationRating,
+      ally: true,
+      isHalf: false,  
+      emptyIcon: <i className="far fa-star"></i>,
+      fullIcon: <i className="fa fa-star"></i>
+    };
+  
+    const courseRatingSchema = {
+      size: 32,
+      count: 5,
+      edit: false,
+      color: "#CDCDCD",
+      activeColor: "black",
+      value: this.state.avgCourseSatisfactionRating,
+      ally: true,
+      isHalf: false,  
+      emptyIcon: <i className="far fa-star"></i>,
+      fullIcon: <i className="fa fa-star"></i>
+    };
+  
     return (
       <div className="content-container-dashboard">
       <span id="image">
@@ -173,34 +188,47 @@ class AdminAboutPage extends React.Component {
                 <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
                 The only Administrative activities currently available are Viewing Course Registrations, and Viewing Course Offerings. More to come.
                 </Typography>
+                <br/>
                 <Divider/>
-                <List>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
-                      </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-                  <Divider/>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
-                      </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-                </List>
+                <br/>
+
+                <div>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."</Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <ReactStars {...selectionRatingSchema} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </div>
+
+                <br/>
+                <Divider/>
+                <br/>
+
+                <div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" padding="2em">
+                        <Grid item>
+                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Average Rating based on the following statement: "Having taken this course, I found that it satisfied my learning goals and expectations."</Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <ReactStars {...courseRatingSchema} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </div>
                 </CardContent>
                 <br/>
             </Card>

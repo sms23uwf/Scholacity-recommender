@@ -14,7 +14,7 @@
 
 export default (courserecommendations) => {
   return courserecommendations.sort((a, b) => {
-    return a.rating == `-1` ? -1 : a.rating < b.rating ? 1 : -1;
+    return a.rating < b.rating ? 1 : -1;
   });
 };
 

@@ -39,15 +39,15 @@ export default function CourseGrid(props) {
   const classes = useStyles();
 
   const myRatingLabel = () => {
-    if (props.rating < `1`)
+    if (props.rating < 1)
       return "Rate Me"
 
     return "My Rating"
   };
 
 
-  const currentRatingSchema = {
-    size: 32,
+  var currentRatingSchema = {
+    size: 18,
     count: 5,
     edit: false,
     color: "#CDCDCD",

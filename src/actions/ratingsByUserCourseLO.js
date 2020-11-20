@@ -15,7 +15,7 @@ export const addRatingsByUserCourseLO = (ratings_user_course_lo) => ({
             courseid = ``,
             learningobjectiveid =``,
             userid = ``,
-            rating = ``
+            rating = 0
         } = ratingData;
         const userCourseLORating = { courseid, learningobjectiveid, userid, rating };
     

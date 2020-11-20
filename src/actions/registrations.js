@@ -13,7 +13,7 @@ export const startAddRegistrationToUser = (registrationData = {}) => {
       courseid = ``,
       course_name = ``,
       course_description = ``,
-      rating = ``,
+      rating = 0,
       course_instructor = ``,
       course_fee = ``, 
       userid = ``,

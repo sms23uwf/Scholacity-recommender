@@ -15,10 +15,6 @@ import selectSessions from '../selectors/sessions';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 class MaintenanceListItem extends React.Component {
   constructor(props){
@@ -31,8 +27,6 @@ class MaintenanceListItem extends React.Component {
         courseid: props.id,
         knowledeAreaId: props.knowledgeareaid,
         currentTitle: props.name,
-        avgOfferingExpectationRating: props.avgOfferingRating,
-        avgCourseSatisfactionRating: props.avgCourseRating,
         currentDescription: props.description,
         currentAvatarUrl: this.setStatusAvatarURL('Open'),
         timeEnteredModal: Date.now(),
@@ -51,80 +45,6 @@ class MaintenanceListItem extends React.Component {
     }
   }
 
-  setAvatarURL = (rating) => {
-
-    {
-      switch(rating) {
-        case '0':
-          return '/images/verysad.png';
-        case `1`:
-            return `/images/sad.png`;
-        case `2`:
-            return `/images/justso.png`;
-        case `3`:
-             return `/images/happy.png`;
-        case `4`:
-          return `/images/veryhappy.png`;
-        default:
-            return ``;
-      }
-    }
-  }
-
-  showAverageOfferingRating = () => {
-    
-    if (this.state.avgOfferingExpectationRating == `-1`)
-      return null;
-
-    return (
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar src={this.setAvatarURL(this.state.avgOfferingExpectationRating)}/>
-        </ListItemAvatar>
-        <ListItemText primary={
-          <React.Fragment>
-          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-          Average User Agreement to this Statement: "This course fits With a desired Learning Outcome, and is the type of course I was hoping to find."
-          </Typography>
-          </React.Fragment>
-          } />
-      </ListItem>
-      )
-  }
-
-  showAverageSatisfactionRating = () => {
-    
-    if (this.state.avgCourseSatisfactionRating == `-1`)
-      return null;
-
-    return (
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar src={this.setAvatarURL(this.state.avgCourseSatisfactionRating)}/>
-        </ListItemAvatar>
-        <ListItemText primary={
-          <React.Fragment>
-          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-          Average User Agreement to this Statement: "Having taken this course, I found that it satisfied my learning goals and expectations."
-          </Typography>
-          </React.Fragment>
-          } />
-      </ListItem>
-      )
-  }
-
-  showAverageCourseRatings = () => {
-    if (this.state.avgOfferingExpectationRating == `-1` && this.state.avgCourseSatisfactionRating == `-1`)
-      return null;
-
-    return (
-      <List>
-        {this.showAverageOfferingRating()}  
-        {this.showAverageSatisfactionRating()}
-      </List>
-
-    )    
-  }
 
   render() {
 
@@ -178,8 +98,6 @@ class MaintenanceListItem extends React.Component {
                 {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
               </Typography>
               <br/>
-              <Divider/>
-              {this.showAverageCourseRatings()}
               <Divider/>
               <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
                 Sessions:

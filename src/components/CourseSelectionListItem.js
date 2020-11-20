@@ -41,7 +41,6 @@ class CourseSelectionListItem extends React.Component {
         currentTitle: props.coursename,
         currentDescription: props.coursedescription,
         courseid: props.courseid,
-        currentAvatarUrl: this.setAvatarURL(props.rating),
         statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? 'Cart' : 'Registered'),
         timeEnteredModal: Date.now(),
         instructor: props.instructor,
@@ -88,7 +87,7 @@ class CourseSelectionListItem extends React.Component {
       const registrationData = {courseid: this.state.courseid, 
         course_name: this.state.currentTitle, 
         course_description: this.state.currentDescription,
-        rating: `-1`,
+        rating: 0,
         course_instructor: this.state.instructor, 
         course_fee: this.state.fee, 
         userid: this.state.userid, 
@@ -135,7 +134,6 @@ class CourseSelectionListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};
     this.props.startEditCourseSelection(id, ratingData);
-    this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
     this.props.startAddRatingsByUserSelection(ratingCapture);
@@ -207,28 +205,9 @@ class CourseSelectionListItem extends React.Component {
     }
   }
 
-  setAvatarURL = (rating) => {
-    {
-      switch(rating) {
-        case '0':
-          return '/images/verysad.png';
-        case `1`:
-            return `/images/sad.png`;
-        case `2`:
-            return `/images/justso.png`;
-        case `3`:
-             return `/images/happy.png`;
-        case `4`:
-          return `/images/veryhappy.png`;
-        default:
-          return `/images/rate_me_icon.png`;
-        }
-    }
-}
-
   render() {
 
-    const ratingSchema = {
+    var ratingSchema = {
       size: 32,
       count: 5,
       color: "#CDCDCD",
@@ -239,7 +218,7 @@ class CourseSelectionListItem extends React.Component {
       emptyIcon: <i className="far fa-star"></i>,
       fullIcon: <i className="fa fa-star"></i>,   
       onChange: newValue => {
-        this.recordLocalRating(newValue.toString()) 
+        this.recordLocalRating(newValue) 
       }
     };
 
@@ -311,27 +290,25 @@ class CourseSelectionListItem extends React.Component {
                 </span>
               </div>
 
-              <br/>
               <Divider/>
+              <br/>
 
                 <div>
-                  <Paper>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                          <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                            <Grid item>
-                              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Please Rate Your Agreement with the Following Statement: <br/>This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
-                            </Grid>
-                          </Grid>
-                          <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                            <Grid item>
-                              <ReactStars {...ratingSchema} />
-                            </Grid>
+                  <Grid container spacing={1}>
+                      <Grid item xs={12}>
+                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate Your Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
                           </Grid>
                         </Grid>
-                    </Grid>
+                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                            <ReactStars {...ratingSchema} />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                  </Grid>
 
-                  </Paper>
                 </div>
             </div>
                 <span>
@@ -360,7 +337,7 @@ class CourseSelectionListItem extends React.Component {
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
-                              disabled={this.state.currentRating == "-1"}
+                              disabled={this.state.currentRating < 1}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
@@ -372,7 +349,7 @@ class CourseSelectionListItem extends React.Component {
                           <Grid item>
                             <Button
                               hidden={this.state.isRegistered}
-                              disabled={this.state.currentRating == "-1"}
+                              disabled={this.state.currentRating < 1}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}

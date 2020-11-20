@@ -31,7 +31,6 @@ class PortfolioListItem extends React.Component {
         currentRating: props.rating,
         newRating: props.rating,
         currentTitle: props.coursename,
-        currentAvatarUrl: this.setAvatarURL(props.rating),
         statusAvatarUrl: this.setStatusAvatarURL('Approved'),
         itemIsKeeper: true,
         recommendationPairing: 0,
@@ -123,7 +122,6 @@ class PortfolioListItem extends React.Component {
     this.setState({currentRating: rating});
     const ratingData = {rating: rating, disposition: disposition};
     this.props.startEditCourseRecommendation(id, ratingData);
-    this.setState({currentAvatarUrl: this.setAvatarURL(rating)});
 
     const ratingCapture = {courseid: courseid, userid: userid, rating: rating};
     this.props.startAddRatingsByUserCourse(ratingCapture);
@@ -144,25 +142,6 @@ class PortfolioListItem extends React.Component {
     }
   }
 
-  setAvatarURL = (rating) => {
-      {
-        switch(rating) {
-          case '0':
-            return '/images/verysad.png';
-          case `1`:
-              return `/images/sad.png`;
-          case `2`:
-              return `/images/justso.png`;
-          case `3`:
-               return `/images/happy.png`;
-          case `4`:
-            return `/images/veryhappy.png`;
-          default:
-            return `/images/rate_me_icon.png`;
-          }
-      }
-  }
-  
   render() {
 
     const recommendationPairing = {id: this.props.id};
