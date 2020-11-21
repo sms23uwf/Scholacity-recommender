@@ -19,11 +19,10 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import CourseGrid from './CourseGrid';
+import CourseSelectionGrid from './CourseSelectionGrid';
 import ReactStars from "react-rating-stars-component";
-//import { FaStar } from "react-icons/fa";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
+import { Work, SaveSharp, BackspaceSharp, ClearSharp, FormatListBulletedTwoTone } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -45,11 +44,24 @@ class CourseSelectionListItem extends React.Component {
         timeEnteredModal: Date.now(),
         instructor: props.instructor,
         fee: props.fee,
+        registrationRequested: false,
+        removeRequested: false,
+        cancelButtonText: 'OK',
         userid: firebase.auth().currentUser.uid
       }
   }
   
   toggleModalWithRemove = () => {
+
+    this.toggleModal();
+    this.setState({
+      removeRequested: true,
+      cancelButtonText: 'Cancel'
+    });
+
+  }
+
+  toggleModalWithConfirmRemove = () => {
 
     if(this.state.showModal == true)
     {
@@ -57,29 +69,24 @@ class CourseSelectionListItem extends React.Component {
     }
   
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
+      removeRequested: true,
+      cancelButtonText: 'OK'
     });
     this.recordTimeInModal('remove selection', this.state.currentRating);
   }
 
-  toggleModalWithUnRegister = () => {
+  toggleModalWithRegister = () => {
 
-    if(this.state.showModal == true)
-    {
-      console.log(`inside toggleModalWithUnRegister with course registration id: ${this.props.registrationId}`);
-
-      this.props.startRemoveRegistrationFromUser(this.props.registrationId);
-    }
-  
+    this.toggleModal();
     this.setState({
-      showModal: !this.state.showModal,
-      statusAvatarUrl: this.setStatusAvatarURL('Cart'),
-      isRegistered: false
+      registrationRequested: true,
+      cancelButtonText: 'Cancel'
     });
-    this.recordTimeInModal('remove registration', this.state.currentRating);
+
   }
 
-  toggleModalWithRegister = () => {
+  toggleModalWithConfirmRegister = () => {
 
     if(this.state.showModal == true)
     {
@@ -110,7 +117,9 @@ class CourseSelectionListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
-      statusAvatarUrl: this.setStatusAvatarURL('Registered')
+      statusAvatarUrl: this.setStatusAvatarURL('Registered'),
+      registrationRequested: false,
+      cancelButtonText: 'OK'
 
     });
     this.recordTimeInModal('register', this.state.currentRating);
@@ -188,6 +197,8 @@ class CourseSelectionListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
+      removeRequested: false,
+      registrationRequested: false
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -215,8 +226,6 @@ class CourseSelectionListItem extends React.Component {
       value: parseInt(this.state.currentRating),
       ally: true,
       isHalf: false,  
-      emptyIcon: <i className="far fa-star"></i>,
-      fullIcon: <i className="fa fa-star"></i>,   
       onChange: newValue => {
         this.recordLocalRating(newValue) 
       }
@@ -261,14 +270,20 @@ class CourseSelectionListItem extends React.Component {
     return (
       <div>
       <Divider/>
-        <CardActionArea onClick={this.toggleModal}>
-          <Card>
-            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
-            <CardContent>
-              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} rating = {parseInt(this.state.currentRating)} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
-            </CardContent>
-          </Card>
-        </CardActionArea>
+
+      <CourseSelectionGrid 
+        course_title = {this.state.currentTitle} 
+        course_description = {this.props.currentDescription} 
+        sessions = {sessionItems} 
+        rating = {parseInt(this.state.currentRating)} 
+        avatarSrc = {this.state.statusAvatarUrl} 
+        instructor = {this.state.instructor} 
+        fee = {'$' + this.state.fee.toFixed(2)} 
+        cardActionCallback = {this.toggleModal} 
+        registerCallback = {this.toggleModalWithRegister} 
+        removeCallback = {this.toggleModalWithRemove}
+        isRegistered = {this.state.isRegistered}
+      />
 
         <Modal
           show={this.state.showModal}
@@ -323,39 +338,33 @@ class CourseSelectionListItem extends React.Component {
                         container 
                         spacing={2}
                         >
-
+                          <Grid item>
+                            <Button
+                              hidden={this.state.registrationRequested == false}
+                              color="primary"
+                              aria-label="Register"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Register</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              hidden={this.state.removeRequested == false}
+                              color="primary"
+                              aria-label="Remove"
+                              style={{fontWeight: "bold"}}
+                              title="Register"
+                              onClick={this.toggleModalWithConfirmRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Removal</Typography>
+                            </Button>
+                          </Grid>
                           <Grid item>
                             <Button
                               color="inherit"
                               aria-label="Cancel"
                               style={{fontWeight: "bold"}}
                               title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              hidden={this.state.isRegistered}
-                              disabled={this.state.currentRating < 1}
-                              color="primary"
-                              aria-label="Register"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              hidden={this.state.isRegistered}
-                              disabled={this.state.currentRating < 1}
-                              color="primary"
-                              aria-label="Remove"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.cancelButtonText}</Typography>
                             </Button>
                           </Grid>
                         </Grid>

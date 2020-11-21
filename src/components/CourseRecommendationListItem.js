@@ -46,10 +46,20 @@ class CourseRecommendationListItem extends React.Component {
         statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? 'Cart' : 'Registered'),
         newRating: props.rating,
         timeEnteredModal: Date.now(),
+        registrationRequested: false,
+        removeRequested: false,
+        cancelButtonText: 'OK',
+        learningobjectives: props.learningobjectives,
         userid: firebase.auth().currentUser.uid
       }
   }
   
+  // componentDidMount() {
+  //   this.setState({
+  //     learningobjectives: {...this.props.learningobjectives}
+  //   });
+  // }
+
   getLOSelectionPairing(loId) {
     const pairing = this.props.learningobjective_userselects.find(p => p.learningobjectiveid === loId) || {id:0};
     return pairing.id;
@@ -57,10 +67,20 @@ class CourseRecommendationListItem extends React.Component {
 
   toggleModalWithRemove = () => {
 
+    this.toggleModal();
+    this.setState({
+      removeRequested: true,
+      cancelButtonText: 'Cancel'
+    });
+
+  }
+
+  toggleModalWithConfirmRemove = () => {
+
     if(this.state.showModal == true)
     {
 
-      var loData = {...this.props.courserecommendation.learningobjectives};
+      var loData = {...this.state.learningobjectives};
       Object.keys(loData).map((key) => {
         const currentLO = loData[key]
         const loSelectionPairingId = this.getLOSelectionPairing(currentLO.learningobjectiveid)
@@ -74,28 +94,13 @@ class CourseRecommendationListItem extends React.Component {
     }
   
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
+      removeRequested: false,
+      cancelButtonText: 'OK'
     });
     this.recordTimeInModal('remove recommendation', this.state.currentRating);
     
   }
-
-  toggleModalWithSave = () => {
-
-    if(this.state.newRating != this.state.currentRating)
-      this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid);
-
-    if(this.state.disposition != this.state.newDisposition)
-      this.recordDisposition(this.props.id, this.state.newDisposition, this.props.courseid, this.props.userid);
-
-    // may want to put this back in but for now, do not close modal on save rating only
-    // this.setState({
-    //   showModal: !this.state.showModal
-    // });
-
-    this.recordTimeInModal('save', this.state.currentRating);
-  }
-
 
   recordTimeInModal = (disposition, rating) => {
     let timeStamp = Date.now();
@@ -128,7 +133,9 @@ class CourseRecommendationListItem extends React.Component {
     this.setState({
       showModal: !this.state.showModal,
       newRating: this.state.currentRating,
-      isPortFolio: false
+      isPortFolio: false,
+      removeRequested: false,
+      registrationRequested: false
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -143,12 +150,6 @@ class CourseRecommendationListItem extends React.Component {
 
   recordLocalStarRating = (newRating) => {
     this.setState({newRating: newRating});
-
-    console.log(`inside recordLocalStarRating with ${newRating}`);
-
-    console.log(`inside recordLocalStarRating, currentRating: ${this.state.currentRating}`);
-
-    console.log(`newRating != this.state.currentRating: ${newRating != this.state.currentRating}`);
 
     if(newRating != this.state.currentRating)
       this.recordRating(this.props.id, newRating, this.props.courseid, this.props.userid);
@@ -186,6 +187,16 @@ class CourseRecommendationListItem extends React.Component {
 
   toggleModalWithRegister = () => {
 
+    this.toggleModal();
+    this.setState({
+      registrationRequested: true,
+      cancelButtonText: 'Cancel'
+    });
+
+  }
+
+  toggleModalWithConfirmRegister = () => {
+
     if(this.state.showModal == true)
     {
 
@@ -206,17 +217,15 @@ class CourseRecommendationListItem extends React.Component {
         isRegistered: true
       });
 
-      // if(this.state.newRating != this.state.currentRating)
-      //   this.recordRating(this.props.id, this.state.newRating, this.props.courseid, this.props.userid, this.props.learningobjectives);
-
       this.recordDisposition(this.props.id, "Registered", this.props.courseid, this.props.userid);
 
     }
 
     this.setState({
       showModal: !this.state.showModal,
-      statusAvatarUrl: this.setStatusAvatarURL('Registered')
-
+      statusAvatarUrl: this.setStatusAvatarURL('Registered'),
+      registrationRequested: false,
+      cancelButtonText: 'OK'
     });
     this.recordTimeInModal('register', this.state.currentRating);
   }
@@ -256,8 +265,6 @@ class CourseRecommendationListItem extends React.Component {
       value: parseInt(this.state.currentRating),
       ally: true,
       isHalf: false,  
-      emptyIcon: <i className="far fa-star"></i>,
-      fullIcon: <i className="fa fa-star"></i>,   
       onChange: newValue => {
         this.recordLocalRating(newValue) 
       }
@@ -302,15 +309,20 @@ class CourseRecommendationListItem extends React.Component {
     return (
       <div>
       <Divider/>
-      <CardActionArea onClick={this.toggleModal}>
-        <Card>
-          <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
-          <CardContent>
-            <RecommendationGrid course_description = {this.props.coursedescription} reasons = {reasons} sessions = {sessionItems} rating = {parseInt(this.state.currentRating)} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
-          </CardContent>
-        </Card>
-      </CardActionArea>
-
+      <RecommendationGrid 
+        course_title = {this.state.currentTitle} 
+        course_description = {this.props.coursedescription} 
+        reasons = {reasons} 
+        sessions = {sessionItems} 
+        rating = {parseInt(this.state.currentRating)} 
+        avatarSrc = {this.state.statusAvatarUrl} 
+        instructor = {this.state.instructor} 
+        fee = {'$' + this.state.fee.toFixed(2)} 
+        cardActionCallback = {this.toggleModal} 
+        registerCallback = {this.toggleModalWithRegister} 
+        removeCallback = {this.toggleModalWithRemove}
+        isRegistered = {this.state.isRegistered}
+      />
 
         <Modal
           show={this.state.showModal}
@@ -363,36 +375,32 @@ class CourseRecommendationListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              hidden={this.state.isRegistered}
-                              disabled={this.state.currentRating < 1}
+                              hidden={this.state.registrationRequested == false}
                               color="primary"
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
                               title="Register"
-                              startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
+                              onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Acceptance</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
                             <Button
-                              hidden={this.state.isRegistered}
+                              hidden={this.state.removeRequested == false}
                               disabled={this.state.currentRating < 1}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}
                               title="Register"
-                              startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                              onClick={this.toggleModalWithConfirmRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Removal</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.cancelButtonText}</Typography>
                             </Button>
                           </Grid>
                         </Grid>

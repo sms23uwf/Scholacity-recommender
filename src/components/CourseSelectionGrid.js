@@ -42,8 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },  
 }));
 
-
-export default function RecommendationGrid(props) {
+export default function CourseSelectionGrid(props) {
   const classes = useStyles();
 
   const myRatingLabel = () => {
@@ -55,7 +54,6 @@ export default function RecommendationGrid(props) {
 
   return (
 
-
     <Card>
       <CardHeader avatar={<Avatar src={props.avatarSrc} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={props.course_title}/>
       <CardContent>
@@ -66,14 +64,6 @@ export default function RecommendationGrid(props) {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {props.instructor}   -  Fee: {props.fee}</Typography></Paper>
-          </Grid>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}>
-              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-                  Based on your selection of:
-              </Typography>
-              <ul>{props.reasons}</ul>
-              </Paper>
           </Grid>
           <Grid item xs={8}>
               <Paper className={classes.paper}>
@@ -118,7 +108,7 @@ export default function RecommendationGrid(props) {
                           style={{fontWeight: "bold"}}
                           title="Register"
                           startIcon={<Work />}
-                          onClick={props.registerCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
+                          onClick={props.registerCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                         </Button>
                       </Grid>
                       <Grid item>
@@ -137,10 +127,10 @@ export default function RecommendationGrid(props) {
                   </Grid>
                 </Grid>
               </Grid>
-          </Grid>
-      </div>
-    </CardContent>
-  </Card>
-
+            </Grid>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
+

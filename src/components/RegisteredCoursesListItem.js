@@ -43,6 +43,8 @@ class RegisteredCoursesListItem extends React.Component {
         timeEnteredModal: Date.now(),
         instructor: props.course_instructor,
         fee: props.course_fee,
+        removeRequested: false,
+        cancelButtonText: 'OK',
         userid: firebase.auth().currentUser.uid
       }
   }
@@ -69,7 +71,18 @@ class RegisteredCoursesListItem extends React.Component {
     this.props.startAddRatingsByUserCourse(ratingCapture);
   }
 
-  toggleModalWithUnRegister = () => {
+  toggleModalWithRemove = () => {
+
+    this.toggleModal();
+    this.setState({
+      removeRequested: true,
+      cancelButtonText: 'Cancel'
+    });
+
+  }
+
+
+  toggleModalWithConfirmRemove = () => {
 
     if(this.state.showModal == true)
     {
@@ -79,7 +92,9 @@ class RegisteredCoursesListItem extends React.Component {
     this.setState({
       showModal: !this.state.showModal,
       statusAvatarUrl: this.setStatusAvatarURL('Cart'),
-      isRegistered: false
+      isRegistered: false,
+      removeRequested: false,
+      cancelButtontext: 'OK'
     });
     this.recordTimeInModal('remove registration', this.state.currentRating);
   }
@@ -124,6 +139,7 @@ class RegisteredCoursesListItem extends React.Component {
 
     this.setState({
       showModal: !this.state.showModal,
+      removeRequested: false
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -153,8 +169,6 @@ class RegisteredCoursesListItem extends React.Component {
       value: parseInt(this.state.currentRating),
       ally: true,
       isHalf: false,  
-      emptyIcon: <i className="far fa-star"></i>,
-      fullIcon: <i className="fa fa-star"></i>,   
       onChange: newValue => {
         this.recordLocalRating(newValue) 
       }
@@ -199,14 +213,19 @@ class RegisteredCoursesListItem extends React.Component {
     return (
       <div>
       <Divider/>
-        <CardActionArea onClick={this.toggleModal}>
-          <Card>
-            <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
-            <CardContent>
-              <CourseGrid course_description = {this.state.currentDescription} sessions = {sessionItems} rating = {parseInt(this.state.currentRating)} avatarSrc = {this.state.currentAvatarUrl} instructor = {this.state.instructor} fee = {'$' + this.state.fee.toFixed(2)} />
-            </CardContent>
-          </Card>
-        </CardActionArea>
+
+      <CourseGrid 
+        course_title = {this.state.currentTitle} 
+        course_description = {this.state.currentDescription} 
+        sessions = {sessionItems} 
+        rating = {parseInt(this.state.currentRating)} 
+        avatarSrc = {this.state.statusAvatarUrl} 
+        instructor = {this.state.instructor} 
+        fee = {'$' + this.state.fee.toFixed(2)} 
+        cardActionCallback = {this.toggleModal} 
+        removeCallback = {this.toggleModalWithRemove}
+        isRegistered = {this.state.isRegistered}
+      />
 
         <Modal
           show={this.state.showModal}
@@ -261,23 +280,22 @@ class RegisteredCoursesListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
+                              hidden={this.state.removeRequested == false}
                               disabled={this.state.currentRating < 1}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}
                               title="Register"
-                              startIcon={<BackspaceSharp />}
-                              onClick={this.toggleModalWithUnRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Remove Registration</Typography>
+                              onClick={this.toggleModalWithConfirmRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Removal</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.cancelButtonText}</Typography>
                             </Button>
                           </Grid>
                         </Grid>
