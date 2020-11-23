@@ -273,7 +273,7 @@ class CourseSelectionListItem extends React.Component {
 
       <CourseSelectionGrid 
         course_title = {this.state.currentTitle} 
-        course_description = {this.props.currentDescription} 
+        course_description = {this.state.currentDescription} 
         sessions = {sessionItems} 
         rating = {parseInt(this.state.currentRating)} 
         avatarSrc = {this.state.statusAvatarUrl} 
@@ -294,13 +294,13 @@ class CourseSelectionListItem extends React.Component {
               <div className="modal-header">
     
                 <div className="content-container">
-                  <h4 className="page-header__title">{this.props.coursename}</h4>
+                  <h4 className="page-header__title">{this.state.currentTitle}</h4>
                 </div>
               </div>
               <div className="content-container">
                 <span>
                 <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.props.coursedescription}
+                  {this.state.currentDescription}
                 </Typography>
                 </span>
               </div>

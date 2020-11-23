@@ -6,6 +6,7 @@ import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 import routes from '../routers/SidebarRouter';
 import altRoutes from '../routers/SidebarRouterAlt';
 import adminRoutes from '../routers/SidebarRouterAdmin';
+import noRoutes from '../routers/NoRouter';
 import { firebase } from '../firebase/firebase';
 
 const handleStartLogout = (props) => {
@@ -27,7 +28,7 @@ export class Header extends React.Component {
     const userName = userDomainArray[0];
     
     //TODO: change this last one to 'uwf.edu'
-    const sessionRoutes = userDomain == 'scholacity.org' && userName == 'lladmin' ? adminRoutes : userDomain == 'scholacity.org' ? routes : altRoutes;
+    const sessionRoutes = userDomain == 'scholacity.org' && userName == 'lladmin' ? adminRoutes : userDomain == 'scholacity.org' ? routes : userDomain == 'scholarsanonymous.org' ? altRoutes : noRoutes;
 
 
     this.setState({

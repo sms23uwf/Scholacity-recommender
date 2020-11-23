@@ -24,7 +24,6 @@ import moment from 'moment/moment';
 import RecommendationGrid from './RecommendationGrid';
 import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
-//import { FaStar } from "react-icons/fa";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
 
@@ -42,6 +41,7 @@ class CourseRecommendationListItem extends React.Component {
         isPortFolio: props.disposition === `Portfolio` ? true : false,
         isRegistered: props.registrationId === 0 ? false : true,
         currentTitle: props.coursename,
+        currentDescription: props.coursedescription,
         courseid: props.courseid,
         statusAvatarUrl: this.setStatusAvatarURL(props.registrationId === 0 ? 'Cart' : 'Registered'),
         newRating: props.rating,
@@ -54,12 +54,6 @@ class CourseRecommendationListItem extends React.Component {
       }
   }
   
-  // componentDidMount() {
-  //   this.setState({
-  //     learningobjectives: {...this.props.learningobjectives}
-  //   });
-  // }
-
   getLOSelectionPairing(loId) {
     const pairing = this.props.learningobjective_userselects.find(p => p.learningobjectiveid === loId) || {id:0};
     return pairing.id;
@@ -311,7 +305,7 @@ class CourseRecommendationListItem extends React.Component {
       <Divider/>
       <RecommendationGrid 
         course_title = {this.state.currentTitle} 
-        course_description = {this.props.coursedescription} 
+        course_description = {this.state.currentDescription} 
         reasons = {reasons} 
         sessions = {sessionItems} 
         rating = {parseInt(this.state.currentRating)} 
@@ -332,13 +326,13 @@ class CourseRecommendationListItem extends React.Component {
             <div>
               <div className="modal-header">
               <div className="content-container">
-                  <h4 className="page-header__title">{this.props.coursename}</h4>
+                  <h4 className="page-header__title">{this.state.currentTitle}</h4>
               </div>
               </div>
               <div className="content-container">
                 <span>
                 <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.props.coursedescription}
+                  {this.state.currentDescription}
                 </Typography>
                 </span>
                 </div>
