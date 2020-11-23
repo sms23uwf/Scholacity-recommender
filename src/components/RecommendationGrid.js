@@ -57,89 +57,91 @@ export default function RecommendationGrid(props) {
 
 
     <Card>
-      <CardHeader avatar={<Avatar src={props.avatarSrc} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={props.course_title}/>
-      <CardContent>
-        <div className={classes.root}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{props.course_description}</Typography></Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {props.instructor}   -  Fee: {props.fee}</Typography></Paper>
-          </Grid>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}>
-              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-                  Based on your selection of:
-              </Typography>
-              <ul>{props.reasons}</ul>
-              </Paper>
-          </Grid>
-          <Grid item xs={8}>
-              <Paper className={classes.paper}>
-              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-                  Sessions:
-              </Typography>
-              <ul>{props.sessions}</ul>
-              </Paper>
-          </Grid>
-          <Grid item xs={4}>
-              <Grid container spacing={1}>
-                <CardActionArea onClick={props.cardActionCallback}>
+      {/* <CardActionArea> */}
+        <CardHeader avatar={<Avatar src={props.avatarSrc} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={props.course_title}/>
+        <CardContent>
+          <div className={classes.root}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Paper className={classes.paper}><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{props.course_description}</Typography></Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {props.instructor}   -  Fee: {props.fee}</Typography></Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    Based on your selection of:
+                </Typography>
+                <ul>{props.reasons}</ul>
+                </Paper>
+            </Grid>
+            <Grid item xs={8}>
+                <Paper className={classes.paper}>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    Sessions:
+                </Typography>
+                <ul>{props.sessions}</ul>
+                </Paper>
+            </Grid>
+            <Grid item xs={4}>
+                <Grid container spacing={1}>
                   <Grid item xs={12}>
-                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                       <Grid item>
-                         <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
-                       </Grid>
-                    </Grid>
-                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                      <Grid item>
-                        <StarRatingComponent
-                            name="courseRating"
-                            starCount={5}
-                            starColor="black"
-                            emptyStarColor="#CDCDCD"
-                            value={props.rating}
-                            editing={false}
-                          />
+                    <Button onClick={props.cardActionCallback} fullWidth={true}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>{myRatingLabel()}</Typography>
                         </Grid>
                       </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <StarRatingComponent
+                              name="courseRating"
+                              starCount={5}
+                              starColor="black"
+                              emptyStarColor="#CDCDCD"
+                              value={props.rating}
+                              editing={false}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Button>
                     </Grid>
-                  </CardActionArea>
 
-                  <Grid item xs={12}>
-                    <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                      <Grid item>
-                        <Button
-                          hidden={props.isRegistered}
-                          disabled={props.rating < 1}
-                          color="primary"
-                          aria-label="Register"
-                          style={{fontWeight: "bold"}}
-                          title="Register"
-                          startIcon={<Work />}
-                          onClick={props.registerCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
-                        </Button>
-                      </Grid>
-                      <Grid item>
-                        <Button
-                          hidden={props.isRegistered}
-                          disabled={props.rating < 1}
-                          color="primary"
-                          aria-label="Remove"
-                          style={{fontWeight: "bold"}}
-                          title="Register"
-                          startIcon={<BackspaceSharp />}
-                          onClick={props.removeCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
-                        </Button>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Button
+                            hidden={props.isRegistered}
+                            disabled={props.rating < 1}
+                            color="primary"
+                            aria-label="Register"
+                            style={{fontWeight: "bold"}}
+                            title="Register"
+                            startIcon={<Work />}
+                            onClick={props.registerCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            hidden={props.isRegistered}
+                            disabled={props.rating < 1}
+                            color="primary"
+                            aria-label="Remove"
+                            style={{fontWeight: "bold"}}
+                            title="Register"
+                            startIcon={<BackspaceSharp />}
+                            onClick={props.removeCallback}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-          </Grid>
-      </div>
-    </CardContent>
+            </Grid>
+        </div>
+      </CardContent>
+    {/* </CardActionArea> */}
   </Card>
 
   );

@@ -301,7 +301,7 @@ class CourseRecommendationListItem extends React.Component {
     );
 
     return (
-      <div>
+      <div className="list-item">
       <Divider/>
       <RecommendationGrid 
         course_title = {this.state.currentTitle} 

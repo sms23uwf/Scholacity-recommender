@@ -53,6 +53,7 @@ export class CourseSelectionList extends React.Component {
                 <span>No Course Selections</span>
               </div>
             ) : (
+                
                 this.props.courseselections.map((courseselection) => {
                   
                   // const isPending = courseselection.disposition == "Registered" ? this.registrationIsPending(courseselection.courseid) : true
