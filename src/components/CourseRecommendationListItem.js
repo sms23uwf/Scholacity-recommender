@@ -5,7 +5,6 @@ import { startAddRatingsByUserSelection } from '../actions/ratingsByUserSelectio
 import { startAddUserTimeInModal } from '../actions/timeInModal';
 import { startAddRegistrationToUser, startRemoveRegistrationFromUser } from '../actions/registrations';
 import selectLOSelectionsForUser from '../selectors/learningobjective_userselect';
-import { findExistingCourseRecommendation } from '../selectors/courserecommendations';
 import { startRemoveLOSelectionFromUser } from '../actions/learningobjective_userselect';
 import { startRemoveCourseRecommendation} from '../actions/courseRecommendations';
 import Modal from './Modal';
@@ -14,18 +13,16 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment';
-import RecommendationGrid from './RecommendationGrid';
 import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Work, SaveSharp, BackspaceSharp, ClearSharp } from '@material-ui/icons';
+import StarRatingComponent from "react-star-rating-component"; 
+import { Work, BackspaceSharp, StarsSharp } from '@material-ui/icons';
 
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
@@ -129,7 +126,8 @@ class CourseRecommendationListItem extends React.Component {
       newRating: this.state.currentRating,
       isPortFolio: false,
       removeRequested: false,
-      registrationRequested: false
+      registrationRequested: false,
+      cancelButtonText: 'OK'
     });
     this.recordTimeInModal('cancel', this.state.currentRating);
   }
@@ -300,109 +298,197 @@ class CourseRecommendationListItem extends React.Component {
       </li>
     );
 
+    const myRatingLabel = () => {
+      if (parseInt(this.state.currentRating) < 1)
+        return "Rate Me"
+  
+      return "My Rating"
+    };
+  
     return (
       <div className="list-item">
       <Divider/>
-      <RecommendationGrid 
-        course_title = {this.state.currentTitle} 
-        course_description = {this.state.currentDescription} 
-        reasons = {reasons} 
-        sessions = {sessionItems} 
-        rating = {parseInt(this.state.currentRating)} 
-        avatarSrc = {this.state.statusAvatarUrl} 
-        instructor = {this.state.instructor} 
-        fee = {'$' + this.state.fee.toFixed(2)} 
-        cardActionCallback = {this.toggleModal} 
-        registerCallback = {this.toggleModalWithRegister} 
-        removeCallback = {this.toggleModalWithRemove}
-        isRegistered = {this.state.isRegistered}
-      />
+      <Card>
+        <CardHeader avatar={<Avatar src={this.state.statusAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
+        <CardContent>
+          <div>
+          <Grid container spacing={1}>
 
-        <Modal
-          show={this.state.showModal}
-          customClass="custom_modal_class"
-        >
-          <React.Fragment>
-            <div>
-              <div className="modal-header">
-              <div className="content-container">
-                  <h4 className="page-header__title">{this.state.currentTitle}</h4>
-              </div>
-              </div>
-              <div className="content-container">
-                <span>
-                <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
-                  {this.state.currentDescription}
+            <Grid item xs={12}>
+                <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography></Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <Paper>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    Based on your selection of:
                 </Typography>
-                </span>
-                </div>
-                <Divider/>
-                <br/>
-                  <div>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                          <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                              <Grid item>
-                                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate this Recommendation based on Your Level of Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
-                              </Grid>
-                          </Grid>
-                          <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                              <Grid item>
-                              <ReactStars {...ratingSchema} />
-                              </Grid>
-                          </Grid>
+                <ul>{reasons}</ul>
+                </Paper>
+            </Grid>
+            <Grid item xs={8}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper>
+                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                        Sessions:
+                    </Typography>
+                    <ul>{sessionItems}</ul>
+                    </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Button
+                            color="primary"
+                            aria-label="Rating"
+                            style={{fontWeight: "bold"}}
+                            title="Rating"
+                            startIcon={<StarsSharp />}
+                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
+                          </Button>
                         </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <StarRatingComponent
+                              name="courseRating"
+                              starCount={5}
+                              starColor="black"
+                              emptyStarColor="#CDCDCD"
+                              value={parseInt(this.state.currentRating)}
+                              editing={false}
+                            />
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Button
+                            hidden={this.state.isRegistered}
+                            disabled={parseInt(this.state.currentRating) < 1}
+                            color="primary"
+                            aria-label="Register"
+                            style={{fontWeight: "bold"}}
+                            title="Register"
+                            startIcon={<Work />}
+                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                        <Grid item>
+                          <Button
+                            hidden={this.state.isRegistered}
+                            disabled={parseInt(this.state.currentRating) < 1}
+                            aria-label="Remove"
+                            style={{fontWeight: "bold"}}
+                            title="Register"
+                            startIcon={<BackspaceSharp />}
+                            onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                          </Button>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  </div>
-                </div>
-                <span>
-                  <div>
+                  </Grid>
+                </Grid>
+            </Grid>
+        </div>
+      </CardContent>
+    </Card>
+
+    <Modal
+      show={this.state.showModal}
+      customClass="custom_modal_class"
+    >
+      <React.Fragment>
+        <div>
+          <div className="modal-header">
+          <div className="content-container">
+              <h4 className="page-header__title">{this.state.currentTitle}</h4>
+          </div>
+          </div>
+          <div className="content-container">
+            <span>
+            <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
+              {this.state.currentDescription}
+            </Typography>
+            </span>
+            </div>
+            <Divider/>
+            <br/>
+              <div>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate this Recommendation based on Your Level of Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
+                          </Grid>
+                      </Grid>
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                          <Grid item>
+                          <ReactStars {...ratingSchema} />
+                          </Grid>
+                      </Grid>
+                    </Grid>
+                </Grid>
+              </div>
+            </div>
+            <span>
+              <div>
+                <Grid
+                justify="center" 
+                container 
+                spacing={1}
+                >
                     <Grid
                     justify="center" 
                     container 
-                    spacing={1}
+                    spacing={2}
                     >
-                        <Grid
-                        justify="center" 
-                        container 
-                        spacing={2}
-                        >
-                          <Grid item>
-                            <Button
-                              hidden={this.state.registrationRequested == false}
-                              color="primary"
-                              aria-label="Register"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Acceptance</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              hidden={this.state.removeRequested == false}
-                              disabled={this.state.currentRating < 1}
-                              color="primary"
-                              aria-label="Remove"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              onClick={this.toggleModalWithConfirmRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Removal</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.cancelButtonText}</Typography>
-                            </Button>
-                          </Grid>
-                        </Grid>
+                      <Grid item>
+                        <Button
+                          hidden={this.state.registrationRequested == false}
+                          color="primary"
+                          aria-label="Register"
+                          style={{fontWeight: "bold"}}
+                          title="Register"
+                          onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Acceptance</Typography>
+                        </Button>
                       </Grid>
-                    </div>
-                </span>
-              </React.Fragment>
+                      <Grid item>
+                        <Button
+                          hidden={this.state.removeRequested == false}
+                          disabled={this.state.currentRating < 1}
+                          color="primary"
+                          aria-label="Remove"
+                          style={{fontWeight: "bold"}}
+                          title="Register"
+                          onClick={this.toggleModalWithConfirmRemove}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Removal</Typography>
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          color="inherit"
+                          aria-label="Cancel"
+                          style={{fontWeight: "bold"}}
+                          title="Cancel"
+                          onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.cancelButtonText}</Typography>
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </div>
+            </span>
+          </React.Fragment>
         </Modal>
+
       </div>
     );
   }
