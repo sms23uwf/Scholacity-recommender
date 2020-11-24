@@ -378,10 +378,11 @@ class CourseRecommendationListItem extends React.Component {
                             style={{fontWeight: "bold"}}
                             title="Register"
                             startIcon={<Work />}
-                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Accept</Typography>
+                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                           </Button>
                         </Grid>
                       </Grid>
+                      <br/>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                         <Grid item>
                           <Button
