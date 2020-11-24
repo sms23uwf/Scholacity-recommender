@@ -460,7 +460,7 @@ class CourseRecommendationListItem extends React.Component {
                           aria-label="Register"
                           style={{fontWeight: "bold"}}
                           title="Register"
-                          onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Acceptance</Typography>
+                          onClick={this.toggleModalWithConfirmRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Confirm Register</Typography>
                         </Button>
                       </Grid>
                       <Grid item>
