@@ -328,11 +328,11 @@ class CourseRecommendationListItem extends React.Component {
             <Grid item xs={8}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
+                  <Paper><Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper>
-                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                         Sessions:
                     </Typography>
                     <ul>{sessionItems}</ul>
