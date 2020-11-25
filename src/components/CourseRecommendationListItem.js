@@ -271,27 +271,22 @@ class CourseRecommendationListItem extends React.Component {
         >
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {session.session_number}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.DOW.substring(0,3).toUpperCase()}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_date).format('DD MMM YYYY')}
+              {moment(session.session_date).format('DD MMM YY')}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_time_start).format('hh:mm A')}
+              {moment(session.session_time_start).format('hh:mm')}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_time_end).format('hh:mm A')}
+              {moment(session.session_time_end).format('hh:mm')}
             </Typography>
           </Grid>
         </Grid>
