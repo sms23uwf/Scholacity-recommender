@@ -18,7 +18,7 @@ import selectSessions from '../selectors/sessions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
-import moment from 'moment/moment';
+import moment from 'moment/moment'
 import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
@@ -266,27 +266,28 @@ class CourseRecommendationListItem extends React.Component {
       <li key={session.session_number}>
         <Grid
           justify="flex-start" 
+          flex-direction="column"
           container 
           spacing={1}
         >
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {session.DOW.substring(0,3).toUpperCase()}
+            {session.DOW.padEnd(9,` `)}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_date).format('DD MMM YY')}
+              {moment(session.session_date).format('DD MMM YYYY')}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_time_start).format('hh:mm')}
+              {moment(session.session_time_start).format('hh:mm A')}
             </Typography>
           </Grid>
           <Grid item>
             <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-              {moment(session.session_time_end).format('hh:mm')}
+              {moment(session.session_time_end).format('hh:mm A')}
             </Typography>
           </Grid>
         </Grid>
@@ -310,35 +311,23 @@ class CourseRecommendationListItem extends React.Component {
           <Grid container spacing={1}>
 
             <Grid item xs={12}>
-                <Paper><Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography></Paper>
+                <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography>
             </Grid>
             <Grid item xs={12}>
-                <Paper>
-                <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-                    Based on your selection of:
-                </Typography>
-                <ul>{reasons}</ul>
-                </Paper>
+              <Divider/>
             </Grid>
+
             <Grid item xs={8}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Paper><Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor} - {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
-                </Grid>
-                <Grid item xs={12}>
-                    <Paper>
-                    <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-                        Sessions:
-                    </Typography>
-                    <ul>{sessionItems}</ul>
-                    </Paper>
+                  <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor} - {'$' + this.state.fee.toFixed(2)}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <Grid container direction="row" justify="left" alignItems="left" alignContent="left" >
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                         <Grid item>
                           <Button
                             color="primary"
@@ -350,7 +339,7 @@ class CourseRecommendationListItem extends React.Component {
                           </Button>
                         </Grid>
                       </Grid>
-                      <Grid container direction="row" justify="left" alignItems="left" alignContent="left" >
+                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                         <Grid item>
                           <StarRatingComponent
                               name="courseRating"
@@ -362,39 +351,62 @@ class CourseRecommendationListItem extends React.Component {
                             />
                         </Grid>
                       </Grid>
-
-                      <Grid container direction="row" justify="left" alignItems="left" alignContent="left" >
-                        <Grid item>
-                          <Button
-                            hidden={this.state.isRegistered}
-                            disabled={parseInt(this.state.currentRating) < 1}
-                            color="primary"
-                            aria-label="Register"
-                            style={{fontWeight: "bold"}}
-                            title="Register"
-                            startIcon={<Work />}
-                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
-                          </Button>
-                        </Grid>
-                      </Grid>
-                      <br/>
-                      <Grid container direction="row" justify="left" alignItems="left" alignContent="left" >
-                        <Grid item>
-                          <Button
-                            hidden={this.state.isRegistered}
-                            disabled={parseInt(this.state.currentRating) < 1}
-                            aria-label="Remove"
-                            style={{fontWeight: "bold"}}
-                            title="Register"
-                            startIcon={<BackspaceSharp />}
-                            onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
-                          </Button>
-                        </Grid>
-                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-            </Grid>
+
+                <Grid item xs={12}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                            Sessions:
+                        </Typography>
+                        <ul>{sessionItems}</ul>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Divider/>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                      Based on your selection of:
+                  </Typography>
+                  <ul>{reasons}</ul>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Divider/>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Grid container direction="column" spacing={1} justify="center" alignItems="center" alignContent="center" >
+                      <Grid item>
+                        <Button
+                          hidden={this.state.isRegistered}
+                          disabled={parseInt(this.state.currentRating) < 1}
+                          color="primary"
+                          aria-label="Register"
+                          style={{fontWeight: "bold"}}
+                          title="Register"
+                          startIcon={<Work />}
+                          onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
+                        </Button>
+                        <Button
+                          hidden={this.state.isRegistered}
+                          disabled={parseInt(this.state.currentRating) < 1}
+                          aria-label="Remove"
+                          style={{fontWeight: "bold"}}
+                          title="Register"
+                          startIcon={<BackspaceSharp />}
+                          onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+              </Grid>
         </div>
       </CardContent>
     </Card>
