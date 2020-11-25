@@ -270,27 +270,27 @@ class CourseRecommendationListItem extends React.Component {
           spacing={1}
         >
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {session.session_number}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.DOW.substring(0,3).toUpperCase()}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_date).format('DD MMM YYYY')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_start).format('hh:mm A')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_end).format('hh:mm A')}
             </Typography>
           </Grid>
@@ -302,7 +302,7 @@ class CourseRecommendationListItem extends React.Component {
       if (parseInt(this.state.currentRating) < 1)
         return "Rate Me"
   
-      return "My Rating"
+      return "Rating"
     };
   
     return (
@@ -325,14 +325,14 @@ class CourseRecommendationListItem extends React.Component {
                 <ul>{reasons}</ul>
                 </Paper>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Paper><Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
+                  <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper>
-                    <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                         Sessions:
                     </Typography>
                     <ul>{sessionItems}</ul>
@@ -340,7 +340,7 @@ class CourseRecommendationListItem extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
