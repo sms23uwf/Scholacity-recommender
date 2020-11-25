@@ -243,7 +243,7 @@ class CourseRecommendationListItem extends React.Component {
     var reasons = [];
     result.forEach((reason) => (
       reasons.push(<li key={reason.learningobjectiveid}>
-        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+        <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
           {reason.content}
         </Typography>
         </li>)
@@ -270,27 +270,27 @@ class CourseRecommendationListItem extends React.Component {
           spacing={1}
         >
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {session.session_number}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.DOW.substring(0,3).toUpperCase()}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_date).format('DD MMM YYYY')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_start).format('hh:mm A')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_end).format('hh:mm A')}
             </Typography>
           </Grid>
@@ -315,24 +315,24 @@ class CourseRecommendationListItem extends React.Component {
           <Grid container spacing={1}>
 
             <Grid item xs={12}>
-                <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography></Paper>
+                <Paper><Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography></Paper>
             </Grid>
             <Grid item xs={12}>
                 <Paper>
-                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                     Based on your selection of:
                 </Typography>
                 <ul>{reasons}</ul>
                 </Paper>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Paper><Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
+                  <Paper><Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor}   -  Fee: {'$' + this.state.fee.toFixed(2)}</Typography></Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper>
-                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                    <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                         Sessions:
                     </Typography>
                     <ul>{sessionItems}</ul>
@@ -340,7 +340,7 @@ class CourseRecommendationListItem extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
@@ -351,11 +351,11 @@ class CourseRecommendationListItem extends React.Component {
                             style={{fontWeight: "bold"}}
                             title="Rating"
                             startIcon={<StarsSharp />}
-                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
+                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
                           </Button>
                         </Grid>
                       </Grid>
-                      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                      <Grid container direction="row" justify="left" alignItems="left" alignContent="left" >
                         <Grid item>
                           <StarRatingComponent
                               name="courseRating"
@@ -378,7 +378,7 @@ class CourseRecommendationListItem extends React.Component {
                             style={{fontWeight: "bold"}}
                             title="Register"
                             startIcon={<Work />}
-                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
+                            onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                           </Button>
                         </Grid>
                       </Grid>
@@ -392,7 +392,7 @@ class CourseRecommendationListItem extends React.Component {
                             style={{fontWeight: "bold"}}
                             title="Register"
                             startIcon={<BackspaceSharp />}
-                            onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
+                            onClick={this.toggleModalWithRemove}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Remove</Typography>
                           </Button>
                         </Grid>
                       </Grid>
@@ -417,7 +417,7 @@ class CourseRecommendationListItem extends React.Component {
           </div>
           <div className="content-container">
             <span>
-            <Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
+            <Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }} gutterBottom>
               {this.state.currentDescription}
             </Typography>
             </span>
@@ -429,7 +429,7 @@ class CourseRecommendationListItem extends React.Component {
                     <Grid item xs={12}>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                           <Grid item>
-                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate this Recommendation based on Your Level of Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
+                            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate this Recommendation based on Your Level of Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
                           </Grid>
                       </Grid>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
