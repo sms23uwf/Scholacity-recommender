@@ -24,6 +24,54 @@ import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
 import { Work, BackspaceSharp, StarsSharp } from '@material-ui/icons';
 
+const styles = muiBaseTheme => ({
+  root: {
+    margin: 5,
+  },
+  card: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+    }
+  },
+  avatar: {
+    margin: 10,
+    width: 30,
+    height: 30
+  },
+  media: {
+    paddingTop: "56.25%"
+  },
+  content: {
+    textAlign: "left",
+    padding: muiBaseTheme.spacing.unit * 3
+  },
+  divider: {
+    margin: `${muiBaseTheme.spacing.unit * 3}px 0`
+  },
+  heading: {
+    fontWeight: "bold"
+  },
+  subheading: {
+    lineHeight: 1.8
+  },
+  typography: {
+    fontFamily: [
+      'Lucida Console'
+    ].join(','),
+  },
+  avatar: {
+    display: "inline-block",
+    border: "2px solid white",
+    "&:not(:first-of-type)": {
+      marginLeft: -muiBaseTheme.spacing.unit
+    }
+  }
+});
+
 class CourseRecommendationListItem extends React.Component {
   constructor(props){
       super(props);
@@ -51,6 +99,7 @@ class CourseRecommendationListItem extends React.Component {
       }
   }
   
+
   getLOSelectionPairing(loId) {
     const pairing = this.props.learningobjective_userselects.find(p => p.learningobjectiveid === loId) || {id:0};
     return pairing.id;
@@ -242,10 +291,21 @@ class CourseRecommendationListItem extends React.Component {
 
     var reasons = [];
     result.forEach((reason) => (
-      reasons.push(<li key={reason.learningobjectiveid}>
-        <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
-          {reason.content}
-        </Typography>
+      reasons.push(
+        <li key={reason.learningobjectiveid}>
+          <Grid
+            justify="flex-start" 
+            flex-direction="column"
+            container 
+            spacing={1}
+          >
+
+            <Grid item>
+              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                {reason.content}
+              </Typography>
+            </Grid>
+          </Grid>
         </li>)
     ));
 
@@ -270,23 +330,30 @@ class CourseRecommendationListItem extends React.Component {
           container 
           spacing={1}
         >
+
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            {session.session_number}
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <Typography type="body2" style={{ fontFamily: 'Lucida Console', fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.DOW.padEnd(9,` `)}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_date).format('DD MMM YYYY')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_start).format('hh:mm A')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
               {moment(session.session_time_end).format('hh:mm A')}
             </Typography>
           </Grid>
@@ -311,7 +378,7 @@ class CourseRecommendationListItem extends React.Component {
           <Grid container spacing={1}>
 
             <Grid item xs={12}>
-                <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography>
+                <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.currentDescription}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Divider/>
@@ -320,7 +387,7 @@ class CourseRecommendationListItem extends React.Component {
             <Grid item xs={8}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>Instructor: {this.state.instructor} - {'$' + this.state.fee.toFixed(2)}</Typography>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>{this.state.instructor} - {'$' + this.state.fee.toFixed(2)}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -335,7 +402,7 @@ class CourseRecommendationListItem extends React.Component {
                             style={{fontWeight: "bold"}}
                             title="Rating"
                             startIcon={<StarsSharp />}
-                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
+                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
                           </Button>
                         </Grid>
                       </Grid>
@@ -358,7 +425,7 @@ class CourseRecommendationListItem extends React.Component {
                 <Grid item xs={12}>
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                             Sessions:
                         </Typography>
                         <ul>{sessionItems}</ul>
@@ -371,7 +438,7 @@ class CourseRecommendationListItem extends React.Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography type="body2" style={{ fontSize: '1.125em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
+                  <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>
                       Based on your selection of:
                   </Typography>
                   <ul>{reasons}</ul>
