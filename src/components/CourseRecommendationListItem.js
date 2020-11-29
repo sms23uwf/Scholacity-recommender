@@ -23,6 +23,8 @@ import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
 import { Work, BackspaceSharp, StarsSharp } from '@material-ui/icons';
+import EmojiObjectsSharpIcon from '@material-ui/icons/EmojiObjectsOutlined';
+
 
 const styles = muiBaseTheme => ({
   root: {
@@ -275,11 +277,11 @@ class CourseRecommendationListItem extends React.Component {
     {
       switch(status) {
         case `Cart`:
-          return `/images/shopping-cart.png`;
+          return `/images/light_bulb.png`;
         case `Registered`:
           return `/images/briefcase.jpg`
         default:
-          return `/images/shopping-cart.png`;
+          return `/images/light_bulb.png`;
       }
     }
   }

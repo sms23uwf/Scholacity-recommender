@@ -146,13 +146,13 @@ class RegisteredCoursesListItem extends React.Component {
     {
       switch(status) {
         case `Cart`:
-          return `/images/shopping-cart.png`;
+          return `/images/light_bulb.png`;
         case `Registered`:
-          return `/images/briefcase.jpg`
+          return `/images/shopping-cart.png`;
         case 'Approved':
-          return `/images/briefcase.jpg`
+          return `/images/shopping-cart.png`;
         default:
-          return `/images/briefcase.jpg`;
+          return `/images/shopping-cart.png`;
       }
     }
   }
