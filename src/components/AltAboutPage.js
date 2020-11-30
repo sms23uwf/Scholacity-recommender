@@ -1,14 +1,10 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 import Modal from './Modal';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardActions from "@material-ui/core/CardActions";
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -16,7 +12,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { withRouter } from 'react-router';
+import Grid from '@material-ui/core/Grid';
+
 
 //require('bootstrap/dist/css/bootstrap.css');
 
@@ -88,9 +85,9 @@ class AboutPage extends React.Component {
         case 'Open':
           return '/images/local_library.png';
         case `Cart`:
-            return `/images/shopping-cart.png`;
+            return `/images/light_bulb.png`;
         case `Registered`:
-            return `/images/briefcase.jpg`;
+            return `/images/shopping-cart.png`;
         default:
             return '/images/local_library.png';
       }
@@ -141,8 +138,7 @@ class AboutPage extends React.Component {
           >
           <div>
             <Card>
-            <CardHeader titleTypographyProps={{variant:'h4'}} title="Scholacity Work Flow"/>
-            <CardActionArea>
+            <CardHeader titleTypographyProps={{variant:'h4'}} title="Scholacity Menu Options"/>
               <CardContent>
                 <Typography variant="h5" component="h5" gutterBottom>
                   Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
@@ -156,12 +152,12 @@ class AboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                         <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                        {<b>"Courses By Domain"</b>} menu option takes you to a page from which you may browse all available courses, organized by Knowledge Area, and select one or more courses that are of interest. You may save it to your shopping cart for further review, or you may save it to the courses for which you intend to register.
+                        {<i>Courses By Domain</i>} menu option takes you to a page from which you may browse all available courses, organized by Knowledge Area, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register.
                         </Typography>
                         <br/>
                         <br/>
                         <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                        {<b>"Courses By Day"</b>} menu option takes you to a page from which you may browse all available courses, organized by Day of the Week, and select one or more courses that are of interest. You may save it to your shopping cart for further review, or you may save it to the courses for which you intend to register. 
+                        {<i>Courses By Day</i>} menu option takes you to a page from which you may browse all available courses, organized by Day of the Week, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register. 
                         </Typography>
                       </React.Fragment>
                       } />
@@ -174,7 +170,7 @@ class AboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                       <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<b>"My Selections"</b>} menu option takes you to your shopping cart of selected courses saved for further review.                      
+                      {<i>My Selections</i>} menu option takes you to your selected courses saved for further review. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  If you plan to register for the recommended course please also select {<i>Register Button</i>} and then select the {<i>Confirm Register Button</i>} on the modal confirmation dialog. You may also {<i>Remove</i>} a saved course, once you have rated it, by similarly using the {<i>Remove Button</i>}.                      
                       </Typography>
                       </React.Fragment>
                       } />
@@ -187,23 +183,31 @@ class AboutPage extends React.Component {
                     <ListItemText primary={
                       <React.Fragment>
                       <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<b>"My Courses"</b>} menu option takes you to a page containing the courses for which you plan to register.
+                      {<i>My Courses</i>} menu option takes you to a page containing the courses for which you plan to register. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  You may also {<i>Remove</i>} a course if you change your mind, once you have rated it, by using the {<i>Remove Button</i>} and confirming the removal on the confirmation modal dialog.
                       </Typography>
                       </React.Fragment>
                       } />
                   </ListItem>
+
+                  <ListItem>
+                    <Grid container justify="center">
+                      <Grid item xs={12} style={{textAlign: "center"}}>
+                        <Button
+                          color="inherit"
+                          aria-label="Cancel"
+                          style={{fontWeight: "bold"}}
+                          title="Cancel"
+                          onClick={this.closeModal}><Typography style={{ fontSize: '2.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography>
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+
                 </List>
 
                 </CardContent>
-            </CardActionArea>
                 <br/>
             </Card>
-            <br/>
-            <br/>
-            <br/>
-            <div>
-              <Button title="Close" className="close_modal" onClick={this.closeModal}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>X</Typography></Button>
-            </div>
           </div>
         </Modal>
       </div>
