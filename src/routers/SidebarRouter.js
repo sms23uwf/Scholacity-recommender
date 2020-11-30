@@ -1,13 +1,12 @@
 import React from 'react';
 import CreateSvgIcon from "@material-ui/icons/utils/createSvgIcon";
-import { Home, Info, Work, ShoppingCart, PlaylistAddCheck } from '@material-ui/icons';
-import svgIcon from '@material-ui/core/SvgIcon';
-import EmojiObjectsSharpIcon from '@material-ui/icons/EmojiObjectsOutlined';
+import { Home, Info, Work, ShoppingCart, PlaylistAddCheck, ExitToApp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import PlannerDashboard from '../components/PlannerDashboard';
 import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AboutPage from '../components/AboutPage';
+import LogoutPage from '../components/LogoutPage';
 
 const PsychologyOutline = CreateSvgIcon(
   <g>
@@ -101,7 +100,16 @@ const SidebarRouter = [
     icon: Info,
     component: AboutPage,
     showModal:true
+  },
+  {
+    path: '/logoutpage',
+    sidebarName: 'Log Out',
+    navbarName: 'Log Out',
+    icon: ExitToApp,
+    component: LogoutPage,
+    showModal: false
   }
+
   
 ];
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import CreateSvgIcon from "@material-ui/icons/utils/createSvgIcon";
-import { Home, DateRangeSharp, Info, Work, ShoppingCart, LocalLibrarySharp } from '@material-ui/icons';
+import { Home, DateRangeSharp, Info, Work, ShoppingCart, LocalLibrarySharp, ExitToApp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import OfferingsDashboard from '../components/OfferingsDashboard';
 import DOWDashboard from '../components/DOWDashboard';
 import SelectionsDashboard from '../components/SelectionsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AltAboutPage from '../components/AltAboutPage';
+import LogoutPage from '../components/LogoutPage';
 
 const LightBulbOutline = CreateSvgIcon(
   <svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
@@ -85,6 +86,14 @@ const SidebarRouterAlt = [
     icon: Info,
     component: AltAboutPage,
     showModal:true
+  },
+  {
+    path: '/logoutpage',
+    sidebarName: 'Log Out',
+    navbarName: 'Log Out',
+    icon: ExitToApp,
+    component: LogoutPage,
+    showModal: false
   }
   
 ];

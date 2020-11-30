@@ -53,7 +53,7 @@ export class Header extends React.Component {
       <header className="header">
       <div className="content-container">
         <div>
-          <PersistentDrawerLeft handleLogout={this.handleCancel} routes={this.state.userRoutes} />
+          <PersistentDrawerLeft handleLogout={this.handleCancel} routes={this.state.userRoutes}/>
         </div>
       </div>
     </header>

@@ -92,6 +92,8 @@ export function PersistentDrawerLeft({ handleLogout, routes }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+
+
   function handleDrawerOpen() {
     setOpen(true);
   }

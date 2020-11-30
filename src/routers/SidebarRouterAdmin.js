@@ -1,10 +1,11 @@
-import { Home, AssignmentSharp, Info, LocalLibrarySharp, EditSharp } from '@material-ui/icons';
+import { Home, AssignmentSharp, Info, LocalLibrarySharp, EditSharp, ExitToApp } from '@material-ui/icons';
 import DashboardPage from '../components/DashboardPage';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
 import MaintenanceDashboard from '../components/MaintenanceDashboard';
 import AdminDOWDashboard from '../components/AdminDOWDashboard';
+import LogoutPage from '../components/LogoutPage';
 
 const SidebarRouterAlt = [
   {
@@ -50,7 +51,16 @@ const SidebarRouterAlt = [
     icon: Info,
     component: AdminAboutPage,
     showModal:true
+  },
+  {
+    path: '/logoutpage',
+    sidebarName: 'Log Out',
+    navbarName: 'Log Out',
+    icon: ExitToApp,
+    component: LogoutPage,
+    showModal: false
   }
+
   
 ];
 

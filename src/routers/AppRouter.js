@@ -4,6 +4,7 @@ import createHistory from 'history/createBrowserHistory';
 import DashboardPage from '../components/DashboardPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
+import LogoutPage from '../components/LogoutPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import PlannerDashboard from '../components/PlannerDashboard';
@@ -41,6 +42,8 @@ const AppRouter = () => (
         <PrivateRoute path="/adminDashboard" component={AdminDashboard}/>
         <PrivateRoute path="/maintenanceDashboard" component={MaintenanceDashboard}/>
         <PrivateRoute path="/aboutPage" component={AboutPage} />
+        <PrivateRoute path="/loginPage" component={LoginPage}/>
+        <PrivateRoute path="/logoutPage" component={LogoutPage}/>
         <PrivateRoute path="/adminOfferingsDashboard" component={AdminOfferingsDashboard}/>
         <PrivateRoute path="/adminDOWDashboard" component={AdminDOWDashboard}/>
         <PrivateRoute path="/adminAboutPage" component={AdminAboutPage}/>
