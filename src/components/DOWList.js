@@ -62,8 +62,9 @@ export class DOWList extends React.Component {
 
                     const matchingCourse = this.getCourse(course_by_dow.courseid);
                     const selectionId = this.getSelectionPairing(course_by_dow.courseid);
-
-                    return <DOWListItem key={course_by_dow.id} id={course_by_dow.id} {...matchingCourse} registrationId={registrationId} registration_status={registration_status} selectionId={selectionId}/>;
+                    
+                    if (matchingCourse.id != 0)
+                      return <DOWListItem key={course_by_dow.id} id={course_by_dow.id} {...matchingCourse} registrationId={registrationId} registration_status={registration_status} selectionId={selectionId}/>;
                   }
                 })
               )
