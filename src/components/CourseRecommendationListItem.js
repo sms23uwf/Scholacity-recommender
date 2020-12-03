@@ -127,7 +127,6 @@ class CourseRecommendationListItem extends React.Component {
         const currentLO = loData[key]
         const loSelectionPairingId = this.getLOSelectionPairing(currentLO.learningobjectiveid)
         const loPairing = {id: loSelectionPairingId};
-        console.log(`loSelectionPairing: ${loSelectionPairingId}`);
         this.props.startRemoveLOSelectionFromUser(loPairing);
       })
 
@@ -217,8 +216,6 @@ class CourseRecommendationListItem extends React.Component {
   }
 
   recordRating = (id,rating,courseid,userid) => {
-
-    console.log(`inside recordRating with ${rating}`)
 
     this.setState({currentRating: rating});
     const ratingData = {rating: rating};

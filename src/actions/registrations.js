@@ -42,8 +42,6 @@ export const startRemoveRegistrationFromUser = (id) => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
-    console.log(`inside of startRemoveRegistrationFromUser with id: ${id}`)
-
     return database.ref(`users_tables/${uid}/registration/${id}`).remove().then(() => {
       dispatch(removeRegistrationFromUser({ id }));
     });

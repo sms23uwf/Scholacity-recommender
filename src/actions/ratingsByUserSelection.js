@@ -18,8 +18,6 @@ export const addRatingsByUserSelection = (ratings_user_selection) => ({
         } = ratingData;
         const userSelectionRating = { courseid, userid, rating };
     
-        console.log(`inside startAddRatingsByUserSelection with ${uid} and with courseid: ${courseid} and with rating: ${rating}`);
-        
         return database.ref(`users_tables/${uid}/ratings_by_user_selection`).push({...userSelectionRating}).then((ref) => {
         dispatch(addRatingsByUserSelection({
             id: ref.key,

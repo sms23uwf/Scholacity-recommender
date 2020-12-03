@@ -90,9 +90,6 @@ class AdminAboutPage extends React.Component {
       count++;
     });
 
-    console.log(`total: ${total}`);
-    console.log(`count: ${count}`);
-
     if (count == 0 || total == 0)
       return 0;
 
@@ -110,9 +107,6 @@ class AdminAboutPage extends React.Component {
       total+= parseInt(record.rating);
       count++;
     });
-
-    console.log(`total: ${total}`);
-    console.log(`count: ${count}`);
 
     if (count == 0 || total == 0)
     return 0;
