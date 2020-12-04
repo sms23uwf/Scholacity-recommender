@@ -169,32 +169,35 @@ class OfferingListItem extends React.Component {
       <li key={session.session_number}>
         <Grid
           justify="flex-start" 
+          flex-direction="column"
           container 
           spacing={1}
         >
+
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
             {session.session_number}
             </Typography>
           </Grid>
+
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {session.DOW.substring(0,3).toUpperCase()}
+            <Typography type="body2" style={{ fontFamily: 'Lucida Console', fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+            {session.DOW.padEnd(9,` `)}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {moment(session.session_date).format('DD MMM YYYY')}
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_date).format('DD MMM YYYY')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {moment(session.session_time_start).format('hh:mm A')}
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_time_start).format('hh:mm A')}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography type="body2" style={{ fontSize: '1.00em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
-            {moment(session.session_time_end).format('hh:mm A')}
+            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>
+              {moment(session.session_time_end).format('hh:mm A')}
             </Typography>
           </Grid>
         </Grid>
@@ -207,21 +210,19 @@ class OfferingListItem extends React.Component {
           <Card>
             <CardHeader avatar={<Avatar src={this.state.currentAvatarUrl} className={"avatar"}/>} titleTypographyProps={{variant:'h4'}} title={this.state.currentTitle}/>
             <CardContent>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>
                 {this.state.currentDescription}
               </Typography>
               <br/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
+              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }} gutterBottom>
                 {this.state.instructor}   |  {'$' + this.state.fee.toFixed(2)}
               </Typography>
               <br/>
               <Divider/>
-              <Typography className={"MuiTypography--content"} variant={"h6"} gutterBottom>
-                Sessions:
+              <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `normal`, color: `#000000`, textAlign: `left` }}>Sessions:</Typography>
                 <ul>
                   {sessionItems}
                 </ul>
-              </Typography>
               <br/>
               <Divider/>
             </CardContent>
@@ -264,16 +265,6 @@ class OfferingListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              color="inherit"
-                              aria-label="Cancel"
-                              style={{fontWeight: "bold"}}
-                              title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Exit</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
                               disabled={this.state.isRegistered || this.state.isInCart}
                               color="primary"
                               aria-label="Save"
@@ -292,6 +283,16 @@ class OfferingListItem extends React.Component {
                               title="Register"
                               startIcon={<Work />}
                               onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
+                            </Button>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              color="inherit"
+                              aria-label="Cancel"
+                              style={{fontWeight: "bold"}}
+                              title="Cancel"
+                              startIcon={<ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography>
                             </Button>
                           </Grid>
                         </Grid>

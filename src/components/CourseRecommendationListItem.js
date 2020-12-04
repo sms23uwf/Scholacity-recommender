@@ -484,9 +484,9 @@ class CourseRecommendationListItem extends React.Component {
       <React.Fragment>
         <div>
           <div className="modal-header">
-          <div className="content-container">
+            <div className="content-container">
               <h4 className="page-header__title">{this.state.currentTitle}</h4>
-          </div>
+            </div>
           </div>
           <div className="content-container">
             <span>
