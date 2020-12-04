@@ -37,7 +37,6 @@ export class DashboardPage extends React.Component {
     let userDomainArray = firebase.auth().currentUser.email.split('@');
     const userDomain = userDomainArray[1];
 
-    //TODO: change this last one to 'uwf.edu'
     if ((userDomain != 'scholacity.org') && (userDomain != 'scholarsanonymous.org')) {
       console.log('logged out due to unauthorized domain');
       this.setState({
@@ -57,8 +56,7 @@ export class DashboardPage extends React.Component {
 
   handleCancel = () => {
     this.closeModal()
-    {cancelLogin()}
-    history.push('/cancel');
+    history.push('/logoutPage');
   }
 
   recordNavigationEvent = (event) => {

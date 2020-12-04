@@ -102,7 +102,7 @@ const SidebarRouter = [
     showModal:true
   },
   {
-    path: '/logoutpage',
+    path: '/logoutPage',
     sidebarName: 'Log Out',
     navbarName: 'Log Out',
     icon: ExitToApp,
