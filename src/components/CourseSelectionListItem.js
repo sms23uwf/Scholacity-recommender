@@ -269,13 +269,31 @@ class CourseSelectionListItem extends React.Component {
       </li>
     );
 
-    const myRatingLabel = () => {
-      if (parseInt(this.state.currentRating) < 1)
-        return "Rate Me"
-  
-      return "My Rating"
+    const ModalRating = () => {
+      if (this.state.removeRequested == false && this.state.registrationRequested == false)
+      {
+        return (
+           <div>
+             <Grid container spacing={1}>
+                 <Grid item xs={12}>
+                   <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                       <Grid item>
+                         <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate Your Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
+                       </Grid>
+                   </Grid>
+                   <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
+                       <Grid item>
+                         <ReactStars {...ratingSchema} />
+                       </Grid>
+                   </Grid>
+                 </Grid>
+             </Grid>
+           </div>
+        )
+      }
+      return null
     };
-  
+ 
 
     return (
       <div className="list-item">
@@ -305,14 +323,7 @@ class CourseSelectionListItem extends React.Component {
                     <Grid item xs={12}>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
                         <Grid item>
-                          <Button
-                            color="primary"
-                            aria-label="Rating"
-                            style={{fontWeight: "bold"}}
-                            title="Rating"
-                            startIcon={<StarsSharp />}
-                            onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>{myRatingLabel()}</Typography>
-                          </Button>
+                          <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `semi-bold`, color: `#000000`, textAlign: `left` }}>My Rating</Typography>
                         </Grid>
                       </Grid>
                       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
@@ -348,10 +359,21 @@ class CourseSelectionListItem extends React.Component {
 
                 <Grid item xs={12}>
                   <Grid container direction="column" spacing={1} justify="center" alignItems="center" alignContent="center" >
-                      <Grid item>
-                        <Button
-                          hidden={this.state.isRegistered}
-                          disabled={parseInt(this.state.currentRating) < 1}
+
+                    <Grid item>
+                      <Button
+                        hidden={parseInt(this.state.currentRating) > 0}
+                        color="primary"
+                        aria-label="Rating"
+                        style={{fontWeight: "bold"}}
+                        title="Rating"
+                        startIcon={<StarsSharp />}
+                        onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Rate Me</Typography>
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                          hidden={parseInt(this.state.currentRating) < 1}
                           color="primary"
                           aria-label="Register"
                           style={{fontWeight: "bold"}}
@@ -360,8 +382,7 @@ class CourseSelectionListItem extends React.Component {
                           onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                         </Button>
                         <Button
-                          hidden={this.state.isRegistered}
-                          disabled={parseInt(this.state.currentRating) < 1}
+                          hidden={parseInt(this.state.currentRating) < 1}
                           aria-label="Remove"
                           style={{fontWeight: "bold"}}
                           title="Register"
@@ -399,24 +420,7 @@ class CourseSelectionListItem extends React.Component {
 
               <Divider/>
               <br/>
-
-                <div>
-                  <Grid container spacing={1}>
-                      <Grid item xs={12}>
-                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                          <Grid item>
-                            <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>Please Rate Your Agreement with the Following Statement: <br/><br/> This course fits With a desired Learning Outcome, and is the type of course I was hoping to find.</Typography>
-                          </Grid>
-                        </Grid>
-                        <Grid container direction="row" justify="center" alignItems="center" alignContent="center" >
-                          <Grid item>
-                            <ReactStars {...ratingSchema} />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                  </Grid>
-
-                </div>
+              <ModalRating/>
             </div>
                 <span>
                   <div>
