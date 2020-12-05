@@ -299,7 +299,7 @@ class RegisteredCoursesListItem extends React.Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Grid container direction="column" spacing={1} justify="center" alignItems="center" alignContent="center" >
+                  <Grid container direction="row" spacing={1} justify="center" alignItems="center" alignContent="center" >
                     <Grid item>
                       <Button
                         hidden={parseInt(this.state.currentRating) > 0}
@@ -313,7 +313,6 @@ class RegisteredCoursesListItem extends React.Component {
                     </Grid>
                     <Grid item>
                       <Button
-                        hidden={parseInt(this.state.currentRating) < 1}
                         aria-label="Remove"
                         style={{fontWeight: "bold"}}
                         title="Register"

@@ -152,11 +152,11 @@ class OfferingListItem extends React.Component {
         case 'Open':
           return '/images/local_library.png';
         case `Cart`:
-            return `/images/shopping-cart.png`;
+            return `/images/light_bulb.png`;
         case `requested`:
-          return `/images/pending-order.png`;
+          return `/images/shopping-cart.png`;
         case `approved`:
-            return `/images/briefcase.jpg`;
+            return `/images/shopping-cart.png`;
         default:
             return '/images/local_library.png';
       }
