@@ -379,7 +379,7 @@ class CourseSelectionListItem extends React.Component {
                           style={{fontWeight: "bold"}}
                           title="Register"
                           startIcon={<ShoppingCart />}
-                          onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
+                          onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Registration Planner</Typography>
                         </Button>
                         <Button
                           hidden={parseInt(this.state.currentRating) < 1}

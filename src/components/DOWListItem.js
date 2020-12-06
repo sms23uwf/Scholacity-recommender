@@ -314,17 +314,6 @@ class DOWListItem extends React.Component {
                           </Grid>
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered || this.state.isInCart}
-                              color="primary"
-                              aria-label="Register"
-                              style={{fontWeight: "bold"}}
-                              title="Register"
-                              startIcon={<ShoppingCart />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
-                            </Button>
-                          </Grid>
-                          <Grid item>
-                            <Button
                               color="inherit"
                               aria-label="Cancel"
                               style={{fontWeight: "bold"}}
