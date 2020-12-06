@@ -366,7 +366,6 @@ class RegisteredCoursesListItem extends React.Component {
                           <Grid item>
                             <Button
                               hidden={this.state.removeRequested == false}
-                              disabled={this.state.currentRating < 1}
                               color="primary"
                               aria-label="Remove"
                               style={{fontWeight: "bold"}}

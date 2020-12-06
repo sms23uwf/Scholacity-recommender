@@ -67,7 +67,8 @@ class DOWListItem extends React.Component {
     this.setState({
       showModal: !this.state.showModal,
       disposition: 'Cart',
-      currentAvatarUrl: this.setAvatarURL('Cart')
+      currentAvatarUrl: this.setAvatarURL('Cart'),
+      isInCart: true
     });
 
     this.recordTimeInModal('add to cart', this.state.currentRating);
@@ -303,7 +304,7 @@ class DOWListItem extends React.Component {
                         >
                           <Grid item>
                             <Button
-                              disabled={this.state.isRegistered || this.state.isInCart}
+                              hidden={this.state.isRegistered || this.state.isInCart}
                               color="primary"
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
@@ -318,8 +319,8 @@ class DOWListItem extends React.Component {
                               aria-label="Cancel"
                               style={{fontWeight: "bold"}}
                               title="Cancel"
-                              startIcon={<ClearSharp />}
-                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Cancel</Typography>
+                              startIcon={this.state.isRegistered || this.state.isInCart ? "" : <ClearSharp />}
+                              onClick={this.toggleModalWithCancel}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>{this.state.isRegistered || this.state.isInCart ? "OK" : "Cancel"}</Typography>
                             </Button>
                           </Grid>
                         </Grid>
