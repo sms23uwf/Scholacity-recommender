@@ -202,7 +202,6 @@ class AdminAboutPage extends React.Component {
                     </Grid>
                   </Grid>
                 </div>
-                <div>Icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>
                 <br/>
                 <Divider/>
                 <br/>

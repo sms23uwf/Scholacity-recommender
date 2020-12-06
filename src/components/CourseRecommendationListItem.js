@@ -274,11 +274,11 @@ class CourseRecommendationListItem extends React.Component {
     {
       switch(status) {
         case `Cart`:
-          return `/images/light_bulb.png`;
+          return `/images/noun_light_bulb.png`;
         case `Registered`:
           return `/images/briefcase.jpg`
         default:
-          return `/images/light_bulb.png`;
+          return `/images/noun_light_bulb.png`;
       }
     }
   }

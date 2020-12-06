@@ -85,7 +85,7 @@ class AboutPage extends React.Component {
         case 'Open':
           return '/images/local_library.png';
         case `Cart`:
-            return `/images/light_bulb.png`;
+            return `/images/noun_light_bulb.png`;
         case `Registered`:
             return `/images/shopping-cart.png`;
         default:
