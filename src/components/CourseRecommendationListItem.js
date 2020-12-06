@@ -22,7 +22,7 @@ import moment from 'moment/moment'
 import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
-import { Work, BackspaceSharp, StarsSharp } from '@material-ui/icons';
+import { ShoppingCart, BackspaceSharp, StarsSharp } from '@material-ui/icons';
 import EmojiObjectsSharpIcon from '@material-ui/icons/EmojiObjectsOutlined';
 
 
@@ -478,7 +478,7 @@ class CourseRecommendationListItem extends React.Component {
                           aria-label="Register"
                           style={{fontWeight: "bold"}}
                           title="Register"
-                          startIcon={<Work />}
+                          startIcon={<ShoppingCart />}
                           onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Registration Planner</Typography>
                         </Button>
                         <Button
