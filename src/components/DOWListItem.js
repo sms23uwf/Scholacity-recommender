@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import { connect } from 'react-redux';
 import { startAddCourseSelection, startEditCourseSelection } from '../actions/courseSelections';
 import { startAddUserTimeInModal } from '../actions/timeInModal';
@@ -17,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { firebase } from '../firebase/firebase';
 import moment from 'moment/moment'
-import { Work, ShoppingCart, ClearSharp } from '@material-ui/icons';
+import { Work, ShoppingCart, ClearSharp, DateRangeSharp } from '@material-ui/icons';
 
 class DOWListItem extends React.Component {
   constructor(props){
@@ -149,7 +150,7 @@ class DOWListItem extends React.Component {
     {
       switch(status) {
         case 'Open':
-          return '/images/local_library.png';
+          return '/images/noun_date_range.png';
         case `Cart`:
             return `/images/light_bulb.png`;
         case `requested`:
@@ -157,13 +158,27 @@ class DOWListItem extends React.Component {
         case `approved`:
             return `/images/shopping-cart.png`;
         default:
-            return '/images/local_library.png';
+            return '/images/noun_date_range.png';
       }
     }
   }
 
   render() {
 
+    const LightBulbOutline = CreateSvgIcon(
+      <svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <g id="line">
+        <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="m52.55 23.75c0 3.985-1.785 5.908-3.754 10.5-0.5028 1.172-4.211 13.38-4.211 13.38h-17.17s-2.981-11.67-3.546-12.62c-2.37-3.998-4.419-6.91-4.419-11.26 0-9.141 7.41-16.55 16.55-16.55 9.141 0 16.55 7.41 16.55 16.55z"/>
+        <line x1="36" x2="36" y1="47.22" y2="35.28" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/>
+        <line x1="41.97" x2="30.03" y1="35.28" y2="35.28" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/>
+        <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.696" d="m44.16 58.79c0 3.24-3.651 5.867-8.155 5.867-4.504 0-8.155-2.627-8.155-5.867z"/>
+        <line x1="27.99" x2="44.01" y1="54.98" y2="51.51" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.965"/>
+        <line x1="38.2" x2="43.98" y1="56.07" y2="54.89" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/>
+        <line x1="28.02" x2="33.8" y1="51.6" y2="50.42" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/>
+      </g>
+    </svg>
+    );
+    
     const sessionItems = this.props.sessions.map((session) =>
       <li key={session.session_number}>
         <Grid
@@ -270,8 +285,8 @@ class DOWListItem extends React.Component {
                               aria-label="Save"
                               style={{fontWeight: "bold"}}
                               title="Save"
-                              startIcon={<ShoppingCart />}
-                              onClick={this.toggleModalWithSaveToCart}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Cart</Typography>
+                              startIcon={<LightBulbOutline />}
+                              onClick={this.toggleModalWithSaveToCart}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save</Typography>
                             </Button>
                           </Grid>
                           <Grid item>
@@ -281,8 +296,8 @@ class DOWListItem extends React.Component {
                               aria-label="Register"
                               style={{fontWeight: "bold"}}
                               title="Register"
-                              startIcon={<Work />}
-                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Save To Courses</Typography>
+                              startIcon={<ShoppingCart />}
+                              onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.5em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                             </Button>
                           </Grid>
                           <Grid item>

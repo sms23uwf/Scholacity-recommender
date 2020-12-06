@@ -20,7 +20,7 @@ import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
-import { Work, BackspaceSharp, StarsSharp } from '@material-ui/icons';
+import { ShoppingCart, BackspaceSharp, StarsSharp } from '@material-ui/icons';
 
 
 class CourseSelectionListItem extends React.Component {
@@ -378,7 +378,7 @@ class CourseSelectionListItem extends React.Component {
                           aria-label="Register"
                           style={{fontWeight: "bold"}}
                           title="Register"
-                          startIcon={<Work />}
+                          startIcon={<ShoppingCart />}
                           onClick={this.toggleModalWithRegister}><Typography style={{ fontSize: '1.125em', fontWeight: `bold`, color: `#000000` }}>Register</Typography>
                         </Button>
                         <Button
