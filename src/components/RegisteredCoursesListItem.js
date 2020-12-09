@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
 import { BackspaceSharp, StarsSharp } from '@material-ui/icons';
-
+import HowToRegSharpIcon from '@material-ui/icons/HowToRegSharp';
 
 class RegisteredCoursesListItem extends React.Component {
   constructor(props){
@@ -41,6 +41,8 @@ class RegisteredCoursesListItem extends React.Component {
         instructor: props.course_instructor,
         fee: props.course_fee,
         removeRequested: false,
+        ratingRequested: false,
+        registerRequested: false,
         cancelButtonText: 'OK',
         userid: firebase.auth().currentUser.uid
       }
@@ -78,6 +80,21 @@ class RegisteredCoursesListItem extends React.Component {
 
   }
 
+  toggleModalWithHowToReg = () => {
+    this.toggleModal();
+    this.setState({
+      registerRequested: true,
+      cancelButtonText: 'OK'
+    })
+  }
+
+  toggleModalWithRate = () => {
+    this.toggleModal();
+    this.setState({
+      ratingRequested: true,
+      cancelButtonText: 'OK'
+    })
+  }
 
   toggleModalWithConfirmRemove = () => {
 
@@ -127,6 +144,13 @@ class RegisteredCoursesListItem extends React.Component {
         timeEnteredModal: timeStamp
       })
     } 
+    else {
+      this.setState({
+        removeRequested: false,
+        ratingRequested: false,
+        registerRequested: false
+      })
+    }
     this.setState({
       showModal: !this.state.showModal
     });
@@ -212,7 +236,7 @@ class RegisteredCoursesListItem extends React.Component {
     );
 
     const ModalRating = () => {
-      if (this.state.removeRequested == false)
+      if (this.state.ratingRequested == true)
       {
         return (
            <div>
@@ -236,6 +260,24 @@ class RegisteredCoursesListItem extends React.Component {
       return null
     };
   
+    const ModalHowToRegister = () => {
+      if (this.state.registerRequested == true)
+      {
+        return (
+          <div>
+            <br/>
+            <Divider/>
+            <br/>
+            <div className="content-container">
+              <h1>Register online at uwf.edu/LeisureLearning</h1>
+              <h1>850.473.7468</h1>
+            </div>
+          </div>
+        )
+      }
+      return null
+    };
+
     return (
       <div className="list-item">
       <Divider/>
@@ -300,6 +342,17 @@ class RegisteredCoursesListItem extends React.Component {
 
                 <Grid item xs={12}>
                   <Grid container direction="row" spacing={1} justify="center" alignItems="center" alignContent="center" >
+
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        aria-label="HowToReg"
+                        style={{fontWeight: "bold"}}
+                        title="HowToReg"
+                        startIcon={<HowToRegSharpIcon />}
+                        onClick={this.toggleModalWithHowToReg}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>How To Register</Typography>
+                      </Button>
+                    </Grid>
                     <Grid item>
                       <Button
                         hidden={parseInt(this.state.currentRating) > 0}
@@ -308,7 +361,7 @@ class RegisteredCoursesListItem extends React.Component {
                         style={{fontWeight: "bold"}}
                         title="Rating"
                         startIcon={<StarsSharp />}
-                        onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Rate Me</Typography>
+                        onClick={this.toggleModalWithRate}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>Rate Me</Typography>
                       </Button>
                     </Grid>
                     <Grid item>
@@ -345,12 +398,13 @@ class RegisteredCoursesListItem extends React.Component {
                   {this.state.currentDescription}
                 </Typography>
                 </span>
-              </div>
 
+              </div>
+              <ModalHowToRegister/>
               <Divider/>
               <br/>
               <ModalRating/>
-            </div>
+              </div>
                 <span>
                   <div>
                     <Grid
