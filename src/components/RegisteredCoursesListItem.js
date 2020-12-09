@@ -75,6 +75,8 @@ class RegisteredCoursesListItem extends React.Component {
     this.toggleModal();
     this.setState({
       removeRequested: true,
+      registerRequested: false,
+      ratingRequested: false,
       cancelButtonText: 'Cancel'
     });
 
@@ -84,6 +86,8 @@ class RegisteredCoursesListItem extends React.Component {
     this.toggleModal();
     this.setState({
       registerRequested: true,
+      removeRequested: false,
+      ratingRequested: false,
       cancelButtonText: 'OK'
     })
   }
@@ -92,6 +96,8 @@ class RegisteredCoursesListItem extends React.Component {
     this.toggleModal();
     this.setState({
       ratingRequested: true,
+      removeRequested: false,
+      registerRequested: false,
       cancelButtonText: 'OK'
     })
   }
