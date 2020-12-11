@@ -40,7 +40,7 @@ module.exports = (env) => {
           'sass-loader',
         ]},
         {
-          test: /\.(jpg|jpeg|gif|svg|png|ico)$/,
+          test: /\.(jpg|jpeg|gif|svg|png|ico|pdf)$/,
           exclude: /node_modules/,
           loader:'file-loader'
        }        

@@ -13,6 +13,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Grid from '@material-ui/core/Grid';
+import ViewScholacityPDF from './DisplayUserManual';
+import User_Manual_Scholacity from '../User_Manual_Scholacity.pdf';
 
 //require('bootstrap/dist/css/bootstrap.css');
 
@@ -65,6 +67,19 @@ class AboutPage extends React.Component {
       avgRating: this.getAverageRating(),
       usabilityScore: this.getUseabilityScore()
     }
+  }
+
+  displayUserDocumentation = () => {
+    console.log(`inside displayUserDocumentation`)
+    return (
+      <header className="header">
+      <div className="content-container">
+        <div>
+          <ViewScholacityPDF props={User_Manual_Scholacity}/>
+        </div>
+      </div>
+    </header>
+    )
   }
 
   closeModal = () => {
@@ -184,6 +199,17 @@ class AboutPage extends React.Component {
                   </ListItem>
                   <ListItem>
                     <Grid container justify="center">
+
+                      <Grid item xs={12} style={{textAlign: "center"}}>
+                        <Button
+                          color="inherit"
+                          aria-label="Cancel"
+                          style={{fontWeight: "bold"}}
+                          title="Cancel"
+                          onClick={this.displayUserDocumentation}><Typography style={{ fontSize: '2.5em', fontWeight: `bold`, color: `#000000` }}>User Manual</Typography>
+                        </Button>
+                      </Grid>
+
                       <Grid item xs={12} style={{textAlign: "center"}}>
                         <Button
                           color="inherit"
