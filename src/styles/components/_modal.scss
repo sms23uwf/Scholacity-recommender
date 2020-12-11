@@ -44,10 +44,17 @@
     padding: 20px;
   }
   
+  .modal .close_modal_button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
   .modal .close_modal {
     position: absolute;
-    right: 80rem;
-    top: 5rem;
+    right: 40px;
+    top: 5px;
+    //display: flex;
+    //justify-content: flex-end;
     cursor: pointer;
     font-size: 18px;
     opacity: 0.75;

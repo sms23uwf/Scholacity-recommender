@@ -7,6 +7,8 @@ export default function ViewScholacityPDF(props) {
     function onDocumentLoadSuccess({ numPages }) {
       setNumPages(numPages);
     }
+
+    console.log(`inside ViewScholacityPDF`)
   
     const { pdf } = props;
 
