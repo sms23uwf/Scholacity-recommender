@@ -13,6 +13,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Grid from '@material-ui/core/Grid';
+import { Document, Page } from "react-pdf";
+import DescriptionSharpIcon from '@material-ui/icons/DescriptionSharp';
 
 
 //require('bootstrap/dist/css/bootstrap.css');
@@ -62,15 +64,21 @@ class AboutPage extends React.Component {
     super(props);
 
     this.state = {
-      showModal: true,
+      showModal: false,
       avgRating: this.getAverageRating(),
-      usabilityScore: this.getUseabilityScore()
+      usabilityScore: this.getUseabilityScore(),
+      numPages: null,
+      pageNumber: 1
     }
   }
 
   closeModal = () => {
     this.toggleModal();
     this.props.history.push('/');
+  }
+
+  onDocumentLoadSuccess({ numPages }) {
+    this.setState({ numPages });
   }
 
   toggleModal = () => {
@@ -84,6 +92,8 @@ class AboutPage extends React.Component {
       switch(status) {
         case 'Open':
           return '/images/local_library.png';
+        case 'DOW':
+          return '/images/noun_date_range.png';
         case `Cart`:
             return `/images/noun_light_bulb.png`;
         case `Registered`:
@@ -125,91 +135,126 @@ class AboutPage extends React.Component {
   }
 
   render() {
+
+    const { pageNumber, numPages } = this.state;
+    
     return (
       <div className="content-container-dashboard">
-      <span id="image">
-        <span id="image-inner">
+        <span id="image">
+          <span id="image-about">
+          </span>
         </span>
-      </span>
-      <Modal
+        <div>
+          <Card>
+          <CardHeader titleTypographyProps={{variant:'h4'}} title="Scholacity Menu Options"/>
+            <CardContent>
+              <Typography variant="h5" component="h5" gutterBottom>
+                Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
+              </Typography>
+
+              <List>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar src={this.setWorkflowAvatarURL('Open')}/>
+                  </ListItemAvatar>
+                  <ListItemText primary={
+                    <React.Fragment>
+                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                      {<i>Courses By Domain</i>} menu option takes you to a page from which you may browse all available courses, organized by Knowledge Area, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register.
+                      </Typography>
+                    </React.Fragment>
+                    } />
+                </ListItem>
+                <Divider/>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar src={this.setWorkflowAvatarURL('DOW')}/>
+                  </ListItemAvatar>
+                  <ListItemText primary={
+                    <React.Fragment>
+                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                    {<i>Courses By Day</i>} menu option takes you to a page from which you may browse all available courses, organized by Day of the Week, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register. 
+                    </Typography>
+                  </React.Fragment>
+                    } />
+                </ListItem>
+                <Divider/>
+
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar src={this.setWorkflowAvatarURL('Cart')}/>
+                  </ListItemAvatar>
+                  <ListItemText primary={
+                    <React.Fragment>
+                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                    {<i>My Selections</i>} menu option takes you to your selected courses saved for further review. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  If you plan to register for the recommended course please also select {<i>Register Button</i>} and then select the {<i>Confirm Register Button</i>} on the modal confirmation dialog. You may also {<i>Remove</i>} a saved course, once you have rated it, by similarly using the {<i>Remove Button</i>}.                      
+                    </Typography>
+                    </React.Fragment>
+                    } />
+                </ListItem>
+                <Divider/>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar src={this.setWorkflowAvatarURL('Registered')}/>
+                  </ListItemAvatar>
+                  <ListItemText primary={
+                    <React.Fragment>
+                    <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
+                    {<i>My Courses</i>} menu option takes you to a page containing the courses for which you plan to register. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  You may also {<i>Remove</i>} a course if you change your mind, once you have rated it, by using the {<i>Remove Button</i>} and confirming the removal on the confirmation modal dialog.
+                    </Typography>
+                    </React.Fragment>
+                    } />
+                </ListItem>
+              </List>
+
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Divider/>
+                </Grid>
+    
+                <Grid item xs={12}>
+                  <Grid container direction="row" spacing={1} justify="center" alignItems="center" alignContent="center" >
+    
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        aria-label="ViewUserManual"
+                        style={{fontWeight: "bold"}}
+                        title="ViewUserManual"
+                        startIcon={<DescriptionSharpIcon />}
+                        onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>User Manual</Typography>
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+  
+            </CardContent>
+            <br/>
+          </Card>
+        </div>
+
+        <Modal
           show={this.state.showModal}
           closeCallback={this.toggleModal}
           customClass="custom_modal_class"
-          >
-          <div>
-            <Card>
-            <CardHeader titleTypographyProps={{variant:'h4'}} title="Scholacity Menu Options"/>
-              <CardContent>
-                <Typography variant="h5" component="h5" gutterBottom>
-                  Scholacity -  Scholarship and Tenacity - the pursuit of Lifelong Learning.
-                </Typography>
+        >
 
-                <List>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setWorkflowAvatarURL('Open')}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                        {<i>Courses By Domain</i>} menu option takes you to a page from which you may browse all available courses, organized by Knowledge Area, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register.
-                        </Typography>
-                        <br/>
-                        <br/>
-                        <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                        {<i>Courses By Day</i>} menu option takes you to a page from which you may browse all available courses, organized by Day of the Week, and select one or more courses that are of interest. You may {<i>save it for for further review</i>}, or you may {<i>Select the Register Button</i>} and save it to the courses for which you plan to register. 
-                        </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-                  <Divider/>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setWorkflowAvatarURL('Cart')}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<i>My Selections</i>} menu option takes you to your selected courses saved for further review. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  If you plan to register for the recommended course please also select {<i>Register Button</i>} and then select the {<i>Confirm Register Button</i>} on the modal confirmation dialog. You may also {<i>Remove</i>} a saved course, once you have rated it, by similarly using the {<i>Remove Button</i>}.                      
-                      </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-                  <Divider/>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar src={this.setWorkflowAvatarURL('Registered')}/>
-                    </ListItemAvatar>
-                    <ListItemText primary={
-                      <React.Fragment>
-                      <Typography type="body2" style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000`, textAlign: `left` }}>
-                      {<i>My Courses</i>} menu option takes you to a page containing the courses for which you plan to register. Please click the {<i>Rating button</i>} and rate the recommendation using the provided {<i>Star Rating Scale</i>}.  You may also {<i>Remove</i>} a course if you change your mind, once you have rated it, by using the {<i>Remove Button</i>} and confirming the removal on the confirmation modal dialog.
-                      </Typography>
-                      </React.Fragment>
-                      } />
-                  </ListItem>
-
-                  <ListItem>
-                    <Grid container justify="center">
-                      <Grid item xs={12} style={{textAlign: "center"}}>
-                        <Button
-                          color="inherit"
-                          aria-label="Cancel"
-                          style={{fontWeight: "bold"}}
-                          title="Cancel"
-                          onClick={this.closeModal}><Typography style={{ fontSize: '2.5em', fontWeight: `bold`, color: `#000000` }}>OK</Typography>
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-
-                </List>
-
-                </CardContent>
-                <br/>
-            </Card>
-          </div>
+          <React.Fragment>
+            <div>
+                <Document
+                  file='/User_Manual_Scholarsanonymous.pdf'
+                  onLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
+                  options={{ workerSrc: "/pdf.worker.js" }}
+                >
+                  {Array.from(new Array(numPages), (el, index) => (
+                    <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                  ))}
+                </Document>
+            </div>
+          </React.Fragment>
         </Modal>
+
       </div>
     );
   }
