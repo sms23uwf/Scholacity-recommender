@@ -184,13 +184,13 @@ const SidebarRouterAlt = [
     icon: DateRangeSharp,
     component: AdminDOWDashboard
   },
-  {
-    path: '/maintenanceDashboard',
-    sidebarName: 'Maintain Courses',
-    navbarName: 'Maintain Courses',
-    icon: EditSharp,
-    component: MaintenanceDashboard
-  },
+  // {
+  //   path: '/maintenanceDashboard',
+  //   sidebarName: 'Maintain Courses',
+  //   navbarName: 'Maintain Courses',
+  //   icon: EditSharp,
+  //   component: MaintenanceDashboard
+  // },
   {
     path:'/adminAboutPage',
     sidebarName: 'About',
