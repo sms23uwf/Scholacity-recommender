@@ -89,11 +89,11 @@ class RegistrationListItem extends React.Component {
     {
       switch(status) {
         case `requested`:
-          return `/images/briefcase.jpg`
+          return `/images/shopping-cart.png`
         case `approved`:
-          return `/images/briefcase.jpg`
+          return `/images/shopping-cart.png`
         default:
-          return `/images/briefcase.jpg`
+          return `/images/shopping-cart.png`
         }
     }
   }

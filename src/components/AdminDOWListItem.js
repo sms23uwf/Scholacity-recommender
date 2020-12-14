@@ -47,9 +47,9 @@ class AdminDOWListItem extends React.Component {
     {
       switch(status) {
         case 'Open':
-          return '/images/local_library.png';
+          return '/images/noun_date_range.png';
         default:
-          return '/images/local_library.png';
+          return '/images/noun_date_range.png';
       }
     }
   }
