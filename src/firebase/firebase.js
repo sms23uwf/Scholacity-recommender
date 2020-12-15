@@ -1,5 +1,7 @@
 import * as firebase from 'firebase';
 import 'firebase/auth';
+import * as firebaseui from 'firebaseui';
+import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -28,4 +30,4 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(func
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { firebase, googleAuthProvider, database as default };
+export { firebase, firebaseui, googleAuthProvider, database as default };

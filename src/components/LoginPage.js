@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startLogin } from '../actions/auth';
 import { history } from '../routers/AppRouter';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { firebase } from '../firebase/firebase';
+import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
+import { firebase, firebaseui } from '../firebase/firebase';
 import 'firebaseui/dist/firebaseui.css';
 
 // Configure FirebaseUI.
@@ -16,7 +16,7 @@ const uiConfig = {
   ],
   callbacks: {
     // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false,
+    signInSuccessWithAuthResult: () => false
   },
 };
 
@@ -30,7 +30,7 @@ export const LoginPage = ({ startLogin }) => (
           <br/>
           <h3>Click the Button to Sign In With Your Participant Account</h3>
           <br/>
-          <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+          <FirebaseAuth disableAutoSignIn uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
         </div>
       </span>
     </div>
