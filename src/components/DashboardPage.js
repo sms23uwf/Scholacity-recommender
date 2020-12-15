@@ -96,7 +96,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   startLogout: () => dispatch(startLogout()),
-  startLogin: () => dispatch(startLogin()),
   startAddUser: () => dispatch(startAddUser()),
   setUUIDFilter: (userId) => dispatch(setUUIDFilter(userId)),
   startAddUserNavigationEvent: (navigationEventCapture) => dispatch(startAddUserNavigationEvent(navigationEventCapture))
