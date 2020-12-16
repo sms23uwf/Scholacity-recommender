@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from './Modal';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
@@ -7,84 +6,24 @@ import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Grid from '@material-ui/core/Grid';
-import { Document, Page } from "react-pdf";
-import DescriptionSharpIcon from '@material-ui/icons/DescriptionSharp';
+
+require('bootstrap/dist/css/bootstrap.css');
 
 
-//require('bootstrap/dist/css/bootstrap.css');
-
-const styles = muiBaseTheme => ({
-  card: {
-    maxWidth: 300,
-    margin: "auto",
-    transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-    }
-  },
-  avatar: {
-    margin: 10,
-    width: 30,
-    height: 30
-  },
-  media: {
-    paddingTop: "56.25%"
-  },
-  content: {
-    textAlign: "left",
-    padding: muiBaseTheme.spacing.unit * 3
-  },
-  divider: {
-    margin: `${muiBaseTheme.spacing.unit * 3}px 0`
-  },
-  heading: {
-    fontWeight: "bold"
-  },
-  subheading: {
-    lineHeight: 1.8
-  },
-  avatar: {
-    display: "inline-block",
-    border: "2px solid white",
-    "&:not(:first-of-type)": {
-      marginLeft: -muiBaseTheme.spacing.unit
-    }
-  }
-});
-
-class AboutPage extends React.Component {
+class AltAboutPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showModal: false,
       avgRating: this.getAverageRating(),
       usabilityScore: this.getUseabilityScore(),
       numPages: null,
       pageNumber: 1
     }
-  }
-
-  closeModal = () => {
-    this.toggleModal();
-    this.props.history.push('/');
-  }
-
-  onDocumentLoadSuccess({ numPages }) {
-    this.setState({ numPages });
-  }
-
-  toggleModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
   }
 
   setWorkflowAvatarURL = (status) => {
@@ -136,8 +75,6 @@ class AboutPage extends React.Component {
 
   render() {
 
-    const { pageNumber, numPages } = this.state;
-    
     return (
       <div className="content-container-dashboard">
         <span id="image">
@@ -207,53 +144,10 @@ class AboutPage extends React.Component {
                 </ListItem>
               </List>
 
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <Divider/>
-                </Grid>
-    
-                <Grid item xs={12}>
-                  <Grid container direction="row" spacing={1} justify="center" alignItems="center" alignContent="center" >
-    
-                    <Grid item>
-                      <Button
-                        color="primary"
-                        aria-label="ViewUserManual"
-                        style={{fontWeight: "bold"}}
-                        title="ViewUserManual"
-                        startIcon={<DescriptionSharpIcon />}
-                        onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>User Manual</Typography>
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-  
             </CardContent>
             <br/>
           </Card>
         </div>
-
-        <Modal
-          show={this.state.showModal}
-          closeCallback={this.toggleModal}
-          customClass="custom_modal_class"
-        >
-
-          <React.Fragment>
-            <div>
-                <Document
-                  file='/User_Manual_Scholarsanonymous.pdf'
-                  onLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
-                  options={{ workerSrc: "/pdf.worker.js" }}
-                >
-                  {Array.from(new Array(numPages), (el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                  ))}
-                </Document>
-            </div>
-          </React.Fragment>
-        </Modal>
 
       </div>
     );
@@ -269,5 +163,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(AboutPage);
+export default connect(mapStateToProps)(AltAboutPage);
 

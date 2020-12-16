@@ -1,88 +1,27 @@
 import React from 'react';
-import Modal from './Modal';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ReactStars from "react-rating-stars-component";
-import { Document, Page } from "react-pdf";
-import DescriptionSharpIcon from '@material-ui/icons/DescriptionSharp';
-import { setUUIDFilter, setCourseFilter } from '../actions/filters';
-import { firebase } from '../firebase/firebase';
+import { setUUIDFilter } from '../actions/filters';
 
-//require('bootstrap/dist/css/bootstrap.css');
-
-const styles = muiBaseTheme => ({
-  card: {
-    maxWidth: 300,
-    margin: "auto",
-    transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-    }
-  },
-  avatar: {
-    margin: 10,
-    width: 30,
-    height: 30
-  },
-  media: {
-    paddingTop: "56.25%"
-  },
-  content: {
-    textAlign: "left",
-    padding: muiBaseTheme.spacing.unit * 3
-  },
-  divider: {
-    margin: `${muiBaseTheme.spacing.unit * 3}px 0`
-  },
-  heading: {
-    fontWeight: "bold"
-  },
-  subheading: {
-    lineHeight: 1.8
-  },
-  avatar: {
-    display: "inline-block",
-    border: "2px solid white",
-    "&:not(:first-of-type)": {
-      marginLeft: -muiBaseTheme.spacing.unit
-    }
-  }
-});
+require('bootstrap/dist/css/bootstrap.css');
 
 class AdminAboutPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showModal: false,
       avgOfferingExpectationRating: this.getAverageOfferingExpectationRating(),
       avgCourseSatisfactionRating: this.getAverageCourseSatisfactionRating(),
       usabilityScore: this.getUseabilityScore(),
       numPages: null,
       pageNumber: 1
     }
-  }
-
-  closeModal = () => {
-    this.toggleModal();
-    this.props.history.push('/');
-  }
-
-  toggleModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  }
-
-  onDocumentLoadSuccess({ numPages }) {
-    this.setState({ numPages });
   }
 
   getAverageOfferingExpectationRating = () => {
@@ -145,8 +84,6 @@ class AdminAboutPage extends React.Component {
   }
 
   render() {
-
-    const { pageNumber, numPages } = this.state;
 
     const selectionRatingSchema = {
       size: 32,
@@ -233,51 +170,9 @@ class AdminAboutPage extends React.Component {
               <br/>
               <Divider/>
               <br/>
-
-              <div>
-                <Grid container spacing={1}>
-                  <Grid item xs={12}>
-                    <Grid container direction="row" spacing={1} justify="center" alignItems="center" alignContent="center" >
-
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          aria-label="ViewUserManual"
-                          style={{fontWeight: "bold"}}
-                          title="ViewUserManual"
-                          startIcon={<DescriptionSharpIcon />}
-                          onClick={this.toggleModal}><Typography style={{ fontSize: '1.25em', fontWeight: `bold`, color: `#000000` }}>User Manual</Typography>
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </div>
-
               </CardContent>
               <br/>
           </Card>
-
-          <Modal
-          show={this.state.showModal}
-          closeCallback={this.toggleModal}
-          customClass="custom_modal_class"
-          >
-
-            <React.Fragment>
-              <div>
-                  <Document
-                    file='/User_Manual_Scholacity_Admin.pdf'
-                    onLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
-                    options={{ workerSrc: "/pdf.worker.js" }}
-                  >
-                    {Array.from(new Array(numPages), (el, index) => (
-                      <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                    ))}
-                  </Document>
-              </div>
-            </React.Fragment>
-          </Modal>
         </div>
       </div>
     );

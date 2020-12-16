@@ -7,6 +7,8 @@ import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AboutPage from '../components/AboutPage';
 import LogoutPage from '../components/LogoutPage';
+import UserManualScholacity from '../components/UserManualScholacity';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const PsychologyOutline = CreateSvgIcon(
   <g>
@@ -177,11 +179,19 @@ const SidebarRouter = [
   },
   {
     path:'/aboutPage',
-    sidebarName: 'How To Use',
-    navbarName: 'How To Use',
+    sidebarName: 'About Menu',
+    navbarName: 'About Menu',
     icon: Info,
     component: AboutPage,
     showModal:true
+  },
+  {
+    path:'/userManualPage',
+    sidebarName: 'User Manual',
+    navbarName: 'User Manual',
+    icon: PictureAsPdfIcon,
+    component: UserManualScholacity,
+    showModal:false
   },
   {
     path: '/logoutPage',

@@ -8,6 +8,8 @@ import SelectionsDashboard from '../components/SelectionsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AltAboutPage from '../components/AltAboutPage';
 import LogoutPage from '../components/LogoutPage';
+import UserManualScholarsAnonymous from '../components/UserManualScholarsAnonymous';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const LightBulbOutline = CreateSvgIcon(
   <svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
@@ -104,11 +106,19 @@ const SidebarRouterAlt = [
   },
   {
     path:'/altAboutPage',
-    sidebarName: 'How To Use',
-    navbarName: 'How To Use',
+    sidebarName: 'About Menu',
+    navbarName: 'About Menu',
     icon: Info,
     component: AltAboutPage,
     showModal:true
+  },
+  {
+    path:'/userManualPageAlt',
+    sidebarName: 'User Manual',
+    navbarName: 'User Manual',
+    icon: PictureAsPdfIcon,
+    component: UserManualScholarsAnonymous,
+    showModal:false
   },
   {
     path: '/logoutPage',

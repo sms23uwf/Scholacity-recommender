@@ -9,6 +9,8 @@ import AdminLearningObjectiveDashboard from '../components/AdminLearningObjectiv
 import MaintenanceDashboard from '../components/MaintenanceDashboard';
 import AdminDOWDashboard from '../components/AdminDOWDashboard';
 import LogoutPage from '../components/LogoutPage';
+import UserManualAdmin from '../components/UserManualAdmin';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const PsychologyOutline = CreateSvgIcon(
   <g>
@@ -200,6 +202,14 @@ const SidebarRouterAlt = [
     showModal:true
   },
   {
+    path:'/userManualPageAdmin',
+    sidebarName: 'User Manual',
+    navbarName: 'User Manual',
+    icon: PictureAsPdfIcon,
+    component: UserManualAdmin,
+    showModal:false
+  },
+  {
     path: '/logoutPage',
     sidebarName: 'Log Out',
     navbarName: 'Log Out',
@@ -207,8 +217,6 @@ const SidebarRouterAlt = [
     component: LogoutPage,
     showModal: false
   }
-
-  
 ];
 
 export default SidebarRouterAlt;

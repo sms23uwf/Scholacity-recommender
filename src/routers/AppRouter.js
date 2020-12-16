@@ -22,6 +22,9 @@ import AdminAboutPage from '../components/AdminAboutPage';
 import AdminOfferingsDashboard from '../components/AdminOfferingsDashboard';
 import AdminDOWDashboard from '../components/AdminDOWDashboard';
 import AltAboutPage from '../components/AltAboutPage';
+import UserManualScholacity from '../components/UserManualScholacity';
+import UserManualScholarsAnonymous from '../components/UserManualScholarsAnonymous';
+import UserManualAdmin from '../components/UserManualAdmin';
 
 export const history = createHistory();
 
@@ -50,6 +53,9 @@ const AppRouter = () => (
         <PrivateRoute path="/adminDOWDashboard" component={AdminDOWDashboard}/>
         <PrivateRoute path="/adminAboutPage" component={AdminAboutPage}/>
         <PrivateRoute path="/altAboutPage" component={AltAboutPage}/>
+        <PrivateRoute path="/userManualPage" component={UserManualScholacity}/>
+        <PrivateRoute path="/userManualPageAlt" component={UserManualScholarsAnonymous}/>
+        <PrivateRoute path="/userManualPageAdmin" component={UserManualAdmin}/>
         <Route component={NotFoundPage} />
       </Switch>
     </div>
