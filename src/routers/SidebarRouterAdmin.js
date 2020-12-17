@@ -202,14 +202,6 @@ const SidebarRouterAlt = [
     showModal:true
   },
   {
-    path:'/userManualPageAdmin',
-    sidebarName: 'User Manual',
-    navbarName: 'User Manual',
-    icon: PictureAsPdfIcon,
-    component: UserManualAdmin,
-    showModal:false
-  },
-  {
     path: '/logoutPage',
     sidebarName: 'Log Out',
     navbarName: 'Log Out',

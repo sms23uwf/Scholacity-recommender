@@ -186,14 +186,6 @@ const SidebarRouter = [
     showModal:true
   },
   {
-    path:'/userManualPage',
-    sidebarName: 'User Manual',
-    navbarName: 'User Manual',
-    icon: PictureAsPdfIcon,
-    component: UserManualScholacity,
-    showModal:false
-  },
-  {
     path: '/logoutPage',
     sidebarName: 'Log Out',
     navbarName: 'Log Out',
