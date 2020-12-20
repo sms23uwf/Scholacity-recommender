@@ -16,11 +16,11 @@ import Grid from '@material-ui/core/Grid';
 import selectSessions from '../selectors/sessions';
 import moment from 'moment/moment'
 import { firebase } from '../firebase/firebase';
-import Paper from '@material-ui/core/Paper';
 import ReactStars from "react-rating-stars-component";
 import StarRatingComponent from "react-star-rating-component"; 
 import { BackspaceSharp, StarsSharp } from '@material-ui/icons';
 import HowToRegSharpIcon from '@material-ui/icons/HowToRegSharp';
+import { Link } from 'react-router-dom';
 
 class RegisteredCoursesListItem extends React.Component {
   constructor(props){
@@ -118,20 +118,6 @@ class RegisteredCoursesListItem extends React.Component {
     });
     this.recordTimeInModal('remove registration', this.state.currentRating);
   }
-
-  toggleModalWithSave = () => {
-
-    if(this.state.newRating != this.state.currentRating)
-      this.recordRating(this.state.registrationId, this.state.newRating, this.props.courseid, this.state.userid);
-
-    // this.setState({
-    //   showModal: !this.state.showModal
-    // });
-
-    this.recordTimeInModal('save', this.state.currentRating);
-  }
-
-
 
   recordTimeInModal = (disposition, rating) => {
     let timeStamp = Date.now();
@@ -275,7 +261,7 @@ class RegisteredCoursesListItem extends React.Component {
             <Divider/>
             <br/>
             <div className="content-container">
-              <h1>Register online at uwf.edu/LeisureLearning</h1>
+            <Typography type="body2" style={{ fontSize: '2.25em', fontWeight: `bold`, color: `#000000`, textAlign: `center` }}><Link to={{ pathname: "https://uwf.augusoft.net//index.cfm?method=ClassListing.ClassListingDisplay&int_category_id=12&int_sub_category_id=18&bit_url=1" }} target="_blank">Register online at uwf.edu/LeisureLearning</Link></Typography>
               <h1>850.473.7468</h1>
             </div>
           </div>

@@ -110,7 +110,7 @@ const SidebarRouterAlt = [
     navbarName: 'About Menu',
     icon: Info,
     component: AltAboutPage,
-    showModal:true
+    showModal:false
   },
   {
     path: '/logoutPage',
