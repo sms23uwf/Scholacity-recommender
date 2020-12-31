@@ -8,8 +8,6 @@ import SelectionsDashboard from '../components/SelectionsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AltAboutPage from '../components/AltAboutPage';
 import LogoutPage from '../components/LogoutPage';
-import UserManualScholarsAnonymous from '../components/UserManualScholarsAnonymous';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const LightBulbOutline = CreateSvgIcon(
   <svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">

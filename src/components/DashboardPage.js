@@ -11,6 +11,8 @@ import { startAddUserNavigationEvent } from '../actions/navigationEvents';
 import { firebase } from '../firebase/firebase';
 import { setUUIDFilter } from '../actions/filters';
 import Typography from "@material-ui/core/Typography";
+import scholacityText from '../documents/ScholacityText';
+import scholarsAnonymousText from '../documents/ScholarsAnonymousText';
 
 // require('bootstrap/dist/css/bootstrap.css');
 
@@ -24,20 +26,27 @@ const section = {
 export class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      showModal: false,
+      userid: firebase.auth().currentUser.uid,
+      userDomain: "",
+      invalidUserDomain: false
+     }
+   
   }
   
-  state = {
-   showModal: false,
-   userid: firebase.auth().currentUser.uid
-  }
 
   componentDidMount() {
     this.recordNavigationEvent('Dashboard');
 
     let userDomainArray = firebase.auth().currentUser.email.split('@');
-    const userDomain = userDomainArray[1];
+    const uDomain = userDomainArray[1];
+    this.setState({
+      userDomain: userDomainArray[1]
+    })
 
-    if ((userDomain != 'scholacity.org') && (userDomain != 'scholarsanonymous.org')) {
+    if ((uDomain != 'scholacity.org') && (uDomain != 'scholarsanonymous.org')) {
       console.log('logged out due to unauthorized domain');
       this.setState({
         invalidUserDomain: true,
@@ -66,12 +75,44 @@ export class DashboardPage extends React.Component {
     this.props.startAddUserNavigationEvent(navigationEventCapture);
   }
 
+  userManualDownloadLink = () => {
+
+    if (this.state.userDomain == 'scholacity.org')
+    {
+      return (
+        <div className="content-container-dashboard">
+            <div className="App">
+                <a href={scholacityText} target="_blank"><Typography style={{ fontSize: '2.25em', fontWeight: `bold`, color: `#000000` }}>Download User Manual</Typography></a>
+            </div>
+        </div>
+      );
+
+    }
+    else if (this.state.userDomain == 'scholarsanonymous.org')
+    {
+
+      return (
+        <div className="content-container-dashboard">
+            <div className="App">
+                <a href={scholarsAnonymousText} target="_blank"><Typography style={{ fontSize: '2.25em', fontWeight: `bold`, color: `#000000` }}>Download User Manual</Typography></a>
+            </div>
+        </div>
+      );
+
+    }
+    else
+    {
+      return "";
+    }
+  }
+
   render() {
     return (
         <div className="content-container-dashboard">
           <span id="image">
             <span id="image-inner" />
           </span>
+          {this.userManualDownloadLink()}
           <InformedConsentModal
             show={this.state.showModal}
             closeCallback={this.handleCancel}

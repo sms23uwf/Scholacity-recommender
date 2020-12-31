@@ -9,8 +9,6 @@ import AdminLearningObjectiveDashboard from '../components/AdminLearningObjectiv
 import MaintenanceDashboard from '../components/MaintenanceDashboard';
 import AdminDOWDashboard from '../components/AdminDOWDashboard';
 import LogoutPage from '../components/LogoutPage';
-import UserManualAdmin from '../components/UserManualAdmin';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const PsychologyOutline = CreateSvgIcon(
   <g>

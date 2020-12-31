@@ -7,8 +7,6 @@ import RecommendationsDashboard from '../components/RecommendationsDashboard';
 import RegisteredCoursesDashboard from '../components/RegisteredCoursesDashboard';
 import AboutPage from '../components/AboutPage';
 import LogoutPage from '../components/LogoutPage';
-import UserManualScholacity from '../components/UserManualScholacity';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 const PsychologyOutline = CreateSvgIcon(
   <g>
