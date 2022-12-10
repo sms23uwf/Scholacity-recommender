@@ -29,7 +29,7 @@
     "bootstrap": "^4.5.3",
     "contentful": "^8.1.4",
     "core-js": "^3.8.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "file-loader": "^6.2.0",
     "firebase": "^7.24.0",
     "firebaseui": "^4.7.1",
